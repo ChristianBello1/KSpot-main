@@ -1,13 +1,169 @@
-.title{
+.title {
     color: white;
-    font-size:40px;
+    font-size: 40px;
     font-weight: 500;
     border-bottom: 1px solid white;
     padding-bottom: 10px;
 }
 
-.notfound{
+.notfound {
     color: white;
     margin-top: 30px;
     font-size: 25px;
+}
+
+.title1 {
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+    padding-bottom: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    font-size: 40px;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+.comments-section {
+    color: black;
+}
+
+.comment-form, .reply-form {
+    position: relative;
+}
+
+.submit-triangle {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.submit-triangle:hover {
+    transform: scale(1.2);
+}
+
+.like-button {
+    color: #007bff;
+    transition: color 0.3s ease;
+    margin-top: 9px;
+}
+
+.like-button.liked {
+    color: #dc3545;
+}
+
+.like-button:hover, .like-button:focus {
+    color: #dc3545;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+.btn-icon:hover {
+    opacity: 0.8;
+}
+
+.replies-toggle {
+    background: none;
+    border: none;
+    color: inherit;
+    text-decoration: none;
+    padding: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border: 1px solid #6c757d !important;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+}
+
+.btn-icon,
+.submit-triangle,
+.replies-toggle,
+.btn-sm,
+.btn-outline-secondary {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-icon:hover,
+.btn-icon:focus,
+.submit-triangle:hover,
+.submit-triangle:focus,
+.replies-toggle:hover,
+.replies-toggle:focus,
+.btn-sm:hover,
+.btn-sm:focus,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn-link:hover {
+    text-decoration: none;
+}
+
+.btn {
+    border: none !important;
+}
+
+.reply-form-container {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.reply-form-container.show {
+    max-height: 300px; /* Adjust this value based on your needs */
+    opacity: 1;
+    transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
+}
+
+.reply-form {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

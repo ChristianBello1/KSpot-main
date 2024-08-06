@@ -71,6 +71,7 @@
 
 #logout {
     margin-top: 0px !important;
+    margin-left:10px;
 }
 
 .searchb {
@@ -80,6 +81,9 @@
     height: 45px;
     background-color: rgba(0, 0, 0, 0);
     margin-left: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .searchb:hover {

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getSoloistById, addComment, deleteComment, likeComment, getUserData } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaFacebook, FaPaperPlane, FaInstagram } from 'react-icons/fa';
 import './CommentStyles.css';
+import './Pages.css';
 
 const SoloistDetail = () => {
   const [soloist, setSoloist] = useState(null);
@@ -12,6 +13,8 @@ const SoloistDetail = () => {
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [expandedComments, setExpandedComments] = useState({});
+  const [likedComments, setLikedComments] = useState({});
+  const [, forceUpdate] = useState();
   const { id } = useParams();
   const { user, addFavorite, removeFavorite, updateUser } = useAuth();
 
@@ -24,6 +27,21 @@ const SoloistDetail = () => {
       setIsFavorite(user.preferiti.some(fav => fav.id === soloist._id && fav.type === 'Soloist'));
     }
   }, [user, soloist]);
+
+  useEffect(() => {
+    if (soloist && soloist.comments) {
+      const initialLikedState = {};
+      soloist.comments.forEach(comment => {
+        initialLikedState[comment._id] = comment.likes && comment.likes.includes(user?._id);
+        if (comment.replies) {
+          comment.replies.forEach(reply => {
+            initialLikedState[reply._id] = reply.likes && reply.likes.includes(user?._id);
+          });
+        }
+      });
+      setLikedComments(initialLikedState);
+    }
+  }, [soloist, user]);
 
   const fetchSoloist = async () => {
     try {
@@ -41,8 +59,7 @@ const SoloistDetail = () => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     try {
-      const commentData = { text: comment };
-      await addComment(id, commentData, false);
+      await addComment(id, { text: comment }, false);
       setComment('');
       fetchSoloist();
     } catch (error) {
@@ -81,6 +98,7 @@ const SoloistDetail = () => {
     try {
       await likeComment(id, commentId, false);
       fetchSoloist();
+      forceUpdate({});
     } catch (error) {
       console.error('Error liking comment:', error);
     }
@@ -95,6 +113,17 @@ const SoloistDetail = () => {
       fetchSoloist();
     } catch (error) {
       console.error('Error adding reply:', error);
+    }
+  };
+
+  const handleReplyCancel = (commentId) => {
+    const replyForm = document.querySelector(`#reply-form-${commentId}`);
+    if (replyForm) {
+      replyForm.classList.remove('show');
+      setTimeout(() => {
+        setReplyingTo(null);
+        setReplyText('');
+      }, 300);
     }
   };
 
@@ -118,21 +147,24 @@ const SoloistDetail = () => {
         <div className="comment-actions">
           {user && (
             <>
-              <button onClick={() => handleLikeComment(comment._id)} className="btn btn-sm btn-outline-primary btn-icon">
-                <FaThumbsUp /> Like ({comment.likes ? comment.likes.length : 0})
+              <button 
+                onClick={() => handleLikeComment(comment._id)} 
+                className={`btn btn-link btn-icon like-button ${likedComments[comment._id] ? 'liked' : ''}`}
+              >
+                <FaThumbsUp /> {comment.likes ? comment.likes.length : 0}
               </button>
-              <button onClick={() => setReplyingTo(comment._id)} className="btn btn-sm btn-outline-secondary btn-icon">
+              <button onClick={() => setReplyingTo(comment._id)} className="btn btn-link btn-icon">
                 <FaReply /> Reply
               </button>
             </>
           )}
           {(user && (user._id === comment.author?._id || user.ruolo === 'admin')) && (
             <button 
-              className="btn btn-sm btn-danger btn-icon" 
+              className="btn btn-link btn-icon" 
               onClick={() => handleDeleteComment(comment._id)}
               title="Delete comment"
             >
-              <FaTrash /> Delete
+              <FaTrash />
             </button>
           )}
         </div>
@@ -162,17 +194,20 @@ const SoloistDetail = () => {
                     </div>
                     <div className="comment-actions">
                       {user && (
-                        <button onClick={() => handleLikeComment(reply._id)} className="btn btn-sm btn-outline-primary btn-icon">
-                          <FaThumbsUp /> Like ({reply.likes ? reply.likes.length : 0})
+                        <button 
+                          onClick={() => handleLikeComment(reply._id)} 
+                          className={`btn btn-link btn-icon like-button ${likedComments[reply._id] ? 'liked' : ''}`}
+                        >
+                          <FaThumbsUp /> {reply.likes ? reply.likes.length : 0}
                         </button>
                       )}
                       {(user && (user._id === reply.author?._id || user.ruolo === 'admin')) && (
                         <button 
-                          className="btn btn-sm btn-danger btn-icon" 
+                          className="btn btn-link btn-icon" 
                           onClick={() => handleDeleteComment(reply._id)}
                           title="Delete reply"
                         >
-                          <FaTrash /> Delete
+                          <FaTrash />
                         </button>
                       )}
                     </div>
@@ -182,72 +217,124 @@ const SoloistDetail = () => {
             )}
           </div>
         )}
-        {replyingTo === comment._id && (
+        <div id={`reply-form-${comment._id}`} className={`reply-form-container ${replyingTo === comment._id ? 'show' : ''}`}>
           <form onSubmit={(e) => handleReplySubmit(e, comment._id)} className="reply-form">
-            <div className="mb-3">
+            <div className="mb-3 position-relative">
               <textarea
                 className="form-control"
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 placeholder="Your reply"
               ></textarea>
+              <button type="submit" className="btn btn-link submit-triangle">
+                <FaPaperPlane />
+              </button>
             </div>
-            <button type="submit" className="btn btn-primary btn-sm">Submit Reply</button>
-            <button type="button" className="btn btn-secondary btn-sm ml-2" onClick={() => setReplyingTo(null)}>Cancel</button>
+            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => handleReplyCancel(comment._id)}>Cancel</button>
           </form>
-        )}
+        </div>
       </div>
     ));
   };
-
+  
   if (!soloist) return <div>Loading...</div>;
-
+  
   return (
-    <div className="container mt-4">
-      <h1>{soloist.name}</h1>
-      <img src={soloist.photo} alt={soloist.name} className="artist-image" />
-      {user && (
-        <button onClick={handleFavoriteToggle} className="btn btn-outline-primary favorite-btn">
-          {isFavorite ? <FaHeart /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        </button>
-      )}
-      <div className="artist-info">
-        <p><strong>Stage Name:</strong> {soloist.stageName}</p>
-        <p><strong>Birthday:</strong> {new Date(soloist.birthday).toLocaleDateString()}</p>
-        <p><strong>Zodiac Sign:</strong> {soloist.zodiacSign}</p>
-        <p><strong>Height:</strong> {soloist.height} cm</p>
-        <p><strong>Weight:</strong> {soloist.weight} kg</p>
-        <p><strong>MBTI Type:</strong> {soloist.mbtiType}</p>
-        <p><strong>Nationality:</strong> {soloist.nationality}</p>
-        <p><strong>Instagram:</strong> <a href={`https://www.instagram.com/${soloist.instagram}`} target="_blank" rel="noopener noreferrer">@{soloist.instagram}</a></p>
-        <p><strong>Bio:</strong> {soloist.bio}</p>
-        <p><strong>Company:</strong> {soloist.company}</p>
-        <p><strong>Debut Date:</strong> {new Date(soloist.debutDate).toLocaleDateString()}</p>
+    <div className="container mt-4 text-white">
+      <h1 className="mb-4 title">{soloist.name}</h1>
+      
+      <div className="row mb-4">
+        <div className="col-md-6 position-relative">
+          {user && (
+            <button 
+              onClick={handleFavoriteToggle} 
+              className="btn btn-outline-light favorite-btn position-absolute top-2 left-5 m-2"
+              style={{
+                transition: 'transform 0.3s ease',
+                transform: 'scale(1)',
+              }}
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            >
+              {isFavorite ? <FaHeart /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+            </button>
+          )}
+          <img src={soloist.photo} alt={soloist.name} className="img-fluid rounded" />
+        </div>
+        <div className="col-md-6 d-flex flex-column justify-content-start align-items-start">
+          <h1 className="mb-3 title1">Artist Info</h1>
+          <p><strong>Stage Name:</strong> {soloist.stageName}</p>
+          <p><strong>Birthday:</strong> {new Date(soloist.birthday).toLocaleDateString()}</p>
+          <p><strong>Zodiac Sign:</strong> {soloist.zodiacSign}</p>
+          <p><strong>Height:</strong> {soloist.height} cm</p>
+          <p><strong>Weight:</strong> {soloist.weight} kg</p>
+          <p><strong>MBTI Type:</strong> {soloist.mbtiType}</p>
+          <p><strong>Nationality:</strong> {soloist.nationality}</p>
+          <p><strong>Company:</strong> {soloist.company}</p>
+          <p><strong>Debut Date:</strong> {new Date(soloist.debutDate).toLocaleDateString()}</p>
+        </div>
       </div>
       
-      <div className="comments-section">
-        <h2>Comments</h2>
+      <div className="row">
+        <div className="col-md-12">
+          <h2 className='title1'>Biography</h2>
+          <p>{soloist.bio}</p>
+        </div>
+      </div>
+
+      <div className="row mt-4">
+        <div className="col-md-12">
+          <h2 className='title1 position-absolute'>Social Media</h2>
+          <div className="social-icons" style={{marginTop:'60px'}}>
+            {soloist.socialMedia?.youtube && (
+              <a href={soloist.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaYoutube />
+              </a>
+            )}
+            {soloist.socialMedia?.twitter && (
+              <a href={soloist.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaTwitter />
+              </a>
+            )}
+            {soloist.socialMedia?.facebook && (
+              <a href={soloist.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaFacebook />
+              </a>
+            )}
+            {soloist.instagram && (
+              <a href={`https://www.instagram.com/${soloist.instagram}`} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaInstagram />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+  
+      <div className="comments-section mt-4">
+        <h2 className='title1'>Comments</h2>
         {soloist.comments && soloist.comments.length > 0 ? (
           renderComments(soloist.comments)
         ) : (
-          <p>No comments yet.</p>
+          <p className='notfound'>No comments yet.</p>
         )}
       
         {user ? (
-          <form onSubmit={handleCommentSubmit}>
-            <div className="mb-3">
-              <label htmlFor="comment" className="form-label">Add a comment:</label>
+          <form onSubmit={handleCommentSubmit} className="comment-form">
+            <div className="mb-3 position-relative">
               <textarea 
                 className="form-control" 
                 id="comment" 
                 value={comment} 
                 onChange={(e) => setComment(e.target.value)}
+                placeholder="Add a comment..."
               ></textarea>
+              <button type="submit" className="btn btn-link submit-triangle">
+                <FaPaperPlane />
+              </button>
             </div>
-            <button type="submit" className="btn btn-primary">Submit Comment</button>
           </form>
         ) : (
-          <p>Please <Link to="/login">login</Link> to add a comment.</p>
+          <p>Please <Link to="/login" className="text-white">login</Link> to add a comment.</p>
         )}
       </div>
     </div>

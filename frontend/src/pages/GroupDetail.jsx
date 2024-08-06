@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getGroupById, addComment, deleteComment, likeComment, getUserData } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaFacebook, FaPaperPlane } from 'react-icons/fa';
 import './CommentStyles.css';
+import './Pages.css';
 
 const GroupDetail = () => {
   const [group, setGroup] = useState(null);
@@ -12,6 +13,8 @@ const GroupDetail = () => {
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState('');
   const [expandedComments, setExpandedComments] = useState({});
+  const [likedComments, setLikedComments] = useState({});
+  const [, forceUpdate] = useState();
   const { id } = useParams();
   const { user, addFavorite, removeFavorite, updateUser } = useAuth();
 
@@ -24,6 +27,21 @@ const GroupDetail = () => {
       setIsFavorite(user.preferiti.some(fav => fav.id === group._id && fav.type === 'Group'));
     }
   }, [user, group]);
+
+  useEffect(() => {
+    if (group && group.comments) {
+      const initialLikedState = {};
+      group.comments.forEach(comment => {
+        initialLikedState[comment._id] = comment.likes && comment.likes.includes(user?._id);
+        if (comment.replies) {
+          comment.replies.forEach(reply => {
+            initialLikedState[reply._id] = reply.likes && reply.likes.includes(user?._id);
+          });
+        }
+      });
+      setLikedComments(initialLikedState);
+    }
+  }, [group, user]);
 
   const fetchGroup = async () => {
     try {
@@ -80,6 +98,7 @@ const GroupDetail = () => {
     try {
       await likeComment(id, commentId, true);
       fetchGroup();
+      forceUpdate({});
     } catch (error) {
       console.error('Error liking comment:', error);
     }
@@ -94,6 +113,17 @@ const GroupDetail = () => {
       fetchGroup();
     } catch (error) {
       console.error('Error adding reply:', error);
+    }
+  };
+
+  const handleReplyCancel = (commentId) => {
+    const replyForm = document.querySelector(`#reply-form-${commentId}`);
+    if (replyForm) {
+      replyForm.classList.remove('show');
+      setTimeout(() => {
+        setReplyingTo(null);
+        setReplyText('');
+      }, 300);
     }
   };
 
@@ -117,21 +147,24 @@ const GroupDetail = () => {
         <div className="comment-actions">
           {user && (
             <>
-              <button onClick={() => handleLikeComment(comment._id)} className="btn btn-sm btn-outline-primary btn-icon">
-                <FaThumbsUp /> Like ({comment.likes ? comment.likes.length : 0})
+              <button 
+                onClick={() => handleLikeComment(comment._id)} 
+                className={`btn btn-link btn-icon like-button ${likedComments[comment._id] ? 'liked' : ''}`}
+              >
+                <FaThumbsUp /> {comment.likes ? comment.likes.length : 0}
               </button>
-              <button onClick={() => setReplyingTo(comment._id)} className="btn btn-sm btn-outline-secondary btn-icon">
+              <button onClick={() => setReplyingTo(comment._id)} className="btn btn-link btn-icon">
                 <FaReply /> Reply
               </button>
             </>
           )}
           {(user && (user._id === comment.author?._id || user.ruolo === 'admin')) && (
             <button 
-              className="btn btn-sm btn-danger btn-icon" 
+              className="btn btn-link btn-icon" 
               onClick={() => handleDeleteComment(comment._id)}
               title="Delete comment"
             >
-              <FaTrash /> Delete
+              <FaTrash />
             </button>
           )}
         </div>
@@ -161,17 +194,20 @@ const GroupDetail = () => {
                     </div>
                     <div className="comment-actions">
                       {user && (
-                        <button onClick={() => handleLikeComment(reply._id)} className="btn btn-sm btn-outline-primary btn-icon">
-                          <FaThumbsUp /> Like ({reply.likes ? reply.likes.length : 0})
+                        <button 
+                          onClick={() => handleLikeComment(reply._id)} 
+                          className={`btn btn-link btn-icon like-button ${likedComments[reply._id] ? 'liked' : ''}`}
+                        >
+                          <FaThumbsUp /> {reply.likes ? reply.likes.length : 0}
                         </button>
                       )}
                       {(user && (user._id === reply.author?._id || user.ruolo === 'admin')) && (
                         <button 
-                          className="btn btn-sm btn-danger btn-icon" 
+                          className="btn btn-link btn-icon" 
                           onClick={() => handleDeleteComment(reply._id)}
                           title="Delete reply"
                         >
-                          <FaTrash /> Delete
+                          <FaTrash />
                         </button>
                       )}
                     </div>
@@ -181,60 +217,90 @@ const GroupDetail = () => {
             )}
           </div>
         )}
-        {replyingTo === comment._id && (
+        <div id={`reply-form-${comment._id}`} className={`reply-form-container ${replyingTo === comment._id ? 'show' : ''}`}>
           <form onSubmit={(e) => handleReplySubmit(e, comment._id)} className="reply-form">
-            <div className="mb-3">
+            <div className="mb-3 position-relative">
               <textarea
                 className="form-control"
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 placeholder="Your reply"
               ></textarea>
+              <button type="submit" className="btn btn-link submit-triangle">
+                <FaPaperPlane />
+              </button>
             </div>
-            <button type="submit" className="btn btn-primary btn-sm">Submit Reply</button>
-            <button type="button" className="btn btn-secondary btn-sm ml-2" onClick={() => setReplyingTo(null)}>Cancel</button>
+            <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => handleReplyCancel(comment._id)}>Cancel</button>
           </form>
-        )}
+        </div>
       </div>
     ));
   };
-
+  
   if (!group) return <div>Loading...</div>;
-
+  
   return (
-    <div className="container mt-4">
-      <h1>{group.name}</h1>
-      <img src={group.coverImage} alt={group.name} className="artist-image" />
-      {user && (
-        <button onClick={handleFavoriteToggle} className="btn btn-outline-primary favorite-btn">
-          {isFavorite ? <FaHeart /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        </button>
-      )}
-      <div className="artist-info">
-        <p><strong>Description:</strong> {group.description}</p>
-        <p><strong>Type:</strong> {group.type}</p>
-        <p><strong>Debut Date:</strong> {new Date(group.debutDate).toLocaleDateString()}</p>
-        <p><strong>Company:</strong> {group.company}</p>
-        <p><strong>Fanclub Name:</strong> {group.fanclubName}</p>
+    <div className="container mt-4 text-white">
+      <h1 className="mb-4 title">{group.name}</h1>
+      
+      <div className="row mb-4">
+        <div className="col-md-6 position-relative">
+          {user && (
+            <button 
+              onClick={handleFavoriteToggle} 
+              className="btn btn-outline-light favorite-btn position-absolute top-2 left-5 m-2"
+              style={{
+                transition: 'transform 0.3s ease',
+                transform: 'scale(1)',
+              }}
+              onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            >
+              {isFavorite ? <FaHeart /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+            </button>
+          )}
+          <img src={group.coverImage} alt={group.name} className="img-fluid rounded" />
+        </div>
+        <div className="col-md-6 d-flex flex-column justify-content-start align-items-start">
+          <h1 className="mb-3 title1">Description</h1>
+          <p className="text-start">{group.description}</p>
+        </div>
       </div>
       
-      <div className="social-media-links">
-        <h2>Social Media</h2>
-        <ul>
-          <li><strong>YouTube:</strong> <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer">{group.socialMedia.youtube}</a></li>
-          <li><strong>Twitter:</strong> <a href={group.socialMedia.twitter} target="_blank" rel="noopener noreferrer">{group.socialMedia.twitter}</a></li>
-          <li><strong>Facebook:</strong> <a href={group.socialMedia.facebook} target="_blank" rel="noopener noreferrer">{group.socialMedia.facebook}</a></li>
-        </ul>
+      <div className="row">
+        <div className="col-md-6">
+          <h2 className='title1 position-absolute'>Group Info</h2>
+          <ul style={{marginTop:'55px'}}  className="list-unstyled">
+            <li><strong>Type:</strong> {group.type}</li>
+            <li><strong>Debut Date:</strong> {new Date(group.debutDate).toLocaleDateString()}</li>
+            <li><strong>Company:</strong> {group.company}</li>
+            <li><strong>Fanclub Name:</strong> {group.fanclubName}</li>
+          </ul>
+        </div>
+        <div className="col-md-6">
+          <h2 className='title1 position-absolute'>Social Media</h2>
+          <div style={{marginTop:'55px'}} className="social-icons">
+            <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+              <FaYoutube />
+            </a>
+            <a href={group.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="social-icon">
+              <FaTwitter />
+            </a>
+            <a href={group.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="social-icon">
+              <FaFacebook />
+            </a>
+          </div>
+        </div>
       </div>
-      
-      <div className="members-section">
-        <h2>Members</h2>
+  
+      <div className="members-section mt-5">
+        <h2 style={{marginBottom:'40px'}} className='title'>Members</h2>
         <div className="row">
           {group.members.map((member, index) => (
             <div key={member._id || index} className="col-md-4 mb-3">
               <div className="card member-card">
                 {member.photo && <img src={member.photo} alt={member.name} className="card-img-top" />}
-                <div className="card-body">
+                <div className="card-body text-dark">
                   <h5 className="card-title">{member.name}</h5>
                   {member.stageName && <p><strong>Stage Name:</strong> {member.stageName}</p>}
                   {member.birthday && <p><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</p>}
@@ -252,29 +318,31 @@ const GroupDetail = () => {
         </div>
       </div>
   
-      <div className="comments-section">
-        <h2>Comments</h2>
+      <div className="comments-section mt-4">
+        <h2 className='title1'>Comments</h2>
         {group.comments && group.comments.length > 0 ? (
           renderComments(group.comments)
         ) : (
-          <p>No comments yet.</p>
+          <p className='notfound'>No comments yet.</p>
         )}
       
         {user ? (
-          <form onSubmit={handleCommentSubmit}>
-            <div className="mb-3">
-              <label htmlFor="comment" className="form-label">Add a comment:</label>
+          <form onSubmit={handleCommentSubmit} className="comment-form">
+            <div className="mb-3 position-relative">
               <textarea 
                 className="form-control" 
                 id="comment" 
                 value={comment} 
                 onChange={(e) => setComment(e.target.value)}
+                placeholder="Add a comment..."
               ></textarea>
+              <button type="submit" className="btn btn-link submit-triangle">
+                <FaPaperPlane />
+              </button>
             </div>
-            <button type="submit" className="btn btn-primary">Submit Comment</button>
           </form>
         ) : (
-          <p>Please <Link to="/login">login</Link> to add a comment.</p>
+          <p>Please <Link to="/login" className="text-white">login</Link> to add a comment.</p>
         )}
       </div>
     </div>
