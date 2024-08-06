@@ -1,0 +1,153 @@
+.logo {
+    width: 100px;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.navbar1 {
+    background-color: rgba(0, 0, 0, 0.514);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 1000;
+}
+
+.list {
+    background-color: rgba(0, 0, 0, 0);
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: none;
+    margin-right: 20px;
+    display: none;
+}
+
+.list:hover {
+    background-color: rgba(97, 97, 97, 0.5);
+}
+
+.text {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    transition: transform 0.3s ease;
+}
+
+.text:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+.textp {
+    transition: transform 0.3s ease;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.textp:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+.uno {
+    margin-right: 20px;
+}
+
+.offcanva1 {
+    display: flex;
+    align-items: center;
+}
+
+.profile-text {
+    margin: 0;
+    font-size: 1.2rem;
+    color: white;
+    display: none !important;
+}
+
+#logout {
+    margin-top: 0px !important;
+}
+
+.searchb {
+    border: none;
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(0, 0, 0, 0);
+    margin-left: 160px;
+}
+
+.searchb:hover {
+    opacity: 0.5;
+}
+
+.search {
+    width: 23px;
+    margin-top: -13px;
+}
+
+@media (max-width: 1032px) and (min-width: 992px) {
+    .search{
+        margin-left: -25px;
+    }
+}
+
+@media (max-width: 991px) {
+    .custom-navbar .navbar-nav {
+        align-items: flex-start;
+    }
+
+    .offcanva {
+        background-color: #006cff;
+    }
+
+    .list {
+        display: block;
+    }
+
+    .searchb {
+        margin-left: 275px !important;
+        margin-top: -2px !important;
+    }
+
+    .text {
+        margin-left: 20px;
+    }
+
+    .searchform {
+        margin-left: 20px;
+        height: 45px;
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .offcanva1 {
+        display: block;
+    }
+
+    #logout {
+        width: 100%;
+        margin-left: 10px;
+    }
+
+    .search {
+        margin-top: 0px !important;
+    }
+
+    .textp .profile-text {
+        display: inline-block !important;
+        margin-left: 10px;
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .textp img,
+    .textp .rounded-circle {
+        margin-right: 10px;
+    }
+}

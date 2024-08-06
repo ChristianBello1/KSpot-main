@@ -1,0 +1,112 @@
+.comment-container {
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.reply-comment {
+  margin-left: 20px;
+  border-left: 3px solid #007bff;
+  background-color: #f0f8ff;
+}
+
+.comment-content {
+  margin-bottom: 10px;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.replies-section {
+  margin-top: 10px;
+}
+
+.replies-toggle {
+  background: none;
+  border: none;
+  color: #007bff;
+  padding: 0;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.replies-container {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.reply-form {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+  
+  .favorite-btn {
+    margin-bottom: 20px;
+  }
+  
+  .artist-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .artist-info {
+    margin-bottom: 30px;
+  }
+  
+  .social-media-links {
+    margin-bottom: 30px;
+  }
+  
+  .members-section {
+    margin-bottom: 30px;
+  }
+  
+  .member-card {
+    height: 100%;
+  }
+  
+  .comments-section {
+    margin-top: 30px;
+  }
+
+  .replies-toggle {
+    color: #777;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9em;
+    display: inline-block;
+  }
+  
+  .replies-container {
+    margin-left: 20px;
+    padding-left: 10px;
+    margin-top: 10px;
+    border-left: 2px solid #ddd;
+  }
+  
+  .reply-item {
+    margin-top: 10px;
+    padding: 5px 0;
+  }
+  
+  .hidden {
+    display: none;
+  }
