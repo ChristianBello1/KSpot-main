@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { searchArtists } from '../services/api';
+import './Pages.css';
 
 const SearchResults = () => {
   const [results, setResults] = useState([]);
@@ -57,9 +58,9 @@ const SearchResults = () => {
 
   return (
     <div className="container mt-4">
-      <h1>Search Results</h1>
+      <h1 className='title'>Search Results</h1>
       {results.length === 0 ? (
-        <p>No results found.</p>
+        <p className='notfound'>No results found.</p>
       ) : (
         <div className="row">
           {results.map(artist => (

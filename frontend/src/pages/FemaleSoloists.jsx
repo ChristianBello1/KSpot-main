@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getSoloistsByType } from '../services/api';
 import { Link } from 'react-router-dom';
-import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card'; // Assicurati che il percorso sia corretto
+import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
+import './Pages.css';
 
 const FemaleSoloists = () => {
   const [soloists, setSoloists] = useState([]);
@@ -28,9 +29,12 @@ const FemaleSoloists = () => {
 
   return (
     <div className="container mt-4">
-      <h1>Female Soloists</h1>
+      <h1 className='title'>Female Soloists</h1>
       <div className="row">
-        {soloists.map(soloist => (
+      {soloists.length === 0 ? (
+          <p className='notfound'>No female soloists found.</p>
+        ) : (
+        soloists.map(soloist => (
           <div key={soloist._id} className="col-md-4 mb-4">
             <Link to={`/soloist/${soloist._id}`} className="text-decoration-none">
               <CardContainer className="h-96 w-80"> {/* Cambiato da w-72 a w-80 */}
@@ -53,7 +57,8 @@ const FemaleSoloists = () => {
               </CardContainer>
             </Link>
           </div>
-        ))}
+        ))
+      )}
       </div>
     </div>
   );

@@ -47,12 +47,11 @@ const Home = () => {
 
   return (
     <div className="container mt-4">
-      <h1>All K-Pop Artists</h1>
       <div className="row">
         {artists.map(artist => (
           <div key={artist._id} className="col-md-4 mb-4">
             <Link to={getArtistLink(artist)} className="text-decoration-none">
-              <CardContainer className="h-96 w-80"> {/* Cambiato da w-72 a w-80 */}
+              <CardContainer className="h-96 w-80">
                 <CardBody className="relative w-full h-full">
                   <CardItem className="absolute inset-0">
                     <img 

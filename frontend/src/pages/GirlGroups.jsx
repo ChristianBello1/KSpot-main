@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getGroupsByType } from '../services/api';
 import { Link } from 'react-router-dom';
-import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card'; // Assicurati che il percorso sia corretto
+import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
+import './Pages.css';
 
 const GirlGroups = () => {
   const [groups, setGroups] = useState([]);
@@ -29,10 +30,10 @@ const GirlGroups = () => {
 
   return (
     <div className="container mt-4">
-      <h1>Girl Groups</h1>
+      <h1 className='title'>Girl Groups</h1>
       <div className="row">
         {groups.length === 0 ? (
-          <p>No girl groups found.</p>
+          <p className='notfound'>No girl groups found.</p>
         ) : (
           groups.map(group => (
             <div key={group._id} className="col-md-4 mb-4">

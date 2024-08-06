@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import './Register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ const Register = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Registrazione</h2>
+      <h2 className='text1'>Registrazione</h2>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -91,7 +92,7 @@ const Register = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="avatar" className="form-label">Foto profilo</label>
+          <label htmlFor="avatar" className="form-label text1">Foto profilo</label>
           <input
             type="file"
             id="avatar"

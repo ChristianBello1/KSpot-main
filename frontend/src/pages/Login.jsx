@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { loginUser, getUserData } from "../services/api";
 import { useAuth } from '../contexts/AuthContext';
+import { FaGoogle } from 'react-icons/fa';
+import styles from './Login.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
@@ -37,7 +39,6 @@ export default function Login() {
       const userData = await getUserData();
       login(userData, token);
       window.dispatchEvent(new Event("storage"));
-      // Adding a small delay to ensure local storage and state are updated before navigating
       await new Promise((resolve) => setTimeout(resolve, 500));
       navigate("/");
     } catch (error) {
@@ -49,7 +50,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null); // Reset error state
+    setError(null);
     try {
       const response = await loginUser(formData);
       console.log("Risposta login:", response);
@@ -71,9 +72,9 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h2>Login</h2>
-      {error && <div className="error">{error}</div>}
+      {error && <div className={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -93,7 +94,8 @@ export default function Login() {
           {isLoading ? "Logging in..." : "Accedi"}
         </button>
       </form>
-      <button onClick={handleGoogleLogin} disabled={isLoading}>
+      <button onClick={handleGoogleLogin} disabled={isLoading} className={styles.googleLogin}>
+        <FaGoogle style={{ marginRight: '8px', marginTop: '4px' }} />
         {isLoading ? "Logging in..." : "Accedi con Google"}
       </button>
       <p>Non hai un account? <Link to="/register">Registrati qui</Link></p>

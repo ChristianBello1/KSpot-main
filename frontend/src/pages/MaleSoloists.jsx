@@ -28,9 +28,12 @@ const MaleSoloists = () => {
 
   return (
     <div className="container mt-4">
-      <h1>Male Soloists</h1>
+      <h1 className='title'>Male Soloists</h1>
       <div className="row">
-        {soloists.map(soloist => (
+      {soloists.length === 0 ? (
+          <p className='notfound'>No male soloists found.</p>
+        ) : (
+        soloists.map(soloist => (
           <div key={soloist._id} className="col-md-4 mb-4">
             <Link to={`/soloist/${soloist._id}`} className="text-decoration-none">
               <CardContainer className="h-96 w-80"> {/* Cambiato da w-72 a w-80 */}
@@ -53,7 +56,8 @@ const MaleSoloists = () => {
               </CardContainer>
             </Link>
           </div>
-        ))}
+        ))
+      )}
       </div>
     </div>
   );
