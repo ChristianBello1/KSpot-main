@@ -45,7 +45,7 @@ const corsOptions = {
     // Queste sono gli URL da cui il nostro frontend farà richieste al backend.
     const whitelist = [
       'http://localhost:5173', // Frontend in sviluppo
-      'https://kspot.vercel.app/', // Frontend in produzione (prendere da vercel!)
+      'https://kspot.vercel.app', // Frontend in produzione (prendere da vercel!) occhio a / finale
       'https://kspot.onrender.com' // URL del backend (prendere da render!)
     ];
     
