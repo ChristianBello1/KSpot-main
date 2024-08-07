@@ -15,6 +15,11 @@
     z-index: 1000;
 }
 
+.nav-link.active {
+    color: rgb(196, 196, 196);
+}
+
+
 .list {
     background-color: rgba(0, 0, 0, 0);
     width: 60px;
@@ -41,6 +46,10 @@
     color: white;
 }
 
+.uno{
+    margin-right: 20px;
+}
+
 .textp {
     transition: transform 0.3s ease;
     margin-left: 20px;
@@ -51,10 +60,6 @@
 .textp:hover {
     transform: scale(1.1);
     color: white;
-}
-
-.uno {
-    margin-right: 20px;
 }
 
 .offcanva1 {
@@ -80,7 +85,7 @@
     width: 45px;
     height: 45px;
     background-color: rgba(0, 0, 0, 0);
-    margin-left: 160px;
+    margin-left: 170px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +123,7 @@
 
     .searchb {
         margin-left: 275px !important;
-        margin-top: -2px !important;
+        margin-top: -5px !important;
     }
 
     .text {

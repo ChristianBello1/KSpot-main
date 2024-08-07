@@ -8,7 +8,7 @@
   background-color: #fff;
 }
 
-h2 {
+.h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
@@ -19,19 +19,19 @@ form {
   flex-direction: column;
 }
 
-input {
+.form {
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-input:focus {
+.form:focus {
   border-color: #007bff;
   outline: none;
 }
 
-button {
+.accedi {
   padding: 10px;
   border: none;
   border-radius: 4px;
@@ -42,18 +42,14 @@ button {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-button:hover {
+.accedi:hover {
   background-color: #0056b3;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-button:disabled {
+.accedi:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-}
-
-button + button {
-  margin-top: 10px;
 }
 
 .googleLogin {
@@ -61,6 +57,13 @@ button + button {
   background-color: #4285f4;
   margin-left: 90px;
   margin-top: 20px;
+  width: 180px;
+  height:45px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .googleLogin:hover {

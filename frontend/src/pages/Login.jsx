@@ -73,7 +73,7 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <h2>Login</h2>
+      <h2 className={styles.h2}>Login</h2>
       {error && <div className={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit}>
         <input
@@ -82,6 +82,7 @@ export default function Login() {
           placeholder="Email"
           onChange={handleChange}
           required
+          className={styles.form}
         />
         <input
           type="password"
@@ -89,13 +90,14 @@ export default function Login() {
           placeholder="Password"
           onChange={handleChange}
           required
+          className={styles.form}
         />
-        <button type="submit" disabled={isLoading}>
+        <button className={styles.accedi} type="submit" disabled={isLoading}>
           {isLoading ? "Logging in..." : "Accedi"}
         </button>
       </form>
       <button onClick={handleGoogleLogin} disabled={isLoading} className={styles.googleLogin}>
-        <FaGoogle style={{ marginRight: '8px', marginTop: '4px' }} />
+        <FaGoogle style={{ marginRight: '8px'}} />
         {isLoading ? "Logging in..." : "Accedi con Google"}
       </button>
       <p>Non hai un account? <Link to="/register">Registrati qui</Link></p>

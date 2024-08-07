@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getGroupById, addComment, deleteComment, likeComment, getUserData } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaFacebook, FaPaperPlane } from 'react-icons/fa';
+import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaInstagram, FaPaperPlane } from 'react-icons/fa';
 import './CommentStyles.css';
 import './Pages.css';
 
@@ -244,7 +244,7 @@ const GroupDetail = () => {
       <h1 className="mb-4 title">{group.name}</h1>
       
       <div className="row mb-4">
-        <div className="col-md-6 position-relative">
+        <div className="col-md-5 position-relative">
           {user && (
             <button 
               onClick={handleFavoriteToggle} 
@@ -259,18 +259,18 @@ const GroupDetail = () => {
               {isFavorite ? <FaHeart /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
             </button>
           )}
-          <img src={group.coverImage} alt={group.name} className="img-fluid rounded" />
+          <img style={{width:'100%', maxWidth:'480px'}} src={group.coverImage} alt={group.name} className="img-fluid rounded" />
         </div>
-        <div className="col-md-6 d-flex flex-column justify-content-start align-items-start">
-          <h1 className="mb-3 title1">Description</h1>
-          <p className="text-start">{group.description}</p>
+        <div className="col-md-7">
+          <h2 className="mb-3 title1">Description</h2>
+          <p>{group.description}</p>
         </div>
       </div>
       
-      <div className="row">
+      <div className="row mb-4">
         <div className="col-md-6">
-          <h2 className='title1 position-absolute'>Group Info</h2>
-          <ul style={{marginTop:'55px'}}  className="list-unstyled">
+          <h2 className='title1'>Group Info</h2>
+          <ul className="list-unstyled">
             <li><strong>Type:</strong> {group.type}</li>
             <li><strong>Debut Date:</strong> {new Date(group.debutDate).toLocaleDateString()}</li>
             <li><strong>Company:</strong> {group.company}</li>
@@ -278,17 +278,23 @@ const GroupDetail = () => {
           </ul>
         </div>
         <div className="col-md-6">
-          <h2 className='title1 position-absolute'>Social Media</h2>
-          <div style={{marginTop:'55px'}} className="social-icons">
-            <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaYoutube />
-            </a>
-            <a href={group.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaTwitter />
-            </a>
-            <a href={group.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="social-icon">
-              <FaFacebook />
-            </a>
+          <h2 className='title1'>Social Media</h2>
+          <div className="social-icons">
+            {group.socialMedia?.youtube && (
+              <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaYoutube />
+              </a>
+            )}
+            {group.socialMedia?.x && (
+              <a href={group.socialMedia.x} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaTwitter />
+              </a>
+            )}
+            {group.socialMedia?.instagram && (
+              <a href={group.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <FaInstagram />
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -323,7 +329,7 @@ const GroupDetail = () => {
         {group.comments && group.comments.length > 0 ? (
           renderComments(group.comments)
         ) : (
-          <p className='notfound'>No comments yet.</p>
+          <p style={{marginBottom:'20px'}} className='notfound'>No comments yet.</p>
         )}
       
         {user ? (

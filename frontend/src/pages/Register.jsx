@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import './Register.css';
+import styles from './Register.module.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -47,63 +47,55 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2 className='text1'>Registrazione</h2>
-      {error && <div className="alert alert-danger">{error}</div>}
+    <div className={styles.container}>
+      <h2 className={styles.h2}>Registrazione</h2>
+      {error && <div className={styles.error}>{error}</div>}
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <input
-            type="text"
-            name="nome"
-            placeholder="Nome"
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            type="text"
-            name="cognome"
-            placeholder="Cognome"
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="avatar" className="form-label text1">Foto profilo</label>
+        <input
+          type="text"
+          name="nome"
+          placeholder="Nome"
+          onChange={handleChange}
+          className={styles.form}
+          required
+        />
+        <input
+          type="text"
+          name="cognome"
+          placeholder="Cognome"
+          onChange={handleChange}
+          className={styles.form}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          className={styles.form}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          className={styles.form}
+          required
+        />
+        <div className={styles.fileInputContainer}>
+          <label htmlFor="avatar" className={styles.fileInputLabel}>Scegli una foto profilo</label>
           <input
             type="file"
             id="avatar"
             name="avatar"
             onChange={handleFileChange}
-            className="form-control"
+            className={styles.fileInput}
             accept="image/*"
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Registrati</button>
+        <button type="submit" className={styles.button}>Registrati</button>
       </form>
     </div>
   );

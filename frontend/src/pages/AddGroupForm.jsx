@@ -15,8 +15,8 @@ const AddGroupForm = () => {
     fanclubName: '',
     socialMedia: {
       youtube: '',
-      twitter: '',
-      facebook: ''
+      x: '',
+      instagram: ''
     }
   });
   const [coverImage, setCoverImage] = useState(null);
@@ -49,7 +49,7 @@ const AddGroupForm = () => {
     const formDataToSend = new FormData();
     const groupData = {
       ...formData,
-      type: type // Assicuriamoci che il tipo sia incluso
+      type: type
     };
     console.log("Dati del gruppo da inviare:", groupData);
     formDataToSend.append('groupData', JSON.stringify(groupData));
@@ -69,16 +69,6 @@ const AddGroupForm = () => {
       navigate('/admin');
     } catch (error) {
       console.error('Errore nella creazione del gruppo:', error);
-      if (error.response) {
-        console.error('Status:', error.response.status);
-        console.error('Data:', error.response.data);
-        console.error('Headers:', error.response.headers);
-      } else if (error.request) {
-        console.error('Request:', error.request);
-      } else {
-        console.error('Error message:', error.message);
-      }
-      console.error('Error config:', error.config);
     }
   };
 
@@ -116,12 +106,12 @@ const AddGroupForm = () => {
           <input type="text" className="form-control" id="youtube" name="youtube" value={formData.socialMedia.youtube} onChange={handleSocialMediaChange} />
         </div>
         <div className="mb-3">
-          <label htmlFor="twitter" className="form-label">Twitter</label>
-          <input type="text" className="form-control" id="twitter" name="twitter" value={formData.socialMedia.twitter} onChange={handleSocialMediaChange} />
+          <label htmlFor="x" className="form-label">X (Twitter)</label>
+          <input type="text" className="form-control" id="x" name="x" value={formData.socialMedia.x} onChange={handleSocialMediaChange} />
         </div>
         <div className="mb-3">
-          <label htmlFor="facebook" className="form-label">Facebook</label>
-          <input type="text" className="form-control" id="facebook" name="facebook" value={formData.socialMedia.facebook} onChange={handleSocialMediaChange} />
+          <label htmlFor="instagram" className="form-label">Instagram</label>
+          <input type="text" className="form-control" id="instagram" name="instagram" value={formData.socialMedia.instagram} onChange={handleSocialMediaChange} />
         </div>
         <button type="submit" className="btn btn-primary">Crea Gruppo</button>
       </form>

@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { Comment } from './CommentModel.js';
 
-// Schema per i membri
 const memberSchema = new mongoose.Schema({
   name: { type: String, required: true },
   photo: { type: String },
@@ -17,7 +16,6 @@ const memberSchema = new mongoose.Schema({
   position: { type: [String] }
 }, { _id: true });
 
-// Schema principale per il gruppo
 const groupSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
@@ -34,8 +32,8 @@ const groupSchema = new mongoose.Schema({
   fanclubName: { type: String },
   socialMedia: {
     youtube: String,
-    twitter: String,
-    facebook: String
+    x: String,
+    instagram: String
   },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });

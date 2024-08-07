@@ -167,3 +167,74 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.soloist-info-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .soloist-image {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .soloist-details-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .soloist-details-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .soloist-details, .soloist-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .soloist-info-container {
+      flex-direction: row;
+      gap: 20px;
+    }
+  
+    .soloist-image {
+      flex: 0 0 480px;
+    }
+  
+    .soloist-details-container {
+      flex: 1;
+    }
+  
+    .soloist-details-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    .soloist-details, .soloist-social {
+      flex: 1;
+      align-items: flex-start;
+    }
+  
+    .soloist-bio {
+      margin-top: 20px;
+    }
+  }
+
+  #namegroup{
+    transition: transform 0.3s ease;
+  }
+
+  #namegroup:hover {
+    transform: scale(1.2);
+}
+
+.namegroup{
+    color: white;
+    display: flex;
+    justify-content: center;
+}

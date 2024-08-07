@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { searchArtists } from '../services/api';
+import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
 import './Pages.css';
 
 const SearchResults = () => {
@@ -35,22 +36,16 @@ const SearchResults = () => {
     }
   }, [location.search]);
 
-  const getArtistType = (type) => {
-    switch(type) {
-      case 'male-group': return 'Boy Group';
-      case 'female-group': return 'Girl Group';
-      case 'male-solo': return 'Male Soloist';
-      case 'female-solo': return 'Female Soloist';
-      default: return type.includes('group') ? 'Group' : 'Soloist';
-    }
-  };
-
   const getArtistLink = (artist) => {
     if (artist.type.includes('solo')) {
       return `/soloist/${artist._id}`;
     } else {
       return `/group/${artist._id}`;
     }
+  };
+
+  const capitalizeFirstLetter = (string) => {
+    return string.replace(/\b\w/g, char => char.toUpperCase());
   };
 
   if (loading) return <div className="container mt-4">Loading...</div>;
@@ -66,18 +61,28 @@ const SearchResults = () => {
           {results.map(artist => (
             <div key={artist._id} className="col-md-4 mb-4">
               <Link to={getArtistLink(artist)} className="text-decoration-none">
-                <div className="card">
-                  <img 
-                    src={artist.coverImage || artist.photo} 
-                    className="card-img-top" 
-                    alt={artist.name} 
-                    style={{ height: '200px', objectFit: 'cover' }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{artist.name}</h5>
-                    <p className="card-text">{getArtistType(artist.type)}</p>
-                  </div>
-                </div>
+                <CardContainer className="group-card h-96 w-80">
+                  <CardBody className="relative w-full h-full bg-black overflow-hidden">
+                    <CardItem
+                      translateZ="100"
+                      className="w-full h-full"
+                    >
+                      <img 
+                        src={artist.coverImage || artist.photo} 
+                        className="h-full w-full object-cover"
+                        alt={artist.name} 
+                      />
+                    </CardItem>
+                    <div id='namegroup'>
+                    <CardItem 
+                      translateZ={30}
+                      className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 namegroup"
+                    >
+                      <h5 className="card-title">{capitalizeFirstLetter(artist.name)}</h5>
+                    </CardItem>
+                    </div>
+                  </CardBody>
+                </CardContainer>
               </Link>
             </div>
           ))}

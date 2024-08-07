@@ -16,20 +16,35 @@ const AddSoloistForm = () => {
     weight: '',
     mbtiType: '',
     nationality: '',
-    instagram: '',
     bio: '',
     company: '',
     debutDate: '',
-    type: `${gender}-solo`  // Aggiungi il tipo direttamente nel formData
+    type: `${gender}-solo`,
+    socialMedia: {
+      youtube: '',
+      x: '',
+      instagram: ''
+    }
   });
   const [photo, setPhoto] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setFormData(prevState => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value
+        }
+      }));
+    } else {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };
 
   const handlePhotoChange = (e) => {
@@ -40,12 +55,25 @@ const AddSoloistForm = () => {
     e.preventDefault();
     const formDataToSend = new FormData();
 
-    // Aggiungi tutti i campi del formData al FormData
-    Object.keys(formData).forEach(key => {
-      formDataToSend.append(key, formData[key]);
+    // Converti l'oggetto formData in un oggetto semplice
+    const dataToSend = {
+      ...formData,
+      socialMedia: {
+        youtube: formData.socialMedia.youtube,
+        x: formData.socialMedia.x,
+        instagram: formData.socialMedia.instagram
+      }
+    };
+
+    // Aggiungi tutti i campi al FormData
+    Object.keys(dataToSend).forEach(key => {
+      if (typeof dataToSend[key] === 'object') {
+        formDataToSend.append(key, JSON.stringify(dataToSend[key]));
+      } else {
+        formDataToSend.append(key, dataToSend[key]);
+      }
     });
 
-    // Aggiungi la foto se presente
     if (photo) {
       formDataToSend.append('photo', photo);
     }
@@ -61,7 +89,6 @@ const AddSoloistForm = () => {
       navigate('/admin');
     } catch (error) {
       console.error('Errore nella creazione del solista:', error.response ? error.response.data : error.message);
-      // Mostra un messaggio di errore all'utente
       alert('Errore nella creazione del solista. Per favore, controlla i dati e riprova.');
     }
   };
@@ -103,10 +130,6 @@ const AddSoloistForm = () => {
           <input type="text" className="form-control" id="nationality" name="nationality" value={formData.nationality} onChange={handleChange} />
         </div>
         <div className="mb-3">
-          <label htmlFor="instagram" className="form-label">Instagram</label>
-          <input type="text" className="form-control" id="instagram" name="instagram" value={formData.instagram} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
           <label htmlFor="bio" className="form-label">Biografia</label>
           <textarea className="form-control" id="bio" name="bio" value={formData.bio} onChange={handleChange} />
         </div>
@@ -121,6 +144,19 @@ const AddSoloistForm = () => {
         <div className="mb-3">
           <label htmlFor="photo" className="form-label">Foto</label>
           <input type="file" className="form-control" id="photo" onChange={handlePhotoChange} />
+        </div>
+        <h3>Social Media</h3>
+        <div className="mb-3">
+          <label htmlFor="youtube" className="form-label">YouTube</label>
+          <input type="text" className="form-control" id="youtube" name="socialMedia.youtube" value={formData.socialMedia.youtube} onChange={handleChange} />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="x" className="form-label">X (Twitter)</label>
+          <input type="text" className="form-control" id="x" name="socialMedia.x" value={formData.socialMedia.x} onChange={handleChange} />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="instagram" className="form-label">Instagram</label>
+          <input type="text" className="form-control" id="instagram" name="socialMedia.instagram" value={formData.socialMedia.instagram} onChange={handleChange} />
         </div>
         <button type="submit" className="btn btn-primary">Crea Solista</button>
       </form>

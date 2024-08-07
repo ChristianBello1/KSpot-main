@@ -7,8 +7,19 @@ export const createSoloist = async (req, res) => {
     console.log("2. Request body:", req.body);
     console.log("3. Request file:", req.file);
 
-    const soloistData = req.body;
+    let soloistData = req.body;
     
+    // Gestione dei dati dei social media
+    if (soloistData.socialMedia) {
+      try {
+        soloistData.socialMedia = JSON.parse(soloistData.socialMedia);
+      } catch (error) {
+        console.error("Errore nel parsing dei dati social media:", error);
+        // Se il parsing fallisce, inizializza socialMedia come un oggetto vuoto
+        soloistData.socialMedia = {};
+      }
+    }
+
     if (req.file) {
       soloistData.photo = req.file.path;
       console.log("4. Photo path:", req.file.path);
@@ -106,8 +117,6 @@ export const searchSoloists = async (query) => {
     throw error;
   }
 };
-
-// ... altre funzioni ...
 
 export const addComment = async (req, res) => {
   try {

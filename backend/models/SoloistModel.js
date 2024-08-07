@@ -10,7 +10,6 @@ const soloistSchema = new mongoose.Schema({
   weight: Number,
   mbtiType: String,
   nationality: String,
-  instagram: String,
   bio: String,
   company: String,
   debutDate: Date,
@@ -23,8 +22,8 @@ const soloistSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   socialMedia: {
     youtube: String,
-    twitter: String,
-    facebook: String
+    x: String,
+    instagram: String
   },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });

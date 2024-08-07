@@ -15,8 +15,8 @@ const EditGroupForm = () => {
     fanclubName: '',
     socialMedia: {
       youtube: '',
-      twitter: '',
-      facebook: ''
+      x: '',
+      instagram: ''
     }
   });
   const [coverImage, setCoverImage] = useState(null);
@@ -61,7 +61,6 @@ const EditGroupForm = () => {
     e.preventDefault();
     const formDataToSend = new FormData();
     
-    // Converti le date in formato ISO
     const updatedFormData = {
       ...formData,
       debutDate: formData.debutDate ? new Date(formData.debutDate).toISOString() : null
@@ -175,24 +174,24 @@ const EditGroupForm = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="twitter" className="form-label">Twitter</label>
+          <label htmlFor="x" className="form-label">X (Twitter)</label>
           <input
             type="text"
             className="form-control"
-            id="twitter"
-            name="twitter"
-            value={formData.socialMedia.twitter}
+            id="x"
+            name="x"
+            value={formData.socialMedia.x}
             onChange={handleSocialMediaChange}
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="facebook" className="form-label">Facebook</label>
+          <label htmlFor="instagram" className="form-label">Instagram</label>
           <input
             type="text"
             className="form-control"
-            id="facebook"
-            name="facebook"
-            value={formData.socialMedia.facebook}
+            id="instagram"
+            name="instagram"
+            value={formData.socialMedia.instagram}
             onChange={handleSocialMediaChange}
           />
         </div>

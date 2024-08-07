@@ -35,8 +35,8 @@ export const CardContainer = ({
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 15; // Aumentato da 25 a 15 per un effetto più pronunciato
-    const y = (e.clientY - top - height / 2) / 15; // Aumentato da 25 a 15 per un effetto più pronunciato
+    const x = (e.clientX - left - width / 2) / 10; // Aumentato da 25 a 15 per un effetto più pronunciato
+    const y = (e.clientY - top - height / 2) / 10; // Aumentato da 25 a 15 per un effetto più pronunciato
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
   };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getSoloistById, addComment, deleteComment, likeComment, getUserData } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
-import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaFacebook, FaPaperPlane, FaInstagram } from 'react-icons/fa';
+import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaPaperPlane, FaInstagram } from 'react-icons/fa';
 import './CommentStyles.css';
 import './Pages.css';
 
@@ -243,79 +243,72 @@ const SoloistDetail = () => {
     <div className="container mt-4 text-white">
       <h1 className="mb-4 title">{soloist.name}</h1>
       
-      <div className="row mb-4">
-        <div className="col-md-6 position-relative">
-          {user && (
-            <button 
-              onClick={handleFavoriteToggle} 
-              className="btn btn-outline-light favorite-btn position-absolute top-2 left-5 m-2"
-              style={{
-                transition: 'transform 0.3s ease',
-                transform: 'scale(1)',
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-            >
-              {isFavorite ? <FaHeart /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-            </button>
-          )}
-          <img src={soloist.photo} alt={soloist.name} className="img-fluid rounded" />
-        </div>
-        <div className="col-md-6 d-flex flex-column justify-content-start align-items-start">
-          <h1 className="mb-3 title1">Artist Info</h1>
-          <p><strong>Stage Name:</strong> {soloist.stageName}</p>
-          <p><strong>Birthday:</strong> {new Date(soloist.birthday).toLocaleDateString()}</p>
-          <p><strong>Zodiac Sign:</strong> {soloist.zodiacSign}</p>
-          <p><strong>Height:</strong> {soloist.height} cm</p>
-          <p><strong>Weight:</strong> {soloist.weight} kg</p>
-          <p><strong>MBTI Type:</strong> {soloist.mbtiType}</p>
-          <p><strong>Nationality:</strong> {soloist.nationality}</p>
-          <p><strong>Company:</strong> {soloist.company}</p>
-          <p><strong>Debut Date:</strong> {new Date(soloist.debutDate).toLocaleDateString()}</p>
-        </div>
+      <div className="soloist-info-container">
+      <div className="soloist-image">
+        {user && (
+          <button 
+            onClick={handleFavoriteToggle} 
+            className="btn btn-light favorite-btn position-absolute"
+            style={{
+              transition: 'transform 0.3s ease',
+              transform: 'scale(1)',
+            }}
+            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+          >
+            {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+          </button>
+        )}
+        <img style={{width:'100%', maxWidth:'480px'}} src={soloist.photo} alt={soloist.name} className="img-fluid rounded" />
       </div>
-      
-      <div className="row">
-        <div className="col-md-12">
+      <div className="soloist-details-container">
+        <div className="soloist-details-wrapper">
+          <div className="soloist-details">
+            <h2 className="mb-3 title1">Artist Info</h2>
+            <p><strong>Stage Name:</strong> {soloist.stageName}</p>
+            <p><strong>Birthday:</strong> {new Date(soloist.birthday).toLocaleDateString()}</p>
+            <p><strong>Zodiac Sign:</strong> {soloist.zodiacSign}</p>
+            <p><strong>Height:</strong> {soloist.height} cm</p>
+            <p><strong>Weight:</strong> {soloist.weight} kg</p>
+            <p><strong>MBTI Type:</strong> {soloist.mbtiType}</p>
+            <p><strong>Nationality:</strong> {soloist.nationality}</p>
+            <p><strong>Company:</strong> {soloist.company}</p>
+            <p><strong>Debut Date:</strong> {new Date(soloist.debutDate).toLocaleDateString()}</p>
+          </div>
+          <div className="soloist-social">
+            <h2 className='title1'>Social Media</h2>
+            <div className="social-icons">
+              {soloist.socialMedia && soloist.socialMedia.youtube && (
+                <a href={soloist.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+                  <FaYoutube />
+                </a>
+              )}
+              {soloist.socialMedia && soloist.socialMedia.x && (
+                <a href={soloist.socialMedia.x} target="_blank" rel="noopener noreferrer" className="social-icon">
+                  <FaTwitter />
+                </a>
+              )}
+              {soloist.socialMedia && soloist.socialMedia.instagram && (
+                <a href={soloist.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="social-icon">
+                  <FaInstagram />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="soloist-bio">
           <h2 className='title1'>Biography</h2>
           <p>{soloist.bio}</p>
         </div>
       </div>
-
-      <div className="row mt-4">
-        <div className="col-md-12">
-          <h2 className='title1 position-absolute'>Social Media</h2>
-          <div className="social-icons" style={{marginTop:'60px'}}>
-            {soloist.socialMedia?.youtube && (
-              <a href={soloist.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaYoutube />
-              </a>
-            )}
-            {soloist.socialMedia?.twitter && (
-              <a href={soloist.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaTwitter />
-              </a>
-            )}
-            {soloist.socialMedia?.facebook && (
-              <a href={soloist.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaFacebook />
-              </a>
-            )}
-            {soloist.instagram && (
-              <a href={`https://www.instagram.com/${soloist.instagram}`} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaInstagram />
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
+    </div>
   
       <div className="comments-section mt-4">
         <h2 className='title1'>Comments</h2>
         {soloist.comments && soloist.comments.length > 0 ? (
           renderComments(soloist.comments)
         ) : (
-          <p className='notfound'>No comments yet.</p>
+          <p style={{marginBottom:'20px'}} className='notfound'>No comments yet.</p>
         )}
       
         {user ? (

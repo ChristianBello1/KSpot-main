@@ -16,10 +16,14 @@ const EditSoloistForm = () => {
     weight: '',
     mbtiType: '',
     nationality: '',
-    instagram: '',
     bio: '',
     company: '',
-    debutDate: ''
+    debutDate: '',
+    socialMedia: {
+      youtube: '',
+      x: '',
+      instagram: ''
+    }
   });
   const [photo, setPhoto] = useState(null);
 
@@ -30,7 +34,6 @@ const EditSoloistForm = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         const data = response.data;
-        // Format the date fields correctly
         data.birthday = data.birthday ? data.birthday.split('T')[0] : '';
         data.debutDate = data.debutDate ? data.debutDate.split('T')[0] : '';
         setFormData(data);
@@ -44,10 +47,21 @@ const EditSoloistForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setFormData(prevState => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value
+        }
+      }));
+    } else {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };
 
   const handlePhotoChange = (e) => {
@@ -58,14 +72,20 @@ const EditSoloistForm = () => {
     e.preventDefault();
     const formDataToSend = new FormData();
     
-    // Converti le date in formato ISO
     const updatedFormData = {
       ...formData,
       birthday: formData.birthday ? new Date(formData.birthday).toISOString() : null,
       debutDate: formData.debutDate ? new Date(formData.debutDate).toISOString() : null
     };
     
-    formDataToSend.append('soloistData', JSON.stringify(updatedFormData));
+    Object.keys(updatedFormData).forEach(key => {
+      if (typeof updatedFormData[key] === 'object') {
+        formDataToSend.append(key, JSON.stringify(updatedFormData[key]));
+      } else {
+        formDataToSend.append(key, updatedFormData[key]);
+      }
+    });
+
     if (photo) {
       formDataToSend.append('photo', photo);
     }
@@ -94,7 +114,7 @@ const EditSoloistForm = () => {
     <div className="container mt-4">
       <h2>Modifica Solista</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="name">Nome</label>
           <input
             type="text"
@@ -105,7 +125,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="stageName">Nome d'Arte</label>
           <input
             type="text"
@@ -116,7 +136,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="birthday">Data di Nascita</label>
           <input
             type="date"
@@ -127,7 +147,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="zodiacSign">Segno Zodiacale</label>
           <input
             type="text"
@@ -138,7 +158,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="height">Altezza</label>
           <input
             type="text"
@@ -149,7 +169,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="weight">Peso</label>
           <input
             type="text"
@@ -160,7 +180,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="mbtiType">Tipo MBTI</label>
           <input
             type="text"
@@ -171,7 +191,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="nationality">Nazionalità</label>
           <input
             type="text"
@@ -182,18 +202,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="instagram">Instagram</label>
-          <input
-            type="text"
-            className="form-control"
-            id="instagram"
-            name="instagram"
-            value={formData.instagram}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="bio">Biografia</label>
           <textarea
             className="form-control"
@@ -203,7 +212,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="company">Azienda</label>
           <input
             type="text"
@@ -214,7 +223,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="debutDate">Data di Debutto</label>
           <input
             type="date"
@@ -225,7 +234,7 @@ const EditSoloistForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="mb-3">
           <label htmlFor="photo">Foto</label>
           <input
             type="file"
@@ -234,6 +243,40 @@ const EditSoloistForm = () => {
             onChange={handlePhotoChange}
           />
         </div>
+        <h3>Social Media</h3>
+<div className="mb-3">
+  <label htmlFor="youtube">YouTube</label>
+  <input
+    type="text"
+    className="form-control"
+    id="youtube"
+    name="socialMedia.youtube"
+    value={formData.socialMedia?.youtube || ''}
+    onChange={handleChange}
+  />
+</div>
+<div className="mb-3">
+  <label htmlFor="x">X (Twitter)</label>
+  <input
+    type="text"
+    className="form-control"
+    id="x"
+    name="socialMedia.x"
+    value={formData.socialMedia?.x || ''}
+    onChange={handleChange}
+  />
+</div>
+<div className="mb-3">
+  <label htmlFor="instagram">Instagram</label>
+  <input
+    type="text"
+    className="form-control"
+    id="instagram"
+    name="socialMedia.instagram"
+    value={formData.socialMedia?.instagram || ''}
+    onChange={handleChange}
+  />
+</div>
         <button type="submit" className="btn btn-primary">Aggiorna Solista</button>
       </form>
     </div>
