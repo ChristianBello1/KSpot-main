@@ -5,6 +5,8 @@ import passport from '../config/passportConfig.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { avatarUploader } from '../middlewares/cloudinaryUploader.js';
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 const router = express.Router();
 
 router.post('/register', avatarUploader.single('avatar'), async (req, res) => {
@@ -57,10 +59,10 @@ router.get('/google/callback',
   async (req, res) => {
     try {
       const token = await generateJWT({ id: req.user._id });
-      res.redirect(`${process.env.FRONTEND_URL}/login?token=${token}`);
+      res.redirect(`${FRONTEND_URL}/login?token=${token}`);
     } catch (error) {
       console.error("Errore nella generazione del token per Google OAuth:", error);
-      res.redirect('/login');
+      res.redirect(`${FRONTEND_URL}/login`);
     }
   }
 );

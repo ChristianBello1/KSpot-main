@@ -14,11 +14,11 @@ if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !pr
 }
 
 // Log delle variabili d'ambiente di Cloudinary (solo per debug, rimuovere in produzione)
-console.log('Cloudinary config:', {
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET ? '****' : undefined
-});
+//console.log('Cloudinary config:', {
+//  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//  api_key: process.env.CLOUDINARY_API_KEY,
+//  api_secret: process.env.CLOUDINARY_API_SECRET ? '****' : undefined
+//});
 
 import express from "express";
 import mongoose from "mongoose";
@@ -30,8 +30,6 @@ import authRoutes from './routes/authRoutes.js';
 import soloistRoutes from './routes/soloistRoutes.js';
 import passport from './config/passportConfig.js';
 
-// ... resto del codice rimane invariato
-
 import {
   badRequestHandler,
   unauthorizedHandler,
@@ -42,8 +40,27 @@ import {
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: function (origin, callback) {
+    // Definiamo una whitelist di origini consentite. 
+    // Queste sono gli URL da cui il nostro frontend farà richieste al backend.
+    const whitelist = [
+      'http://localhost:5173', // Frontend in sviluppo
+      'https://mern-blog-part-v.vercel.app/', // Frontend in produzione (prendere da vercel!)
+      'https://mern-blog-ctt3.onrender.com' // URL del backend (prendere da render!)
+    ];
+    
+    if (process.env.NODE_ENV === 'development') {
+      // In sviluppo, permettiamo anche richieste senza origine (es. Postman)
+      callback(null, true);
+    } else if (whitelist.indexOf(origin) !== -1 || !origin) {
+      // In produzione, controlliamo se l'origine è nella whitelist
+      callback(null, true);
+    } else {
+      callback(new Error('PERMESSO NEGATO - CORS'));
+    }
+  },
+  credentials: true // Permette l'invio di credenziali, come nel caso di autenticazione
+  // basata su sessioni.
 };
 
 app.use(cors(corsOptions));
