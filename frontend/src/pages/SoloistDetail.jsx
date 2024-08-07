@@ -248,7 +248,8 @@ const SoloistDetail = () => {
         {user && (
           <button 
             onClick={handleFavoriteToggle} 
-            className="btn btn-light favorite-btn position-absolute"
+            id='btnfav'
+            className="btn btn-outline-light favorite-btn position-absolute bottom-2 m-2"
             style={{
               transition: 'transform 0.3s ease',
               transform: 'scale(1)',
@@ -259,7 +260,7 @@ const SoloistDetail = () => {
             {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
           </button>
         )}
-        <img style={{width:'100%', maxWidth:'480px'}} src={soloist.photo} alt={soloist.name} className="img-fluid rounded" />
+        <img style={{width:'100%', maxWidth:'480px'}} src={soloist.photo} alt={soloist.name} className="img-fluid rounded object-cover" />
       </div>
       <div className="soloist-details-container">
         <div className="soloist-details-wrapper">

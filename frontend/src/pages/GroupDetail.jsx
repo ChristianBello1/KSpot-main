@@ -248,7 +248,7 @@ const GroupDetail = () => {
           {user && (
             <button 
               onClick={handleFavoriteToggle} 
-              className="btn btn-outline-light favorite-btn position-absolute top-2 left-5 m-2"
+              className="btn btn-outline-light favorite-btn position-absolute top-2 m-2"
               style={{
                 transition: 'transform 0.3s ease',
                 transform: 'scale(1)',
@@ -267,62 +267,72 @@ const GroupDetail = () => {
         </div>
       </div>
       
-      <div className="row mb-4">
-        <div className="col-md-6">
-          <h2 className='title1'>Group Info</h2>
-          <ul className="list-unstyled">
-            <li><strong>Type:</strong> {group.type}</li>
-            <li><strong>Debut Date:</strong> {new Date(group.debutDate).toLocaleDateString()}</li>
-            <li><strong>Company:</strong> {group.company}</li>
-            <li><strong>Fanclub Name:</strong> {group.fanclubName}</li>
-          </ul>
-        </div>
-        <div className="col-md-6">
-          <h2 className='title1'>Social Media</h2>
-          <div className="social-icons">
-            {group.socialMedia?.youtube && (
-              <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaYoutube />
-              </a>
+      <div className="row mb-4 group-info-social-media">
+  <div className="col-md-6 group-info">
+    <h2 className='title1'>Group Info</h2>
+    <ul className="list-unstyled">
+      <li><strong>Type:</strong> {group.type}</li>
+      <li><strong>Debut Date:</strong> {new Date(group.debutDate).toLocaleDateString()}</li>
+      <li><strong>Company:</strong> {group.company}</li>
+      <li><strong>Fanclub Name:</strong> {group.fanclubName}</li>
+    </ul>
+  </div>
+  <div className="col-md-6 social-media">
+    <h2 className='title1'>Social Media</h2>
+    <div className="social-icons">
+      {group.socialMedia?.youtube && (
+        <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+          <FaYoutube />
+        </a>
+      )}
+      {group.socialMedia?.x && (
+        <a href={group.socialMedia.x} target="_blank" rel="noopener noreferrer" className="social-icon">
+          <FaTwitter />
+        </a>
+      )}
+      {group.socialMedia?.instagram && (
+        <a href={group.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="social-icon">
+          <FaInstagram />
+        </a>
+      )}
+    </div>
+  </div>
+</div>
+
+  
+      <div className="members-section mt-5">
+  <h2 style={{ marginBottom: '40px' }} className='title'>Members</h2>
+  <div className="row">
+    {group.members.map((member, index) => (
+      <div key={member._id || index} className="col-md-12 mb-3">
+        <div className="card member-card">
+          {member.photo && <img src={member.photo} alt={member.name} className="card-img-left" />}
+          <div className="card-body">
+            {member.bio && (
+              <div className="bio">
+                <h2>Bio</h2>
+                <p>{member.bio}</p>
+              </div>
             )}
-            {group.socialMedia?.x && (
-              <a href={group.socialMedia.x} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaTwitter />
-              </a>
-            )}
-            {group.socialMedia?.instagram && (
-              <a href={group.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="social-icon">
-                <FaInstagram />
-              </a>
-            )}
+            <div className="info">
+              {member.name && <div><strong>Real Name:</strong> {member.name}</div>}
+              {member.stageName && <div><strong>Stage Name:</strong> {member.stageName}</div>}
+              {member.birthday && <div><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</div>}
+              {member.position && <div><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</div>}
+              {member.height && <div><strong>Height:</strong> {member.height} cm</div>}
+              {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
+              {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
+              {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
+              {member.instagram && <div><strong>Instagram:</strong> <a href={`https://www.instagram.com/${member.instagram}`} target="_blank" rel="noopener noreferrer">@{member.instagram}</a></div>}
+            </div>
           </div>
         </div>
       </div>
-  
-      <div className="members-section mt-5">
-        <h2 style={{marginBottom:'40px'}} className='title'>Members</h2>
-        <div className="row">
-          {group.members.map((member, index) => (
-            <div key={member._id || index} className="col-md-4 mb-3">
-              <div className="card member-card">
-                {member.photo && <img src={member.photo} alt={member.name} className="card-img-top" />}
-                <div className="card-body text-dark">
-                  <h5 className="card-title">{member.name}</h5>
-                  {member.stageName && <p><strong>Stage Name:</strong> {member.stageName}</p>}
-                  {member.birthday && <p><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</p>}
-                  {member.position && <p><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</p>}
-                  {member.height && <p><strong>Height:</strong> {member.height} cm</p>}
-                  {member.weight && <p><strong>Weight:</strong> {member.weight} kg</p>}
-                  {member.mbtiType && <p><strong>MBTI Type:</strong> {member.mbtiType}</p>}
-                  {member.nationality && <p><strong>Nationality:</strong> {member.nationality}</p>}
-                  {member.instagram && <p><strong>Instagram:</strong> <a href={`https://www.instagram.com/${member.instagram}`} target="_blank" rel="noopener noreferrer">@{member.instagram}</a></p>}
-                  {member.bio && <p><strong>Bio:</strong> {member.bio}</p>}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    ))}
+  </div>
+</div>
+
+
   
       <div className="comments-section mt-4">
         <h2 className='title1'>Comments</h2>

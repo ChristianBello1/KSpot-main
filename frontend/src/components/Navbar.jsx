@@ -59,12 +59,12 @@ const CustomNavbar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body className='offcanva'>
             <Nav className="justify-content-end flex-grow-1 pe-3 offcanva1">
-              <NavLink to="/boy-groups" className='nav-link text' activeClassName="active">Boy Groups</NavLink>
-              <NavLink to="/girl-groups" className='nav-link text' activeClassName="active">Girl Groups</NavLink>
-              <NavLink to="/male-soloists" className='nav-link text' activeClassName="active">Male Soloists</NavLink>
-              <NavLink to="/female-soloists" className='nav-link text uno' activeClassName="active">Female Soloists</NavLink>
+              <NavLink to="/boy-groups" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`}>Boy Groups</NavLink>
+              <NavLink to="/girl-groups" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`}>Girl Groups</NavLink>
+              <NavLink to="/male-soloists" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`}>Male Soloists</NavLink>
+              <NavLink to="/female-soloists" className={({ isActive }) => `nav-link text uno ${isActive ? 'active' : ''}`}>Female Soloists</NavLink>
               {user && (
-                <NavLink to="/profile" className='nav-link textp d-flex align-items-center' activeClassName="active">
+                <NavLink to="/profile" className={({ isActive }) => `nav-link textp d-flex align-items-center ${isActive ? 'active' : ''}`}>
                   {user.avatar ? (
                     <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '50px', height: '50px', marginRight: '20px' }} />
                   ) : (

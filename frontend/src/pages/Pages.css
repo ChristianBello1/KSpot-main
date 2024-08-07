@@ -34,6 +34,15 @@
     transform: scale(1.2);
 }
 
+.card{
+    background-color: white;
+    width: 350px;
+}
+
+.card-img-top{
+    width: 250px;
+}
+
 .comments-section {
     color: black;
 }
@@ -61,7 +70,6 @@
 .like-button {
     color: #007bff;
     transition: color 0.3s ease;
-    margin-top: 9px;
 }
 
 .like-button.liked {
@@ -168,10 +176,18 @@
     padding-bottom: 10px;
 }
 
+.container {
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 15px; /* Aggiungi padding per evitare che il contenuto tocchi i bordi */
+    box-sizing: border-box; /* Assicura che padding e bordo siano inclusi nella larghezza totale */
+}
+
 .soloist-info-container {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spazio tra gli elementi */
+}
   
   .soloist-image {
     display: flex;
@@ -183,6 +199,8 @@
   .soloist-details-container {
     display: flex;
     flex-direction: column;
+    gap: 20px; /* Spazio tra gli elementi */
+    overflow: hidden; /* Evita overflow dei contenuti */
   }
   
   .soloist-details-wrapper {
@@ -195,6 +213,13 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .soloist-bio {
+    width: 100%; /* Assicura che la biografia occupi tutta la larghezza del contenitore genitore */
+    box-sizing: border-box; /* Include padding e border nella larghezza e altezza */
+    overflow-wrap: break-word; /* Forza il wrapping del testo lungo */
+    word-wrap: break-word; /* Per garantire il wrapping su tutti i browser */
+  }
   
   @media screen and (min-width: 1024px) {
     .soloist-info-container {
@@ -203,11 +228,7 @@
     }
   
     .soloist-image {
-      flex: 0 0 480px;
-    }
-  
-    .soloist-details-container {
-      flex: 1;
+      flex: 0 0 400px;
     }
   
     .soloist-details-wrapper {
@@ -237,4 +258,183 @@
     color: white;
     display: flex;
     justify-content: center;
+}
+
+.member-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-img-left {
+    width: 250px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 8px;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-wrap: break-word;
+  }
+  
+  .card-body p {
+    margin: 0 0 10px;
+  }
+  
+  .card-body a {
+    color: #007bff;
+  }
+  
+  .card-body a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .member-card {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card-img-left {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+  
+    .card-body {
+      align-items: center;
+      text-align: center;
+    }
+  
+    .card-body p {
+      text-align: center;
+    }
+  }
+  
+  .member-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: white;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    box-sizing: border-box; /* Ensure padding and border are included in width and height */
+  }
+  
+  .card-img-left {
+    width: 250px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 8px;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .card-body .bio {
+    margin-bottom: 15px;
+  }
+  
+  .card-body .bio h2 {
+    margin: 0;
+    font-size: 30px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .card-body .bio p {
+    margin: 5px 0 0;
+    font-size: 16px;
+  }
+  
+  .card-body .info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .card-body .info div {
+    flex: 1;
+    min-width: 200px; /* Adjust as needed */
+    margin-bottom: 10px;
+  }
+  
+  .card-body p {
+    margin: 0 0 10px;
+  }
+  
+  .card-body a {
+    color: #007bff;
+  }
+  
+  .card-body a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .member-card {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+  
+    .card-img-left {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+  
+    .card-body {
+      align-items: center;
+      text-align: center;
+    }
+  
+    .card-body .bio {
+      margin-bottom: 15px;
+    }
+  
+    .card-body .bio h2 {
+      font-size: 30px;
+
+    }
+  
+    .card-body .info {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .card-body .info div {
+      min-width: auto;
+      width: 100%;
+    }
+    .title1{
+        margin-top: 20px;
+    }
+  }
+
+
+.group-info-social-media {
+  display: flex;
+  flex-wrap: wrap;
+  width: 550px;
+}
+
+.group-info{
+  width: 230px;
 }
