@@ -17,6 +17,7 @@ const router = express.Router();
 
 // Rotte pubbliche
 router.get('/', getAllSoloists);
+
 router.get('/search', async (req, res) => {
   try {
     const { q } = req.query;
@@ -27,10 +28,9 @@ router.get('/search', async (req, res) => {
     res.status(500).json({ message: "Errore durante la ricerca" });
   }
 });
+
 router.get('/:id', getSoloistById);
 
-
-// Rotte che richiedono autenticazione
 router.use(authMiddleware);
 
 // Rotte per l'amministrazione dei solisti (solo per admin)

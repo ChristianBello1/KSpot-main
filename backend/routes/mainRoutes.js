@@ -27,7 +27,7 @@ router.get('/search', async (req, res) => {
   }
 });
 
-// Middleware di autenticazione per le rotte protette
+// rotte protette
 router.use(authMiddleware);
 
 // Rotte per il profilo utente e i preferiti

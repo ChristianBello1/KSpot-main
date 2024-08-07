@@ -24,6 +24,7 @@ import EditMembersPage from './pages/EditMembersPage';
 import EditMemberForm from './pages/EditMemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { loading } = useAuth();
@@ -60,7 +61,8 @@ function App() {
               <Route path="/admin/edit-members/:groupId" element={<EditMembersPage />} />
               <Route path="/admin/edit-member/:groupId/:memberId" element={<EditMemberForm />} />
             </Route>
-            <Route path="*" element={<div>404 Not Found</div>} />
+            <Route path="/notfound" element={<NotFound />} />
+            <Route path="*" element={<div style={{color:'white'}}>404 Not Found</div>} />
           </Routes>
         </div>
       </div>

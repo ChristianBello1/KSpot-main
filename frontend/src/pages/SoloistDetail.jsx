@@ -46,7 +46,6 @@ const SoloistDetail = () => {
   const fetchSoloist = async () => {
     try {
       const response = await getSoloistById(id);
-      console.log("Soloist data:", response.data);
       if (response.data && !response.data.comments) {
         response.data.comments = [];
       }
@@ -236,6 +235,13 @@ const SoloistDetail = () => {
       </div>
     ));
   };
+
+  const getSocialMediaLink = (url) => {
+    if (!url || url.toLowerCase() === 'no') {
+      return '/notfound';
+    }
+    return url;
+  };
   
   if (!soloist) return <div>Loading...</div>;
   
@@ -277,22 +283,22 @@ const SoloistDetail = () => {
             <p><strong>Debut Date:</strong> {new Date(soloist.debutDate).toLocaleDateString()}</p>
           </div>
           <div className="soloist-social">
-            <h2 className='title1'>Social Media</h2>
+            <h2 className='title1s'>Social Media</h2>
             <div className="social-icons">
               {soloist.socialMedia && soloist.socialMedia.youtube && (
-                <a href={soloist.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <Link to={getSocialMediaLink(soloist.socialMedia.youtube)} target="_blank" rel="noopener noreferrer" className="social-icon">
                   <FaYoutube />
-                </a>
+                </Link>
               )}
               {soloist.socialMedia && soloist.socialMedia.x && (
-                <a href={soloist.socialMedia.x} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <Link to={getSocialMediaLink(soloist.socialMedia.x)} target="_blank" rel="noopener noreferrer" className="social-icon">
                   <FaTwitter />
-                </a>
+                </Link>
               )}
               {soloist.socialMedia && soloist.socialMedia.instagram && (
-                <a href={soloist.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="social-icon">
+                <Link to={getSocialMediaLink(soloist.socialMedia.instagram)} target="_blank" rel="noopener noreferrer" className="social-icon">
                   <FaInstagram />
-                </a>
+                </Link>
               )}
             </div>
           </div>

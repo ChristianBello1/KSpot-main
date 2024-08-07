@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMemberById, updateMember } from '../services/api';
+import './AdminForms.css';
 
 const EditMemberForm = () => {
   const { groupId, memberId } = useParams();
@@ -96,65 +97,22 @@ const EditMemberForm = () => {
   if (error) return <div className="alert alert-danger">{error}</div>;
 
   return (
-    <div className="container mt-4">
+    <div className="admin-form-container">
       <h2>Modifica Membro</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nome</label>
-          <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="stageName" className="form-label">Nome d'arte</label>
-          <input type="text" className="form-control" id="stageName" name="stageName" value={formData.stageName} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="birthday" className="form-label">Data di nascita</label>
-          <input type="date" className="form-control" id="birthday" name="birthday" value={formData.birthday ? formData.birthday.split('T')[0] : ''} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="zodiacSign" className="form-label">Segno zodiacale</label>
-          <input type="text" className="form-control" id="zodiacSign" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="height" className="form-label">Altezza (cm)</label>
-          <input type="text" className="form-control" id="height" name="height" value={formData.height} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="weight" className="form-label">Peso (kg)</label>
-          <input type="text" className="form-control" id="weight" name="weight" value={formData.weight} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="mbtiType" className="form-label">Tipo MBTI</label>
-          <input type="text" className="form-control" id="mbtiType" name="mbtiType" value={formData.mbtiType} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="nationality" className="form-label">Nazionalità</label>
-          <input type="text" className="form-control" id="nationality" name="nationality" value={formData.nationality} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="instagram" className="form-label">Instagram</label>
-          <input type="text" className="form-control" id="instagram" name="instagram" value={formData.instagram} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="bio" className="form-label">Biografia</label>
-          <textarea className="form-control" id="bio" name="bio" value={formData.bio} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="position" className="form-label">Posizione</label>
-          <input 
-            type="text" 
-            className="form-control" 
-            id="position" 
-            name="position" 
-            value={Array.isArray(formData.position) ? formData.position.join(', ') : formData.position} 
-            onChange={handleChange} 
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="photo" className="form-label">Nuova Foto (lascia vuoto per mantenere quella attuale)</label>
-          <input type="file" className="form-control" id="photo" onChange={handlePhotoChange} />
-        </div>
-        <button type="submit" className="btn btn-primary">Aggiorna Membro</button>
+        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
+        <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" />
+        <input type="date" name="birthday" value={formData.birthday ? formData.birthday.split('T')[0] : ''} onChange={handleChange} placeholder="Data di nascita" />
+        <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno zodiacale" />
+        <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm)" />
+        <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg)" />
+        <input type="text" name="mbtiType" value={formData.mbtiType} onChange={handleChange} placeholder="Tipo MBTI" />
+        <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
+        <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Instagram" />
+        <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
+        <input type="text" name="position" value={Array.isArray(formData.position) ? formData.position.join(', ') : formData.position} onChange={handleChange} placeholder="Posizione" />
+        <input type="file" onChange={handlePhotoChange} />
+        <button type="submit">Aggiorna Membro</button>
       </form>
     </div>
   );

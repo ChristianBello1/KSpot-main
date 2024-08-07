@@ -3,10 +3,6 @@ import { Comment } from '../models/CommentModel.js';
 
 export const createSoloist = async (req, res) => {
   try {
-    console.log("1. Inizio della funzione createSoloist");
-    console.log("2. Request body:", req.body);
-    console.log("3. Request file:", req.file);
-
     let soloistData = req.body;
     
     // Gestione dei dati dei social media
@@ -22,14 +18,10 @@ export const createSoloist = async (req, res) => {
 
     if (req.file) {
       soloistData.photo = req.file.path;
-      console.log("4. Photo path:", req.file.path);
     }
 
-    console.log("5. Creating new Soloist instance");
     const newSoloist = new Soloist(soloistData);
-    console.log("6. Saving soloist");
     const savedSoloist = await newSoloist.save();
-    console.log("7. Soloist saved successfully:", savedSoloist);
     res.status(201).json(savedSoloist);
   } catch (error) {
     console.error("8. Errore dettagliato nella creazione del solista:", error);
@@ -39,7 +31,10 @@ export const createSoloist = async (req, res) => {
 
 export const updateSoloist = async (req, res) => {
   try {
-    let updates = JSON.parse(req.body.soloistData);
+    let updates = {};
+    if (req.body.soloistData) {
+      updates = JSON.parse(req.body.soloistData);
+    }
 
     if (req.file) {
       updates.photo = req.file.path;
@@ -227,11 +222,11 @@ export const likeComment = async (req, res) => {
 
 export const replyToComment = async (req, res) => {
   try {
-    const { soloistId, commentId } = req.params; // o soloistId per soloistController.js
+    const { soloistId, commentId } = req.params;
     const { text } = req.body;
     const userId = req.user._id;
 
-    const soloist = await Group.findById(soloistId); // o Soloist per soloistController.js
+    const soloist = await Group.findById(soloistId);
     if (!soloist) {
       return res.status(404).json({ message: 'Solista non trovato' });
     }

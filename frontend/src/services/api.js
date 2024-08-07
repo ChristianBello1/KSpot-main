@@ -108,8 +108,6 @@ export const registerUser = async (formData) => {
 export const getUserData = async () => {
     try {
         const response = await api.get('/auth/me');
-        console.log("Dati utente ricevuti:", response.data);
-        console.log("Avatar URL:", response.data.avatar);
         return response.data;
     } catch (error) {
         console.error('Errore nel recupero dei dati utente:', error);

@@ -40,23 +40,14 @@ export const getGroupById = async (req, res) => {
 
 export const createGroup = async (req, res, next) => {
   try {
-    console.log("1. Inizio della funzione createGroup");
-    console.log("2. Request body:", req.body);
-    console.log("3. Request file:", req.file);
-
     let groupData = JSON.parse(req.body.groupData);
-    console.log("4. Parsed group data:", groupData);
     
     if (req.file) {
       groupData.coverImage = req.file.path;
-      console.log("5. Cover image path:", req.file.path);
     }
 
-    console.log("6. Creating new Group instance");
     const newGroup = new Group(groupData);
-    console.log("7. Saving group");
     const savedGroup = await newGroup.save();
-    console.log("8. Group saved successfully:", savedGroup);
     res.status(201).json(savedGroup);
   } catch (error) {
     console.error("9. Errore dettagliato nella creazione del gruppo:", error);
@@ -205,7 +196,6 @@ export const getMemberById = async (req, res) => {
   }
 };
 
-
 export const addComment = async (req, res) => {
   try {
     const { groupId } = req.params;
@@ -315,11 +305,11 @@ export const likeComment = async (req, res) => {
 
 export const replyToComment = async (req, res) => {
   try {
-    const { groupId, commentId } = req.params; // o soloistId per soloistController.js
+    const { groupId, commentId } = req.params;
     const { text } = req.body;
     const userId = req.user._id;
 
-    const group = await Group.findById(groupId); // o Soloist per soloistController.js
+    const group = await Group.findById(groupId);
     if (!group) {
       return res.status(404).json({ message: 'Gruppo non trovato' });
     }

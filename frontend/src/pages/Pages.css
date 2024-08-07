@@ -19,9 +19,19 @@
     padding-bottom: 10px;
 }
 
+.title1s {
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  padding-bottom: 10px;
+  width: 240px;
+  margin-left: 20px;
+}
+
 .social-icons {
     display: flex;
     gap: 15px;
+    margin-left: 20px;
 }
 
 .social-icon {
@@ -386,6 +396,10 @@
     text-decoration: underline;
   }
   
+  .biogroup{
+    text-align: left;
+  }
+
   @media (max-width: 768px) {
     .member-card {
       flex-direction: column;

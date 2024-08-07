@@ -4,6 +4,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { getUserData, getFavorites } from '../services/api';
 import ProfileUpdateModal from './ProfileUpdateModal';
 import { FaCog } from 'react-icons/fa';
+import './Profile.css';
+import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
 
 const Profile = () => {
   const { user, loading } = useAuth();
@@ -31,19 +33,35 @@ const Profile = () => {
 
   const renderFavorites = () => {
     if (!Array.isArray(favorites) || favorites.length === 0) {
-      return <p>Nessun preferito trovato.</p>;
+      return <p className='favoritesno'>Nessun preferito trovato.</p>;
     }
     
     return favorites.map(favorite => (
       <div key={`${favorite.type}-${favorite.id}`} className="col-md-4 mb-3">
-        <div className="card">
-          <img src={favorite.coverImage || favorite.photo} className="card-img-top" alt={favorite.name} />
-          <div className="card-body">
-            <h5 className="card-title">{favorite.name}</h5>
-            <p className="card-text">{favorite.type === 'Group' ? 'Gruppo' : 'Solista'}</p>
-            <Link to={`/${favorite.type.toLowerCase()}/${favorite.id}`} className="btn btn-primary">Vedi dettagli</Link>
-          </div>
-        </div>
+        <Link to={`/${favorite.type.toLowerCase()}/${favorite.id}`} className="text-decoration-none">
+          <CardContainer className="group-card h-96 w-80">
+            <CardBody className="relative w-full h-full bg-black overflow-hidden">
+              <CardItem
+                translateZ="100"
+                className="w-full h-full"
+              >
+                <img 
+                  src={favorite.coverImage || favorite.photo} 
+                  className="h-full w-full object-cover"
+                  alt={favorite.name} 
+                />
+              </CardItem>
+              <div id='namegroup'>
+                <CardItem 
+                  translateZ={30}
+                  className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 namegroup"
+                >
+                  <h5 className="card-title">{favorite.name}</h5>
+                </CardItem>
+              </div>
+            </CardBody>
+          </CardContainer>
+        </Link>
       </div>
     ));
   };
@@ -54,68 +72,55 @@ const Profile = () => {
         <img 
           src={profileData.avatar} 
           alt="Avatar" 
-          className="mb-3" 
-          style={{maxWidth: '200px'}} 
+          className="profile-avatar" 
           onError={(e) => {
-            console.error("Error loading image:", e);
             e.target.onerror = null;
             e.target.src = 'https://via.placeholder.com/200?text=Avatar+Not+Found';
           }}
         />
       );
     } else {
-      console.log("No avatar found, rendering initials");
       const initials = `${profileData.nome.charAt(0)}${profileData.cognome.charAt(0)}`;
       return (
-        <div className="avatar-placeholder mb-3" style={{
-          width: '200px',
-          height: '200px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '48px',
-          borderRadius: '50%'
-        }}>
+        <div className="profile-avatar">
           {initials}
         </div>
       );
     }
   };
 
-  if (loading) return <p>Caricamento...</p>;
-  if (!user) return <p>Please <Link to="/login">login</Link> to view your profile.</p>;
+  if (loading) return <p className="text-white">Caricamento...</p>;
+  if (!user) return <p className="text-white">Please <Link to="/login">login</Link> to view your profile.</p>;
 
   return (
-    <div className="container mt-4">
-      <h2>Profilo</h2>
+    <div className="container mt-4 text-white">
       {profileData ? (
         <div>
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <div>
+          <div className="profile-info">
+            <div className="profile-avatar-container">
+              {renderAvatar()}
+            </div>
+            <div className="profile-details">
               <p>Nome: {profileData.nome}</p>
               <p>Cognome: {profileData.cognome}</p>
               <p>Email: {profileData.email}</p>
             </div>
-            <button 
-              className="btn btn-secondary" 
-              onClick={() => setShowUpdateModal(true)}
-            >
-              <FaCog /> Impostazioni Profilo
-            </button>
+            <div className="profile-settings">
+              <FaCog 
+                className="settings-icon" 
+                onClick={() => setShowUpdateModal(true)}
+              />
+            </div>
           </div>
-          {renderAvatar()}
           
           {profileData.ruolo === 'admin' && (
             <div className="mb-4">
-              <h3>Pannello di Amministrazione</h3>
-              <Link to="/admin" className="btn btn-primary">Gestione Gruppi e Solisti</Link>
+              <Link to="/admin" className="btn btn-primary">Pannello di Amministrazione</Link>
             </div>
           )}
           
-          <h3>Preferiti:</h3>
-          <div className="row">
+          <h1 className='h1'>Preferiti:</h1>
+          <div className="row favorites">
             {renderFavorites()}
           </div>
 

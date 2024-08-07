@@ -36,6 +36,7 @@ const EditSoloistForm = () => {
         const data = response.data;
         data.birthday = data.birthday ? data.birthday.split('T')[0] : '';
         data.debutDate = data.debutDate ? data.debutDate.split('T')[0] : '';
+        data.socialMedia = data.socialMedia || { youtube: '', x: '', instagram: '' };
         setFormData(data);
       } catch (error) {
         console.error('Errore nel recupero dei dati del solista:', error);
@@ -75,17 +76,18 @@ const EditSoloistForm = () => {
     const updatedFormData = {
       ...formData,
       birthday: formData.birthday ? new Date(formData.birthday).toISOString() : null,
-      debutDate: formData.debutDate ? new Date(formData.debutDate).toISOString() : null
+      debutDate: formData.debutDate ? new Date(formData.debutDate).toISOString() : null,
+      socialMedia: {
+        youtube: formData.socialMedia?.youtube || '',
+        x: formData.socialMedia?.x || '',
+        instagram: formData.socialMedia?.instagram || ''
+      }
     };
     
-    Object.keys(updatedFormData).forEach(key => {
-      if (typeof updatedFormData[key] === 'object') {
-        formDataToSend.append(key, JSON.stringify(updatedFormData[key]));
-      } else {
-        formDataToSend.append(key, updatedFormData[key]);
-      }
-    });
-
+    // Converti l'intero oggetto updatedFormData in una stringa JSON
+    const soloistDataJSON = JSON.stringify(updatedFormData);
+    formDataToSend.append('soloistData', soloistDataJSON);
+  
     if (photo) {
       formDataToSend.append('photo', photo);
     }
@@ -111,173 +113,26 @@ const EditSoloistForm = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="admin-form-container">
       <h2>Modifica Solista</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name">Nome</label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="stageName">Nome d'Arte</label>
-          <input
-            type="text"
-            className="form-control"
-            id="stageName"
-            name="stageName"
-            value={formData.stageName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="birthday">Data di Nascita</label>
-          <input
-            type="date"
-            className="form-control"
-            id="birthday"
-            name="birthday"
-            value={formData.birthday}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="zodiacSign">Segno Zodiacale</label>
-          <input
-            type="text"
-            className="form-control"
-            id="zodiacSign"
-            name="zodiacSign"
-            value={formData.zodiacSign}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="height">Altezza</label>
-          <input
-            type="text"
-            className="form-control"
-            id="height"
-            name="height"
-            value={formData.height}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="weight">Peso</label>
-          <input
-            type="text"
-            className="form-control"
-            id="weight"
-            name="weight"
-            value={formData.weight}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="mbtiType">Tipo MBTI</label>
-          <input
-            type="text"
-            className="form-control"
-            id="mbtiType"
-            name="mbtiType"
-            value={formData.mbtiType}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="nationality">Nazionalità</label>
-          <input
-            type="text"
-            className="form-control"
-            id="nationality"
-            name="nationality"
-            value={formData.nationality}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="bio">Biografia</label>
-          <textarea
-            className="form-control"
-            id="bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="company">Azienda</label>
-          <input
-            type="text"
-            className="form-control"
-            id="company"
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="debutDate">Data di Debutto</label>
-          <input
-            type="date"
-            className="form-control"
-            id="debutDate"
-            name="debutDate"
-            value={formData.debutDate}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="photo">Foto</label>
-          <input
-            type="file"
-            className="form-control"
-            id="photo"
-            onChange={handlePhotoChange}
-          />
-        </div>
+        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" />
+        <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'Arte" />
+        <input type="date" name="birthday" value={formData.birthday} onChange={handleChange} placeholder="Data di Nascita" />
+        <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno Zodiacale" />
+        <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza" />
+        <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso" />
+        <input type="text" name="mbtiType" value={formData.mbtiType} onChange={handleChange} placeholder="Tipo MBTI" />
+        <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
+        <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
+        <input type="text" name="company" value={formData.company} onChange={handleChange} placeholder="Azienda" />
+        <input type="date" name="debutDate" value={formData.debutDate} onChange={handleChange} placeholder="Data di Debutto" />
+        <input type="file" onChange={handlePhotoChange} />
         <h3>Social Media</h3>
-<div className="mb-3">
-  <label htmlFor="youtube">YouTube</label>
-  <input
-    type="text"
-    className="form-control"
-    id="youtube"
-    name="socialMedia.youtube"
-    value={formData.socialMedia?.youtube || ''}
-    onChange={handleChange}
-  />
-</div>
-<div className="mb-3">
-  <label htmlFor="x">X (Twitter)</label>
-  <input
-    type="text"
-    className="form-control"
-    id="x"
-    name="socialMedia.x"
-    value={formData.socialMedia?.x || ''}
-    onChange={handleChange}
-  />
-</div>
-<div className="mb-3">
-  <label htmlFor="instagram">Instagram</label>
-  <input
-    type="text"
-    className="form-control"
-    id="instagram"
-    name="socialMedia.instagram"
-    value={formData.socialMedia?.instagram || ''}
-    onChange={handleChange}
-  />
-</div>
-        <button type="submit" className="btn btn-primary">Aggiorna Solista</button>
+        <input type="text" name="socialMedia.youtube" value={formData.socialMedia?.youtube || ''} onChange={handleChange} placeholder="YouTube" />
+        <input type="text" name="socialMedia.x" value={formData.socialMedia?.x || ''} onChange={handleChange} placeholder="X (Twitter)" />
+        <input type="text" name="socialMedia.instagram" value={formData.socialMedia?.instagram || ''} onChange={handleChange} placeholder="Instagram" />
+        <button type="submit">Aggiorna Solista</button>
       </form>
     </div>
   );

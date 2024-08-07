@@ -43,7 +43,6 @@ router.post('/login', async (req, res) => {
     }
     
     const token = await generateJWT({ id: user._id });
-    console.log("Token generato:", token);
     res.json({ token, message: "Login effettuato con successo" });
   } catch (error) {
     console.error("Errore durante il login:", error);
@@ -58,7 +57,6 @@ router.get('/google/callback',
   async (req, res) => {
     try {
       const token = await generateJWT({ id: req.user._id });
-      console.log("Token generato per Google OAuth:", token);
       res.redirect(`${process.env.FRONTEND_URL}/login?token=${token}`);
     } catch (error) {
       console.error("Errore nella generazione del token per Google OAuth:", error);

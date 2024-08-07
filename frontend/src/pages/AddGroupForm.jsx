@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AdminForms.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -73,47 +74,38 @@ const AddGroupForm = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="admin-form-container">
       <h2>Aggiungi Gruppo {type === 'male-group' ? 'Maschile' : 'Femminile'}</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Nome</label>
-          <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">Descrizione</label>
-          <textarea className="form-control" id="description" name="description" value={formData.description} onChange={handleChange} required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="debutDate" className="form-label">Data di debutto</label>
-          <input type="date" className="form-control" id="debutDate" name="debutDate" value={formData.debutDate} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="company" className="form-label">Agenzia</label>
-          <input type="text" className="form-control" id="company" name="company" value={formData.company} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="fanclubName" className="form-label">Nome Fanclub</label>
-          <input type="text" className="form-control" id="fanclubName" name="fanclubName" value={formData.fanclubName} onChange={handleChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="coverImage" className="form-label">Immagine di copertina</label>
-          <input type="file" className="form-control" id="coverImage" name="coverImage" onChange={handleImageChange} />
-        </div>
+        <label htmlFor="name">Nome</label>
+        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+
+        <label htmlFor="description">Descrizione</label>
+        <textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
+
+        <label htmlFor="debutDate">Data di debutto</label>
+        <input type="date" id="debutDate" name="debutDate" value={formData.debutDate} onChange={handleChange} />
+
+        <label htmlFor="company">Agenzia</label>
+        <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} />
+
+        <label htmlFor="fanclubName">Nome Fanclub</label>
+        <input type="text" id="fanclubName" name="fanclubName" value={formData.fanclubName} onChange={handleChange} />
+
+        <label htmlFor="coverImage">Immagine di copertina</label>
+        <input type="file" id="coverImage" name="coverImage" onChange={handleImageChange} />
+
         <h3>Social Media</h3>
-        <div className="mb-3">
-          <label htmlFor="youtube" className="form-label">YouTube</label>
-          <input type="text" className="form-control" id="youtube" name="youtube" value={formData.socialMedia.youtube} onChange={handleSocialMediaChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="x" className="form-label">X (Twitter)</label>
-          <input type="text" className="form-control" id="x" name="x" value={formData.socialMedia.x} onChange={handleSocialMediaChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="instagram" className="form-label">Instagram</label>
-          <input type="text" className="form-control" id="instagram" name="instagram" value={formData.socialMedia.instagram} onChange={handleSocialMediaChange} />
-        </div>
-        <button type="submit" className="btn btn-primary">Crea Gruppo</button>
+        <label htmlFor="youtube">YouTube</label>
+        <input type="text" id="youtube" name="youtube" value={formData.socialMedia.youtube} onChange={handleSocialMediaChange} />
+
+        <label htmlFor="x">X (Twitter)</label>
+        <input type="text" id="x" name="x" value={formData.socialMedia.x} onChange={handleSocialMediaChange} />
+
+        <label htmlFor="instagram">Instagram</label>
+        <input type="text" id="instagram" name="instagram" value={formData.socialMedia.instagram} onChange={handleSocialMediaChange} />
+
+        <button type="submit">Crea Gruppo</button>
       </form>
     </div>
   );

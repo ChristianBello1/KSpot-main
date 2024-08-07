@@ -46,7 +46,6 @@ const GroupDetail = () => {
   const fetchGroup = async () => {
     try {
       const response = await getGroupById(id);
-      console.log("Group data:", response.data);
       if (response.data && !response.data.comments) {
         response.data.comments = [];
       }
@@ -236,6 +235,13 @@ const GroupDetail = () => {
       </div>
     ));
   };
+
+  const getSocialMediaLink = (url) => {
+    if (!url || url.toLowerCase() === 'no') {
+      return '/notfound';
+    }
+    return url;
+  };
   
   if (!group) return <div>Loading...</div>;
   
@@ -263,7 +269,7 @@ const GroupDetail = () => {
         </div>
         <div className="col-md-7">
           <h2 className="mb-3 title1">Description</h2>
-          <p>{group.description}</p>
+          <p className='biogroup'>{group.description}</p>
         </div>
       </div>
       
@@ -281,19 +287,19 @@ const GroupDetail = () => {
     <h2 className='title1'>Social Media</h2>
     <div className="social-icons">
       {group.socialMedia?.youtube && (
-        <a href={group.socialMedia.youtube} target="_blank" rel="noopener noreferrer" className="social-icon">
+        <Link to={getSocialMediaLink(group.socialMedia.youtube)} target="_blank" rel="noopener noreferrer" className="social-icon">
           <FaYoutube />
-        </a>
+       </Link>
       )}
       {group.socialMedia?.x && (
-        <a href={group.socialMedia.x} target="_blank" rel="noopener noreferrer" className="social-icon">
+        <Link to={getSocialMediaLink(group.socialMedia.x)} target="_blank" rel="noopener noreferrer" className="social-icon">
           <FaTwitter />
-        </a>
+        </Link>
       )}
       {group.socialMedia?.instagram && (
-        <a href={group.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="social-icon">
+        <Link to={getSocialMediaLink(group.socialMedia.instagram)} target="_blank" rel="noopener noreferrer" className="social-icon">
           <FaInstagram />
-        </a>
+        </Link>
       )}
     </div>
   </div>

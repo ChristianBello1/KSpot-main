@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import './AdminDashboard.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -47,14 +48,14 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="container mt-4">
+    <div className="admin-dashboard">
       <h2>Pannello di Amministrazione</h2>
       
-      <div className="mb-4">
-        <Link to="/admin/add-group/male-group" className="btn btn-primary me-2">Nuovo Gruppo Maschile</Link>
-        <Link to="/admin/add-group/female-group" className="btn btn-primary me-2">Nuovo Gruppo Femminile</Link>
-        <Link to="/admin/add-soloist/male" className="btn btn-primary me-2">Nuovo Solista Maschile</Link>
-        <Link to="/admin/add-soloist/female" className="btn btn-primary">Nuova Solista Femminile</Link>
+      <div className="mb-4 btngroups">
+        <Link to="/admin/add-group/male-group" className="btn btn-primary">Gruppo Maschile</Link>
+        <Link to="/admin/add-group/female-group" className="btn btn-primary">Gruppo Femminile</Link>
+        <Link to="/admin/add-soloist/male" className="btn btn-primary">Solista Maschile</Link>
+        <Link to="/admin/add-soloist/female" className="btn btn-primary">Solista Femminile</Link>
       </div>
 
       <input
@@ -65,22 +66,28 @@ const AdminDashboard = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      {filteredArtists.map(artist => (
-        <div key={artist._id} className="card mb-3">
-          <div className="card-body">
-            <h5 className="card-title">{artist.name}</h5>
-            <p className="card-text">{artist.type}</p>
-            <Link to={`/admin/edit-${artist.type.includes('solo') ? 'soloist' : 'group'}/${artist._id}`} className="btn btn-secondary me-2">Modifica</Link>
-            {artist.type.includes('group') && (
-              <>
-                <Link to={`/admin/add-member/${artist._id}`} className="btn btn-info me-2">Aggiungi Membro</Link>
-                <Link to={`/admin/edit-members/${artist._id}`} className="btn btn-warning me-2">Modifica Membri</Link>
-              </>
-            )}
-            <button onClick={() => handleDelete(artist._id, artist.type.includes('solo') ? 'soloist' : 'group')} className="btn btn-danger">Elimina</button>
+      <div className="card-container">
+        {filteredArtists.map(artist => (
+          <div key={artist._id} className="card-wrapper">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{artist.name}</h5>
+                <p className="card-text">{artist.type}</p>
+                <div className="card-actions">
+                  <Link to={`/admin/edit-${artist.type.includes('solo') ? 'soloist' : 'group'}/${artist._id}`} className="btn btn-secondary">Modifica</Link>
+                  {artist.type.includes('group') && (
+                    <>
+                      <Link to={`/admin/add-member/${artist._id}`} className="btn btn-info">Aggiungi Membro</Link>
+                      <Link to={`/admin/edit-members/${artist._id}`} className="btn btn-warning">Modifica Membri</Link>
+                    </>
+                  )}
+                  <button onClick={() => handleDelete(artist._id, artist.type.includes('solo') ? 'soloist' : 'group')} className="btn btn-danger">Elimina</button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
