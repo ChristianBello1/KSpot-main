@@ -55,14 +55,14 @@ router.post('/login', async (req, res) => {
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: `${FRONTEND_URL}/login` }),
   async (req, res) => {
     try {
       const token = await generateJWT({ id: req.user._id });
       res.redirect(`${FRONTEND_URL}/login?token=${token}`);
     } catch (error) {
       console.error("Errore nella generazione del token per Google OAuth:", error);
-      res.redirect(`${FRONTEND_URL}/login`);
+      res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
     }
   }
 );
