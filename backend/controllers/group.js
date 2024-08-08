@@ -109,13 +109,13 @@ export const addMemberToGroup = async (req, res) => {
       stageName: req.body.stageName,
       birthday: req.body.birthday,
       zodiacSign: req.body.zodiacSign,
-      height: req.body.height,
-      weight: req.body.weight,
+      height: req.body.height === 'N/A' ? 'N/A' : parseFloat(req.body.height) || null,
+      weight: req.body.weight === 'N/A' ? 'N/A' : parseFloat(req.body.weight) || null,
       mbtiType: req.body.mbtiType,
       nationality: req.body.nationality,
       instagram: req.body.instagram,
       bio: req.body.bio,
-      position: req.body.position.split(',').map(item => item.trim()),
+      position: Array.isArray(req.body.position) ? req.body.position : req.body.position.split(',').map(item => item.trim()),
     };
 
     if (req.file) {

@@ -58,7 +58,7 @@ const AddMemberForm = () => {
           formDataToSend.append(key, 'N/A');
         } else {
           const numValue = parseFloat(value);
-          formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue);
+          formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue.toString());
         }
       } else if (key === 'birthday') {
         formDataToSend.append(key, new Date(formData[key]).toISOString());
