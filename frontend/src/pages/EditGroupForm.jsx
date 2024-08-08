@@ -42,6 +42,14 @@ const EditGroupForm = () => {
     fetchGroupData();
   }, [id]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
   const handleSocialMediaChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -97,7 +105,6 @@ const EditGroupForm = () => {
   return (
     <div className="admin-form-container">
       <h2>Modifica Gruppo</h2>
-      {isLoading && <div className="loading">Caricamento in corso...</div>}
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Descrizione" required />

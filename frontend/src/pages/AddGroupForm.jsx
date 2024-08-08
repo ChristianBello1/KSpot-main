@@ -81,7 +81,6 @@ const AddGroupForm = () => {
   return (
     <div className="admin-form-container">
       <h2>Aggiungi Gruppo {type === 'male-group' ? 'Maschile' : 'Femminile'}</h2>
-      {isLoading && <div className="loading">Caricamento in corso...</div>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Nome</label>
         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />

@@ -106,7 +106,7 @@ const EditMemberForm = () => {
     }
   };
 
-  if (loading) return <div>Caricamento...</div>;
+  if (isLoading) return <div>Caricamento...</div>;
   if (error) return <div className="alert alert-danger">{error}</div>;
 
   return (
@@ -126,7 +126,7 @@ const EditMemberForm = () => {
         <input type="text" name="position" value={Array.isArray(formData.position) ? formData.position.join(', ') : formData.position} onChange={handleChange} placeholder="Posizione" />
         <input type="file" onChange={handlePhotoChange} />
         <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Membro'}
+          {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Membro'}
         </button>
       </form>
     </div>

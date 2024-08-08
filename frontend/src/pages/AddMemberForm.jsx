@@ -86,7 +86,6 @@ const AddMemberForm = () => {
     <div className="admin-form-container">
       <h2>Aggiungi Membro al Gruppo</h2>
       {error && <div className="error-message">{error}</div>}
-      {isLoading && <div className="loading">Caricamento in corso...</div>}
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" required />
