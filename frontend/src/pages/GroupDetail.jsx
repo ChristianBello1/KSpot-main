@@ -330,7 +330,7 @@ const GroupDetail = () => {
               {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
               {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
               {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
-              {member.instagram && <div><strong>Instagram:</strong> <a href={`https://www.instagram.com/${member.instagram}`} target="_blank" rel="noopener noreferrer">@{member.instagram}</a></div>}
+              {member.instagram && <div><strong>Instagram:</strong> <a href={`https://www.instagram.com/${member.instagram}`} target="_blank" rel="noopener noreferrer">@{member.instagram.replace(/^@/, '')}</a></div>}
             </div>
           </div>
         </div>
