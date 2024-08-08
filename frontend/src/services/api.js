@@ -147,6 +147,11 @@ export const updateGroup = (groupId, formData) =>
 
 export const deleteGroup = (groupId) => api.delete(`/groups/${groupId}`);
 
+export const addMemberToGroup = (groupId, formData) => 
+  api.post(`/groups/${groupId}/members`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
+
 export const createSoloist = (formData) => 
   api.post('/soloists', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }

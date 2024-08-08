@@ -76,7 +76,7 @@ const EditMemberForm = () => {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach(key => {
         if (key === 'position') {
-          formDataToSend.append(key, formData[key].split(',').map(item => item.trim()));
+          formDataToSend.append(key, formData[key].split(',').map(item => item.trim()).join(','));
         } else {
           formDataToSend.append(key, formData[key]);
         }
@@ -88,7 +88,7 @@ const EditMemberForm = () => {
       await updateMember(groupId, memberId, formDataToSend);
       navigate(`/admin/edit-members/${groupId}`);
     } catch (error) {
-      console.error('Errore nella modifica del membro:', error);
+      console.error('Errore nella modifica del membro:', error.response?.data || error.message);
       setError('Impossibile aggiornare il membro. Riprova più tardi.');
     }
   };

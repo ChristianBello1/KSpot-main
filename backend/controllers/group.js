@@ -88,11 +88,22 @@ export const deleteGroup = async (req, res) => {
 
 export const addMemberToGroup = async (req, res) => {
   try {
+    console.log('Dati ricevuti:', req.body);
+    console.log('File ricevuto:', req.file);
+
     const group = await Group.findById(req.params.groupId);
     if (!group) {
       return res.status(404).json({ message: 'Gruppo non trovato' });
     }
     
+    // Validazione dei campi obbligatori
+    const requiredFields = ['name', 'stageName', 'birthday', 'position'];
+    for (let field of requiredFields) {
+      if (!req.body[field]) {
+        return res.status(400).json({ message: `Il campo ${field} è obbligatorio` });
+      }
+    }
+
     const newMember = {
       name: req.body.name,
       stageName: req.body.stageName,
@@ -112,11 +123,16 @@ export const addMemberToGroup = async (req, res) => {
     }
 
     group.members.push(newMember);
-    await group.save();
+    
+    const updatedGroup = await group.save();
+    if (!updatedGroup) {
+      throw new Error('Errore nel salvare il gruppo aggiornato');
+    }
 
-    res.status(201).json(group);
+    res.status(201).json(updatedGroup);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error('Errore nell\'aggiunta del membro:', error);
+    res.status(400).json({ message: 'Errore nell\'aggiunta del membro', error: error.message });
   }
 };
 
