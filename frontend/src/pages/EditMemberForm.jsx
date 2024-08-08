@@ -21,7 +21,7 @@ const EditMemberForm = () => {
   });
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchMemberData();
@@ -29,9 +29,9 @@ const EditMemberForm = () => {
 
   const fetchMemberData = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await getMemberById(groupId, memberId);
-      console.log('Dati del membro ricevuti:', response.data); // Per debug
+      console.log('Dati del membro ricevuti:', response.data);
       if (response.data) {
         setFormData({
           name: response.data.name || '',
@@ -54,7 +54,7 @@ const EditMemberForm = () => {
       console.error('Errore nel recupero dei dati del membro:', error);
       setError('Impossibile recuperare i dati del membro. Riprova più tardi.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -72,6 +72,7 @@ const EditMemberForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach(key => {
@@ -86,7 +87,6 @@ const EditMemberForm = () => {
             formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue);
           }
         } else if (key === 'birthday') {
-          // Assicurati che la data sia nel formato corretto
           formDataToSend.append(key, formData[key] ? new Date(formData[key]).toISOString() : null);
         } else {
           formDataToSend.append(key, formData[key]);
@@ -101,6 +101,8 @@ const EditMemberForm = () => {
     } catch (error) {
       console.error('Errore nella modifica del membro:', error.response?.data || error.message);
       setError('Impossibile aggiornare il membro. Riprova più tardi.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -123,7 +125,9 @@ const EditMemberForm = () => {
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
         <input type="text" name="position" value={Array.isArray(formData.position) ? formData.position.join(', ') : formData.position} onChange={handleChange} placeholder="Posizione" />
         <input type="file" onChange={handlePhotoChange} />
-        <button type="submit">Aggiorna Membro</button>
+        <button type="submit" disabled={isLoading}>
+        {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Membro'}
+        </button>
       </form>
     </div>
   );

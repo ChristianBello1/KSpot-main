@@ -21,6 +21,7 @@ const AddGroupForm = () => {
     }
   });
   const [coverImage, setCoverImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +48,7 @@ const AddGroupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formDataToSend = new FormData();
     const groupData = {
       ...formData,
@@ -58,7 +60,7 @@ const AddGroupForm = () => {
       formDataToSend.append('coverImage', coverImage);
       console.log("Immagine di copertina allegata");
     }
-
+  
     try {
       const response = await axios.post(`${API_URL}/api/groups`, formDataToSend, {
         headers: {
@@ -70,12 +72,16 @@ const AddGroupForm = () => {
       navigate('/admin');
     } catch (error) {
       console.error('Errore nella creazione del gruppo:', error);
+      alert('Errore nella creazione del gruppo: ' + (error.response ? error.response.data.message : error.message));
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="admin-form-container">
       <h2>Aggiungi Gruppo {type === 'male-group' ? 'Maschile' : 'Femminile'}</h2>
+      {isLoading && <div className="loading">Caricamento in corso...</div>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Nome</label>
         <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
@@ -105,7 +111,9 @@ const AddGroupForm = () => {
         <label htmlFor="instagram">Instagram</label>
         <input type="text" id="instagram" name="instagram" value={formData.socialMedia.instagram} onChange={handleSocialMediaChange} />
 
-        <button type="submit">Crea Gruppo</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Creazione in corso...' : 'Crea Gruppo'}
+        </button>
       </form>
     </div>
   );

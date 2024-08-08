@@ -21,6 +21,7 @@ const AddMemberForm = () => {
   });
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,14 +38,16 @@ const AddMemberForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+    setIsLoading(true);
+  
     const requiredFields = ['name', 'stageName', 'birthday', 'position'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     if (missingFields.length > 0) {
       setError(`I seguenti campi sono obbligatori: ${missingFields.join(', ')}`);
+      setIsLoading(false);
       return;
     }
-
+  
     const formDataToSend = new FormData();
     Object.keys(formData).forEach(key => {
       if (key === 'position') {
@@ -58,7 +61,6 @@ const AddMemberForm = () => {
           formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue);
         }
       } else if (key === 'birthday') {
-        // Assicurati che la data sia nel formato corretto
         formDataToSend.append(key, new Date(formData[key]).toISOString());
       } else {
         formDataToSend.append(key, formData[key]);
@@ -67,7 +69,7 @@ const AddMemberForm = () => {
     if (photo) {
       formDataToSend.append('photo', photo);
     }
-
+  
     try {
       const response = await addMemberToGroup(groupId, formDataToSend);
       console.log('Risposta del server:', response.data);
@@ -75,6 +77,8 @@ const AddMemberForm = () => {
     } catch (error) {
       console.error('Errore nell\'aggiunta del membro:', error.response?.data || error.message);
       setError('Errore nell\'aggiunta del membro. Riprova più tardi.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,6 +86,7 @@ const AddMemberForm = () => {
     <div className="admin-form-container">
       <h2>Aggiungi Membro al Gruppo</h2>
       {error && <div className="error-message">{error}</div>}
+      {isLoading && <div className="loading">Caricamento in corso...</div>}
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" required />
@@ -95,7 +100,9 @@ const AddMemberForm = () => {
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
         <input type="text" name="position" value={formData.position} onChange={handleChange} placeholder="Posizione" required />
         <input type="file" onChange={handlePhotoChange} />
-        <button type="submit">Aggiungi Membro</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Aggiunta in corso...' : 'Aggiungi Membro'}
+        </button>
       </form>
     </div>
   );

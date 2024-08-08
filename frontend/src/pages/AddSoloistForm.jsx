@@ -28,6 +28,7 @@ const AddSoloistForm = () => {
     }
   });
   const [photo, setPhoto] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,9 +55,9 @@ const AddSoloistForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formDataToSend = new FormData();
-
-    // Converti l'oggetto formData in un oggetto semplice
+  
     const dataToSend = {
       ...formData,
       socialMedia: {
@@ -65,8 +66,7 @@ const AddSoloistForm = () => {
         instagram: formData.socialMedia.instagram
       }
     };
-
-    // Aggiungi tutti i campi al FormData
+  
     Object.keys(dataToSend).forEach(key => {
       if (typeof dataToSend[key] === 'object') {
         formDataToSend.append(key, JSON.stringify(dataToSend[key]));
@@ -74,11 +74,11 @@ const AddSoloistForm = () => {
         formDataToSend.append(key, dataToSend[key]);
       }
     });
-
+  
     if (photo) {
       formDataToSend.append('photo', photo);
     }
-
+  
     try {
       const response = await axios.post(`${API_URL}/api/soloists`, formDataToSend, {
         headers: {
@@ -91,6 +91,8 @@ const AddSoloistForm = () => {
     } catch (error) {
       console.error('Errore nella creazione del solista:', error.response ? error.response.data : error.message);
       alert('Errore nella creazione del solista. Per favore, controlla i dati e riprova.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -114,7 +116,9 @@ const AddSoloistForm = () => {
         <input type="text" name="socialMedia.youtube" value={formData.socialMedia.youtube} onChange={handleChange} placeholder="YouTube" />
         <input type="text" name="socialMedia.x" value={formData.socialMedia.x} onChange={handleChange} placeholder="X (Twitter)" />
         <input type="text" name="socialMedia.instagram" value={formData.socialMedia.instagram} onChange={handleChange} placeholder="Instagram" />
-        <button type="submit">Crea Solista</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Creazione in corso...' : 'Crea Solista'}
+        </button>
       </form>
     </div>
   );

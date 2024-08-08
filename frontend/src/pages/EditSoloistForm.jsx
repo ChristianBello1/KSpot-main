@@ -26,9 +26,11 @@ const EditSoloistForm = () => {
     }
   });
   const [photo, setPhoto] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchSoloistData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`${API_URL}/api/soloists/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -40,9 +42,12 @@ const EditSoloistForm = () => {
         setFormData(data);
       } catch (error) {
         console.error('Errore nel recupero dei dati del solista:', error);
+        alert('Errore nel recupero dei dati del solista');
+      } finally {
+        setIsLoading(false);
       }
     };
-
+  
     fetchSoloistData();
   }, [id]);
 
@@ -71,6 +76,7 @@ const EditSoloistForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formDataToSend = new FormData();
     
     const updatedFormData = {
@@ -84,7 +90,6 @@ const EditSoloistForm = () => {
       }
     };
     
-    // Converti l'intero oggetto updatedFormData in una stringa JSON
     const soloistDataJSON = JSON.stringify(updatedFormData);
     formDataToSend.append('soloistData', soloistDataJSON);
   
@@ -109,6 +114,8 @@ const EditSoloistForm = () => {
     } catch (error) {
       console.error('Errore nella modifica del solista:', error.response ? error.response.data : error);
       alert('Errore nella modifica del solista: ' + (error.response ? error.response.data.message : error.message));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -132,7 +139,9 @@ const EditSoloistForm = () => {
         <input type="text" name="socialMedia.youtube" value={formData.socialMedia?.youtube || ''} onChange={handleChange} placeholder="YouTube" />
         <input type="text" name="socialMedia.x" value={formData.socialMedia?.x || ''} onChange={handleChange} placeholder="X (Twitter)" />
         <input type="text" name="socialMedia.instagram" value={formData.socialMedia?.instagram || ''} onChange={handleChange} placeholder="Instagram" />
-        <button type="submit">Aggiorna Solista</button>
+        <button type="submit" disabled={isLoading}>
+        {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Solista'}
+        </button>
       </form>
     </div>
   );

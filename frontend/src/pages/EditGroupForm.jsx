@@ -21,27 +21,26 @@ const EditGroupForm = () => {
     }
   });
   const [coverImage, setCoverImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchGroupData = async () => {
+      setIsLoading(true);
       try {
-        const response = await axios.get(`${API_URL}/api/groups/${id}`);
+        const response = await axios.get(`${API_URL}/api/groups/${id}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
         setFormData(response.data);
       } catch (error) {
         console.error('Errore nel recupero dei dati del gruppo:', error);
+        alert('Errore nel recupero dei dati del gruppo');
+      } finally {
+        setIsLoading(false);
       }
     };
   
     fetchGroupData();
   }, [id]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
 
   const handleSocialMediaChange = (e) => {
     const { name, value } = e.target;
@@ -60,6 +59,7 @@ const EditGroupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formDataToSend = new FormData();
     
     const updatedFormData = {
@@ -89,12 +89,15 @@ const EditGroupForm = () => {
     } catch (error) {
       console.error('Errore nella modifica del gruppo:', error.response ? error.response.data : error);
       alert('Errore nella modifica del gruppo: ' + (error.response ? error.response.data.message : error.message));
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="admin-form-container">
       <h2>Modifica Gruppo</h2>
+      {isLoading && <div className="loading">Caricamento in corso...</div>}
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Descrizione" required />
@@ -106,7 +109,9 @@ const EditGroupForm = () => {
         <input type="text" name="youtube" value={formData.socialMedia.youtube} onChange={handleSocialMediaChange} placeholder="YouTube" />
         <input type="text" name="x" value={formData.socialMedia.x} onChange={handleSocialMediaChange} placeholder="X (Twitter)" />
         <input type="text" name="instagram" value={formData.socialMedia.instagram} onChange={handleSocialMediaChange} placeholder="Instagram" />
-        <button type="submit">Aggiorna Gruppo</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Gruppo'}
+        </button>
       </form>
     </div>
   );
