@@ -96,12 +96,17 @@ export const getFavorites = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'Utente non trovato' });
     }
-    const favorites = user.preferiti ? user.preferiti.map(fav => ({
-      id: fav.id._id,
-      name: fav.id.name,
-      type: fav.type,
-      coverImage: fav.id.coverImage || fav.id.photo
-    })) : [];
+    const favorites = user.preferiti ? user.preferiti.map(fav => {
+      if (fav.id && fav.id._id) {
+        return {
+          id: fav.id._id,
+          name: fav.id.name,
+          type: fav.type,
+          coverImage: fav.id.coverImage || fav.id.photo
+        };
+      }
+      return null;
+    }).filter(Boolean) : [];
     res.json(favorites);
   } catch (error) {
     console.error('Errore nel recupero dei preferiti:', error);
