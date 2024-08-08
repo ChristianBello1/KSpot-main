@@ -76,7 +76,18 @@ const EditMemberForm = () => {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach(key => {
         if (key === 'position') {
-          formDataToSend.append(key, formData[key].split(',').map(item => item.trim()).join(','));
+          formDataToSend.append(key, formData[key].split(',').map(item => item.trim()));
+        } else if (key === 'weight' || key === 'height') {
+          const value = formData[key];
+          if (value === 'N/A' || value === '') {
+            formDataToSend.append(key, 'N/A');
+          } else {
+            const numValue = parseFloat(value);
+            formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue);
+          }
+        } else if (key === 'birthday') {
+          // Assicurati che la data sia nel formato corretto
+          formDataToSend.append(key, formData[key] ? new Date(formData[key]).toISOString() : null);
         } else {
           formDataToSend.append(key, formData[key]);
         }

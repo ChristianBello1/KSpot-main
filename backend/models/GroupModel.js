@@ -11,7 +11,7 @@ const memberSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     validate: {
       validator: function(v) {
-        return v === 'N/A' || (typeof v === 'number' && v > 0);
+        return v === 'N/A' || (typeof v === 'number' && v > 0) || (typeof v === 'string' && !isNaN(parseFloat(v)) && parseFloat(v) > 0);
       },
       message: props => `${props.value} non è un'altezza valida!`
     }

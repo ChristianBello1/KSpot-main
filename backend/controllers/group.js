@@ -180,7 +180,12 @@ export const updateMember = async (req, res) => {
     }
 
     Object.keys(req.body).forEach(key => {
-      member[key] = req.body[key];
+      if (key === 'height' || key === 'weight') {
+        const value = req.body[key];
+        member[key] = value === 'N/A' ? 'N/A' : parseFloat(value) || null;
+      } else {
+        member[key] = req.body[key];
+      }
     });
 
     if (req.file) {
