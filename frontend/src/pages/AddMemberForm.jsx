@@ -38,7 +38,6 @@ const AddMemberForm = () => {
     e.preventDefault();
     setError('');
 
-    // Validazione dei campi obbligatori
     const requiredFields = ['name', 'stageName', 'birthday', 'position'];
     const missingFields = requiredFields.filter(field => !formData[field]);
     if (missingFields.length > 0) {
@@ -49,7 +48,18 @@ const AddMemberForm = () => {
     const formDataToSend = new FormData();
     Object.keys(formData).forEach(key => {
       if (key === 'position') {
-        formDataToSend.append(key, formData[key].split(',').map(item => item.trim()).join(','));
+        formDataToSend.append(key, formData[key].split(',').map(item => item.trim()));
+      } else if (key === 'weight' || key === 'height') {
+        const value = formData[key];
+        if (value === 'N/A' || value === '') {
+          formDataToSend.append(key, 'N/A');
+        } else {
+          const numValue = parseFloat(value);
+          formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue);
+        }
+      } else if (key === 'birthday') {
+        // Assicurati che la data sia nel formato corretto
+        formDataToSend.append(key, new Date(formData[key]).toISOString());
       } else {
         formDataToSend.append(key, formData[key]);
       }
@@ -77,8 +87,8 @@ const AddMemberForm = () => {
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" required />
         <input type="date" name="birthday" value={formData.birthday} onChange={handleChange} placeholder="Data di nascita" required />
         <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno zodiacale" />
-        <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm)" />
-        <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg)" />
+        <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm) o N/A" />
+        <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg) o N/A" />
         <input type="text" name="mbtiType" value={formData.mbtiType} onChange={handleChange} placeholder="Tipo MBTI" />
         <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
         <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Instagram" />

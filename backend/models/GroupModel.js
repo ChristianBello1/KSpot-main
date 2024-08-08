@@ -7,8 +7,24 @@ const memberSchema = new mongoose.Schema({
   stageName: { type: String },
   birthday: { type: Date },
   zodiacSign: { type: String },
-  height: { type: Number },
-  weight: { type: Number },
+  height: {
+    type: mongoose.Schema.Types.Mixed,
+    validate: {
+      validator: function(v) {
+        return v === 'N/A' || (typeof v === 'number' && v > 0);
+      },
+      message: props => `${props.value} non è un'altezza valida!`
+    }
+  },
+  weight: {
+    type: mongoose.Schema.Types.Mixed,
+    validate: {
+      validator: function(v) {
+        return v === 'N/A' || (typeof v === 'number' && v > 0);
+      },
+      message: props => `${props.value} non è un peso valido!`
+    }
+  },
   mbtiType: { type: String },
   nationality: { type: String },
   instagram: { type: String },
