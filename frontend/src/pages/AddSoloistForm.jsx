@@ -102,8 +102,8 @@ const AddSoloistForm = () => {
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" />
         <input type="date" name="birthday" value={formData.birthday} onChange={handleChange} placeholder="Data di nascita" />
         <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno zodiacale" />
-        <input type="number" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm)" />
-        <input type="number" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg)" />
+        <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm)" />
+        <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg)" />
         <input type="text" name="mbtiType" value={formData.mbtiType} onChange={handleChange} placeholder="Tipo MBTI" />
         <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
