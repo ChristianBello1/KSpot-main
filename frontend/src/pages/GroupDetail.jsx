@@ -330,7 +330,18 @@ const GroupDetail = () => {
               {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
               {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
               {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
-              {member.instagram && <div><strong>Instagram:</strong> <a href={`https://www.instagram.com/${member.instagram}`} target="_blank" rel="noopener noreferrer">@{member.instagram.replace(/^@/, '')}</a></div>}
+              {member.instagram && (
+                <div>
+                  <strong>Instagram:</strong>{' '}
+                  {(() => {
+                    const match = member.instagram.match(/instagram\.com\/([^/?]+)/);
+                    const username = match ? match[1] : 'profile';
+                    return (
+                      <a href={member.instagram} target="_blank" rel="noopener noreferrer">@{username}</a>
+                    );
+                  })()}
+                </div>
+              )}
             </div>
           </div>
         </div>
