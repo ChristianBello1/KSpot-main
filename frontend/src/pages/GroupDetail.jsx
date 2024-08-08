@@ -324,6 +324,7 @@ const GroupDetail = () => {
               {member.name && <div><strong>Real Name:</strong> {member.name}</div>}
               {member.stageName && <div><strong>Stage Name:</strong> {member.stageName}</div>}
               {member.birthday && <div><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</div>}
+              {member.zodiacSign && <div><strong>Zodiac Sign:</strong> {member.zodiacSign}</div>}
               {member.position && <div><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</div>}
               {member.height && <div><strong>Height:</strong> {member.height} cm</div>}
               {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
