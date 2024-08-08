@@ -370,6 +370,7 @@
   .card-body .bio p {
     margin: 5px 0 0;
     font-size: 16px;
+    text-align:justify;
   }
   
   .card-body .info {
