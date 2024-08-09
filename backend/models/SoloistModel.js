@@ -6,8 +6,24 @@ const soloistSchema = new mongoose.Schema({
   stageName: String,
   birthday: Date,
   zodiacSign: String,
-  height: Number,
-  weight: Number,
+  height: {
+    type: mongoose.Schema.Types.Mixed,
+    validate: {
+      validator: function(v) {
+        return v === 'N/A' || (typeof v === 'number' && v > 0) || (typeof v === 'string' && !isNaN(parseFloat(v)) && parseFloat(v) > 0);
+      },
+      message: props => `${props.value} non è un'altezza valida!`
+    }
+  },
+  weight: {
+    type: mongoose.Schema.Types.Mixed,
+    validate: {
+      validator: function(v) {
+        return v === 'N/A' || (typeof v === 'number' && v > 0) || (typeof v === 'string' && !isNaN(parseFloat(v)) && parseFloat(v) > 0);
+      },
+      message: props => `${props.value} non è un peso valido!`
+    }
+  },
   mbtiType: String,
   nationality: String,
   bio: String,

@@ -11,9 +11,21 @@ export const createSoloist = async (req, res) => {
         soloistData.socialMedia = JSON.parse(soloistData.socialMedia);
       } catch (error) {
         console.error("Errore nel parsing dei dati social media:", error);
-        // Se il parsing fallisce, inizializza socialMedia come un oggetto vuoto
         soloistData.socialMedia = {};
       }
+    }
+
+    // Gestione dei campi height e weight
+    if (soloistData.height === 'N/A') {
+      soloistData.height = 'N/A';
+    } else {
+      soloistData.height = parseFloat(soloistData.height) || null;
+    }
+
+    if (soloistData.weight === 'N/A') {
+      soloistData.weight = 'N/A';
+    } else {
+      soloistData.weight = parseFloat(soloistData.weight) || null;
     }
 
     if (req.file) {
@@ -34,6 +46,19 @@ export const updateSoloist = async (req, res) => {
     let updates = {};
     if (req.body.soloistData) {
       updates = JSON.parse(req.body.soloistData);
+
+      // Gestione dei campi height e weight
+      if (updates.height === 'N/A') {
+        updates.height = 'N/A';
+      } else if (updates.height) {
+        updates.height = parseFloat(updates.height) || null;
+      }
+
+      if (updates.weight === 'N/A') {
+        updates.weight = 'N/A';
+      } else if (updates.weight) {
+        updates.weight = parseFloat(updates.weight) || null;
+      }
     }
 
     if (req.file) {
