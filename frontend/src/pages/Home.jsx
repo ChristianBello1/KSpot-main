@@ -24,11 +24,11 @@ const Home = () => {
     fetchArtists();
   }, []);
 
-  const getArtistLink = (artist) => {
+  const getArtistName = (artist) => {
     if (artist.type.includes('group')) {
-      return `/group/${artist._id}`;
+      return artist.name;
     } else {
-      return `/soloist/${artist._id}`;
+      return artist.stageName || artist.name; // Usa stageName se disponibile, altrimenti usa name
     }
   };
 
@@ -45,28 +45,28 @@ const Home = () => {
         {artists.map(artist => (
           <div key={artist._id} className="col-md-4 mb-4">
             <Link to={getArtistLink(artist)} className="text-decoration-none">
-            <CardContainer className="group-card h-96 w-80">
-                  <CardBody className="relative w-full h-full bg-black overflow-hidden">
-                    <CardItem
-                      translateZ="100"
-                      className="w-full h-full"
-                    >
-                      <img 
-                        src={artist.coverImage || artist.photo} 
-                        className="h-full w-full object-cover"
-                        alt={artist.name} 
-                      />
-                    </CardItem>
-                    <div id='namegroup'>
+              <CardContainer className="group-card h-96 w-80">
+                <CardBody className="relative w-full h-full bg-black overflow-hidden">
+                  <CardItem
+                    translateZ="100"
+                    className="w-full h-full"
+                  >
+                    <img 
+                      src={artist.coverImage || artist.photo} 
+                      className="h-full w-full object-cover"
+                      alt={getArtistName(artist)} // Usa la nuova funzione qui
+                    />
+                  </CardItem>
+                  <div id='namegroup'>
                     <CardItem 
                       translateZ={30}
                       className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 namegroup"
                     >
-                      <h5 className="card-title">{capitalizeFirstLetter(artist.name)}</h5>
+                      <h5 className="card-title">{capitalizeFirstLetter(getArtistName(artist))}</h5>
                     </CardItem>
-                    </div>
-                  </CardBody>
-                </CardContainer>
+                  </div>
+                </CardBody>
+              </CardContainer>
             </Link>
           </div>
         ))}
