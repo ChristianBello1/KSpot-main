@@ -125,11 +125,7 @@ export const deleteSoloist = async (req, res) => {
 export const searchSoloists = async (query) => {
   try {
     const soloists = await Soloist.find({
-      $or: [
-        { name: { $regex: query, $options: 'i' } },
-        { stageName: { $regex: query, $options: 'i' } },
-        { bio: { $regex: query, $options: 'i' } }
-      ]
+      stageName: { $regex: query, $options: 'i' }
     });
     return soloists.map(soloist => ({...soloist.toObject(), type: 'soloist'}));
   } catch (error) {

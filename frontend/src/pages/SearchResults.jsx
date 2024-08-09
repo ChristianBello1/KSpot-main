@@ -45,10 +45,10 @@ const SearchResults = () => {
   };
 
   const getArtistName = (artist) => {
-    if (artist.type && artist.type.includes('group')) {
+    if (artist.type === 'group') {
       return artist.name;
     } else {
-      return artist.stageName || artist.name;
+      return artist.stageName;
     }
   };
 
