@@ -462,11 +462,12 @@
 .login-link {
   color: white;
   text-decoration: none;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 
 .login-link:hover {
-  color: white;
+  color: #4285F4;
   text-decoration: none;
   transform: scale(1.05);
 }
