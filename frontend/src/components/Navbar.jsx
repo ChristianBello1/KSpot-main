@@ -85,18 +85,20 @@ const CustomNavbar = () => {
                   <FormControl
                     type="search"
                     placeholder="Search"
-                    className="me-2"
+                    className="w-100"
                     aria-label="Search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  <button type="submit" className='searchb position-absolute top-50 end-0 translate-middle-y'>
+                  <button type="submit" className='searchb'>
                     <img className='search' src={search} alt=""/>
                   </button>
                 </div>
               </Form>
               {user && (
-                <Button variant="outline-light" onClick={handleLogout} className="mt-3" id='logout'>Logout</Button>
+                <Button variant="outline-light" onClick={handleLogout} id='logout'>
+                  Logout
+                </Button>
               )}
             </Nav>
           </Offcanvas.Body>

@@ -26,12 +26,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import NotFound from './pages/NotFound';
 import Footer from "./components/Footer";
+import Spinner from "./components/Spinner";
 
 function App() {
   const { loading } = useAuth();
 
   if (loading) {
-    return <div>Caricamento...</div>;
+    return <Spinner />;
   }
 
   return (
