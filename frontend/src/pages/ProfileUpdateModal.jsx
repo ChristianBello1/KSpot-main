@@ -58,7 +58,6 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
         await deleteUserAccount();
         logout();
         navigate('/');
-        // Opzionale: mostra un messaggio di conferma all'utente
         alert("Il tuo account è stato eliminato con successo.");
       } catch (error) {
         console.error("Errore nell'eliminazione dell'account:", error);
@@ -115,12 +114,12 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
               accept="image/*"
             />
           </Form.Group>
-          <Button variant="primary" type="submit" disabled={loading}>
+          <Button variant="primary" type="submit" disabled={loading} className="w-100 mb-3">
             {loading ? <Spinner animation="border" size="sm" /> : 'Salva Modifiche'}
           </Button>
         </Form>
         <hr />
-        <div className="d-flex justify-content-between align-items-center">
+        <div className="text-center mt-4">
           <Button 
             variant="danger" 
             onClick={handleDeleteAccount}
@@ -128,7 +127,6 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
           >
             {loading ? <Spinner animation="border" size="sm" /> : 'Elimina Account'}
           </Button>
-          <small className="text-muted">Questa azione è irreversibile</small>
         </div>
       </Modal.Body>
     </Modal>
