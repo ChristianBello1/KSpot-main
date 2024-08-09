@@ -38,8 +38,8 @@ const CustomNavbar = () => {
         <NavLink to="/" className="navbar-brand">
           <img className="logo" src={logo} alt="Strive Logo" />
         </NavLink>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" className="d-lg-none" onClick={handleShow}>
-          <img src={list} alt="Menu" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="d-lg-none custom-toggler" onClick={handleShow}>
+          <img src={list} alt="Menu" className="toggler-icon" />
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -99,7 +99,7 @@ const CustomNavbar = () => {
             {user && (
               <NavLink to="/profile" className="nav-link textp" onClick={handleClose}>
                 {user.avatar ? (
-                  <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
+                  <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '70px', height: '70px', marginRight: '10px' }} />
                 ) : (
                   <div className="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style={{ width: '50px', height: '50px', marginRight: '10px' }}>
                     {user.nome[0]}

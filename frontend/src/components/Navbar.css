@@ -113,3 +113,24 @@
         display: none;
     }
 }
+
+.custom-toggler {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.custom-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toggler-icon {
+    width: 24px;
+    height: 24px;
+}
