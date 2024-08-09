@@ -9,10 +9,10 @@
 }
 
 .background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 200%;
+  width: 100%;
   height: 100%;
   background-image: url('./assets/sfondo.png');
   background-repeat: repeat-x;
@@ -23,10 +23,10 @@
 
 @keyframes slideBackground {
   0% {
-    transform: translateX(0);
+    background-position: 0 0;
   }
   100% {
-    transform: translateX(-50%);
+    background-position: -100% 0;
   }
 }
 

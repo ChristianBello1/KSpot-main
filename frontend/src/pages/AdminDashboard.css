@@ -7,36 +7,29 @@
   color: white;
 }
 
+/* Titoli */
 .admin-dashboard h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* Pulsanti */
 .admin-dashboard .btn {
   margin: 5px;
-  text-decoration: none;
+  text-decoration: none !important;
   color: white;
+  white-space: nowrap;
+  padding: 5px 10px;
+  font-size: 0.9rem;
 }
 
-.admin-dashboard .card {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.admin-dashboard .card-body {
-  color: white;
+.btngroups {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.admin-dashboard .card-title,
-.admin-dashboard .card-text {
-  margin-bottom: 10px;
-}
-
+/* Input di ricerca */
 .admin-dashboard input[type="text"] {
   margin-bottom: 15px;
   padding: 10px;
@@ -47,16 +40,11 @@
   width: 100%;
 }
 
-.admin-dashboard input[type="text"]::placeholder{
+.admin-dashboard input[type="text"]::placeholder {
   color: white;
 }
 
-.btngroups {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
+/* Container delle card */
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -65,13 +53,40 @@
   width: 100%;
 }
 
+/* Wrapper delle card */
 .card-wrapper {
-  width: calc(50% - 10px); /* 50% della larghezza meno metà del gap */
-  min-width: 250px; /* Larghezza minima per evitare card troppo strette */
-  max-width: 100%; /* Assicura che non superi la larghezza del contenitore */
+  width: calc(50% - 10px);
+  min-width: 250px;
+  max-width: 100%;
   display: flex;
 }
 
+/* Card */
+.card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  margin-bottom: 15px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  flex: 1;
+}
+
+.card-title, .card-text {
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+/* Azioni delle card */
 .card-actions {
   display: flex;
   flex-wrap: wrap;
@@ -80,36 +95,19 @@
   margin-top: auto;
 }
 
+/* Media queries */
 @media (min-width: 768px) {
   .card-wrapper {
-      width: 50%;
+    width: 50%;
   }
-}
-
-.card {
-  height: 100%; /* Assicura che tutte le card abbiano la stessa altezza */
-  display: flex;
-  flex-direction: column;
-}
-
-.card-actions .btn {
-  text-decoration: none !important; /* Rimuove l'underline */
-  margin: 0; /* Rimuove il margine predefinito */
-  padding: 5px 10px; /* Ridotto il padding per adattarsi meglio */
-  font-size: 0.9rem; /* Ridotto leggermente la dimensione del font */
 }
 
 @media (max-width: 576px) {
   .card-wrapper {
-    width: 100%; /* Una card per riga su schermi molto piccoli */
+    width: 100%;
   }
 }
 
-.btn {
-  white-space: nowrap;
-}
-
-/* Stile per i pulsanti quando lo spazio è limitato */
 @media (max-width: 400px) {
   .card-actions {
     flex-direction: column;
@@ -121,21 +119,10 @@
   }
 }
 
+/* Allineamento form e container */
 .admin-dashboard .form-control,
 .card-container {
-  max-width: calc(100% - 40px); /* Sottrai il padding sinistro e destro del .admin-dashboard */
+  max-width: calc(100% - 40px);
   margin-left: auto;
   margin-right: auto;
-}
-
-.card-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 15px; /* Aggiunto per assicurare un po' di spazio interno */
-}
-
-.card-title, .card-text {
-  word-break: break-word; /* Aggiunto per prevenire overflow del testo */
 }

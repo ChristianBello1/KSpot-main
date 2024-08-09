@@ -15,6 +15,11 @@
     z-index: 1000;
 }
 
+.nav-link {
+    width: 100%;
+    padding: 10px 0;
+}
+
 .nav-link.active {
     color: rgb(196, 196, 196);
 }
@@ -64,7 +69,9 @@
 
 .offcanva1 {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .profile-text {
@@ -75,8 +82,8 @@
 }
 
 #logout {
-    margin-top: 0px !important;
-    margin-left:10px;
+    width: 100%;
+    margin: 10px 0;
 }
 
 .searchb {
@@ -100,6 +107,11 @@
 .search {
     width: 23px;
     margin-top: 0px;
+}
+
+.searchform {
+    width: 100%;
+    margin: 10px 0;
 }
 
 @media (max-width: 1032px) and (min-width: 992px) {
