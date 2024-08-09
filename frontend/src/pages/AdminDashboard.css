@@ -69,6 +69,7 @@
   width: calc(50% - 10px); /* 50% della larghezza meno metà del gap */
   min-width: 250px; /* Larghezza minima per evitare card troppo strette */
   max-width: 100%; /* Assicura che non superi la larghezza del contenitore */
+  display: flex;
 }
 
 .card-actions {
@@ -76,6 +77,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
+  margin-top: auto;
 }
 
 @media (min-width: 768px) {
@@ -86,11 +88,15 @@
 
 .card {
   height: 100%; /* Assicura che tutte le card abbiano la stessa altezza */
+  display: flex;
+  flex-direction: column;
 }
 
 .card-actions .btn {
   text-decoration: none !important; /* Rimuove l'underline */
   margin: 0; /* Rimuove il margine predefinito */
+  padding: 5px 10px; /* Ridotto il padding per adattarsi meglio */
+  font-size: 0.9rem; /* Ridotto leggermente la dimensione del font */
 }
 
 @media (max-width: 576px) {
@@ -120,4 +126,16 @@
   max-width: calc(100% - 40px); /* Sottrai il padding sinistro e destro del .admin-dashboard */
   margin-left: auto;
   margin-right: auto;
+}
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px; /* Aggiunto per assicurare un po' di spazio interno */
+}
+
+.card-title, .card-text {
+  word-break: break-word; /* Aggiunto per prevenire overflow del testo */
 }

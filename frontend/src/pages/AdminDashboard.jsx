@@ -71,8 +71,10 @@ const AdminDashboard = () => {
           <div key={artist._id} className="card-wrapper">
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title">{artist.name}</h5>
-                <p className="card-text">{artist.type}</p>
+                <div>
+                  <h5 className="card-title">{artist.name}</h5>
+                  <p className="card-text">{artist.type}</p>
+                </div>
                 <div className="card-actions">
                   <Link to={`/admin/edit-${artist.type.includes('solo') ? 'soloist' : 'group'}/${artist._id}`} className="btn btn-secondary">Modifica</Link>
                   {artist.type.includes('group') && (
