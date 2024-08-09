@@ -376,7 +376,9 @@ const GroupDetail = () => {
             </div>
           </form>
         ) : (
-          <p>Please <Link to="/login" className="text-white">login</Link> to add a comment.</p>
+          <p className="login-prompt">
+            Please <Link to="/login" className="login-link">login</Link> to add a comment.
+          </p>
         )}
       </div>
     </div>

@@ -25,6 +25,7 @@ import EditMemberForm from './pages/EditMemberForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import NotFound from './pages/NotFound';
+import Footer from "./components/Footer";
 
 function App() {
   const { loading } = useAuth();
@@ -65,6 +66,7 @@ function App() {
             <Route path="*" element={<div style={{color:'white'}}>404 Not Found</div>} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

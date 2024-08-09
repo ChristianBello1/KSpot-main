@@ -453,3 +453,24 @@
 .group-info{
   width: 230px;
 }
+
+.login-prompt {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.login-link:hover {
+  color: white;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+.comments-section {
+  padding-bottom: 50px; /* Aggiunge spazio sotto i commenti */
+}
