@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllArtists } from '../services/api';
 import { Link } from 'react-router-dom';
 import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';  // Assicurati che il percorso sia corretto
+import Spinner from '../components/Spinner';
 
 const Home = () => {
   const [artists, setArtists] = useState([]);
@@ -44,7 +45,9 @@ const Home = () => {
     return string.replace(/\b\w/g, char => char.toUpperCase());
   };
 
-  if (loading) return <div className="container mt-4">Loading...</div>;
+  if (loading) {
+    return <Spinner />;
+  }
   if (error) return <div className="container mt-4 text-danger">{error}</div>;
 
   return (
