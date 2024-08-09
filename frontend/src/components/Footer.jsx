@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="scrolling-text">
-        In caso di problemi manda email a: tua.email@esempio.com
+        In caso di problemi come scritte sbagliate, info non corrette, ecc.  manda email a: lulabchannel2@gmail.com
       </div>
     </footer>
   );
