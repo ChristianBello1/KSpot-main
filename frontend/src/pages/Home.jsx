@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { getAllArtists } from '../services/api';
 import { Link } from 'react-router-dom';
-import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';  // Assicurati che il percorso sia corretto
+import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
 import Spinner from '../components/Spinner';
+
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
 
 const Home = () => {
   const [artists, setArtists] = useState([]);
@@ -14,7 +22,7 @@ const Home = () => {
       try {
         setLoading(true);
         const data = await getAllArtists();
-        setArtists(data);
+        setArtists(shuffleArray(data)); // Mescola l'array solo all'inizio
         setLoading(false);
       } catch (error) {
         console.error('Error fetching artists:', error);
@@ -23,7 +31,7 @@ const Home = () => {
       }
     };
     fetchArtists();
-  }, []);
+  }, []); // Dipendenze vuote, quindi viene eseguito solo al montaggio del componente
 
   const getArtistLink = (artist) => {
     if (artist.type.includes('group')) {
