@@ -3,6 +3,7 @@ import { getGroupsByType } from '../services/api';
 import { Link } from 'react-router-dom';
 import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
 import './Pages.css';
+import Spinner from '../components/Spinner';
 
 const BoyGroups = () => {
   const [groups, setGroups] = useState([]);
@@ -29,7 +30,9 @@ const BoyGroups = () => {
     return string.replace(/\b\w/g, char => char.toUpperCase());
   };
 
-  if (loading) return <div className="container mt-4">Loading...</div>;
+  if (loading) {
+    return <Spinner />;
+  }
   if (error) return <div className="container mt-4 text-danger">{error}</div>;
 
   return (

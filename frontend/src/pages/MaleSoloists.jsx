@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getSoloistsByType } from '../services/api';
 import { Link } from 'react-router-dom';
 import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card'; // Assicurati che il percorso sia corretto
+import Spinner from '../components/Spinner';
 
 const MaleSoloists = () => {
   const [soloists, setSoloists] = useState([]);
@@ -27,7 +28,9 @@ const MaleSoloists = () => {
     return string.replace(/\b\w/g, char => char.toUpperCase());
   };
 
-  if (loading) return <div className="container mt-4">Loading...</div>;
+  if (loading) {
+    return <Spinner />;
+  }
   if (error) return <div className="container mt-4 text-danger">{error}</div>;
 
   return (
