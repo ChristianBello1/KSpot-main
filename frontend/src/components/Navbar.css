@@ -15,11 +15,12 @@
 .nav-link {
     color: white;
     white-space: nowrap;
-    transition: color 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .nav-link:hover, .nav-link:focus {
     color: rgb(200, 200, 200);
+    transform: scale(1.1);
 }
 
 .nav-link.active {
@@ -37,11 +38,21 @@
 
 .search {
     width: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.searchb:hover .search {
+    opacity: 0.7;
 }
 
 .textp {
     display: flex;
     align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.textp:hover {
+    transform: scale(1.1);
 }
 
 /* Stili per schermi più grandi */
@@ -53,6 +64,14 @@
 
     .form-control {
         width: 200px;
+    }
+
+    .navbar-collapse {
+        display: flex !important;
+    }
+
+    .offcanvas {
+        display: none !important;
     }
 }
 
@@ -81,6 +100,10 @@
 
     .offcanva .btn {
         margin-top: 10px;
+    }
+
+    .navbar-collapse {
+        display: none !important;
     }
 }
 

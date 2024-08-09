@@ -73,7 +73,6 @@ const CustomNavbar = () => {
                     {user.nome[0]}
                   </div>
                 )}
-                <span className="ms-2 d-none d-lg-inline">Profile</span>
               </NavLink>
               <Button variant="outline-light" onClick={handleLogout} size="sm">
                 Logout
