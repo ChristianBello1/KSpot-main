@@ -24,6 +24,14 @@ const Home = () => {
     fetchArtists();
   }, []);
 
+  const getArtistLink = (artist) => {
+    if (artist.type.includes('group')) {
+      return `/group/${artist._id}`;
+    } else {
+      return `/soloist/${artist._id}`;
+    }
+  };
+
   const getArtistName = (artist) => {
     if (artist.type.includes('group')) {
       return artist.name;
@@ -62,7 +70,7 @@ const Home = () => {
                       translateZ={30}
                       className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 namegroup"
                     >
-                      <h5 className="card-title">{capitalizeFirstLetter(getArtistName(artist))}</h5>
+                      <h5 className="card-title">{capitalizeFirstLetter(getArtistName(artist))}</h5> // E qui
                     </CardItem>
                   </div>
                 </CardBody>
