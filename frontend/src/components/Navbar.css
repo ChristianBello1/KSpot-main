@@ -93,14 +93,13 @@
     top: 50%;
     transform: translateY(-50%);
 }
-
 .searchb:hover {
     opacity: 0.5;
 }
 
 .search {
     width: 23px;
-    margin-top: -13px;
+    margin-top: 0px;
 }
 
 @media (max-width: 1032px) and (min-width: 992px) {

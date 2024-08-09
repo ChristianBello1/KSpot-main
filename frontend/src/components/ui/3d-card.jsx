@@ -32,22 +32,34 @@ export const CardContainer = ({
   const containerRef = useRef(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
-  const handleMouseMove = (e) => {
+  const handleMove = (clientX, clientY) => {
     if (!containerRef.current) return;
     const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 10; // Aumentato da 25 a 15 per un effetto più pronunciato
-    const y = (e.clientY - top - height / 2) / 10; // Aumentato da 25 a 15 per un effetto più pronunciato
+    const x = (clientX - left - width / 2) / 10;
+    const y = (clientY - top - height / 2) / 10;
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
   };
 
-  const handleMouseEnter = (e) => {
+  const handleMouseMove = (e) => {
+    handleMove(e.clientX, e.clientY);
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      handleMove(touch.clientX, touch.clientY);
+    }
+  };
+
+  const handleEnter = () => {
     setIsMouseEntered(true);
   };
 
-  const handleMouseLeave = (e) => {
+  const handleLeave = () => {
     setIsMouseEntered(false);
-    if (!containerRef.current) return;
-    containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    if (containerRef.current) {
+      containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    }
   };
 
   return (
@@ -58,9 +70,12 @@ export const CardContainer = ({
       >
         <div
           ref={containerRef}
-          onMouseEnter={handleMouseEnter}
+          onMouseEnter={handleEnter}
           onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
+          onMouseLeave={handleLeave}
+          onTouchStart={handleEnter}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleLeave}
           className={cn("flex items-center justify-center relative transition-all duration-200 ease-linear", className)}
           style={{ transformStyle: "preserve-3d" }}
         >
