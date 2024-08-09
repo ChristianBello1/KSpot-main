@@ -61,22 +61,55 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
 }
 
 .card-wrapper {
-  width: 100%;
-  padding: 0 10px;
-  margin-bottom: 15px;
+  width: calc(50% - 10px); /* 50% della larghezza meno metà del gap */
+  min-width: 250px; /* Larghezza minima per evitare card troppo strette */
+  max-width: 100%; /* Assicura che non superi la larghezza del contenitore */
 }
 
 .card-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 5px;
 }
 
 @media (min-width: 768px) {
   .card-wrapper {
       width: 50%;
+  }
+}
+
+.card {
+  height: 100%; /* Assicura che tutte le card abbiano la stessa altezza */
+}
+
+.card-actions .btn {
+  text-decoration: none; /* Rimuove l'underline */
+  margin: 0; /* Rimuove il margine predefinito */
+}
+
+@media (max-width: 576px) {
+  .card-wrapper {
+    width: 100%; /* Una card per riga su schermi molto piccoli */
+  }
+}
+
+.btn {
+  white-space: nowrap;
+}
+
+/* Stile per i pulsanti quando lo spazio è limitato */
+@media (max-width: 400px) {
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .card-actions .btn {
+    margin-bottom: 5px;
   }
 }
