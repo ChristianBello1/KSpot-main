@@ -70,7 +70,7 @@ const Home = () => {
                       translateZ={30}
                       className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 namegroup"
                     >
-                      <h5 className="card-title">{capitalizeFirstLetter(getArtistName(artist))}</h5> // E qui
+                      <h5 className="card-title">{capitalizeFirstLetter(getArtistName(artist))}</h5>
                     </CardItem>
                   </div>
                 </CardBody>
