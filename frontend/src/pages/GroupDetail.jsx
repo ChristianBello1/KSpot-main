@@ -370,7 +370,7 @@ const GroupDetail = () => {
       
         {user ? (
           <form onSubmit={handleCommentSubmit} className="comment-form">
-            <div className="mb-3 position-relative">
+            <div className="position-relative">
               <textarea 
                 className="form-control" 
                 id="comment" 
@@ -385,7 +385,7 @@ const GroupDetail = () => {
           </form>
         ) : (
           <p className="login-prompt">
-            Please <Link to="/login" className='login-link'>login</Link> to add a comment.
+            Please <Link to="/login" className="login-link">login</Link> to add a comment.
           </p>
         )}
       </div>

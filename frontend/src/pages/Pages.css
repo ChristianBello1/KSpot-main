@@ -62,15 +62,15 @@
 }
 
 .submit-triangle {
-    position: absolute;
-    right: 10px;
-    bottom: 15px;
-    background: none;
-    border: none;
-    color: #007bff;
-    font-size: 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .submit-triangle:hover {
@@ -475,3 +475,4 @@
 .comments-section {
   padding-bottom: 50px; /* Aggiunge spazio sotto i commenti */
 }
+

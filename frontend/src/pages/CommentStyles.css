@@ -110,3 +110,14 @@
   .hidden {
     display: none;
   }
+
+  .comment-form {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+  }

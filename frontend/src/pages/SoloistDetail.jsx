@@ -320,7 +320,7 @@ const SoloistDetail = () => {
       
         {user ? (
           <form onSubmit={handleCommentSubmit} className="comment-form">
-            <div className="mb-3 position-relative">
+            <div className="position-relative">
               <textarea 
                 className="form-control" 
                 id="comment" 
