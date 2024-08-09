@@ -318,34 +318,38 @@ const GroupDetail = () => {
             </div>
             <div className="col-md-8">
               <div className="card-body">
-                <h2 className='text-white'>{member.stageName}</h2>
+                <h2 className='text-white member-name'>{member.stageName}</h2>
                 {member.bio && (
                   <div className="bio mb-3">
                     <p>{member.bio}</p>
                   </div>
                 )}
-                <div className="info">
-                  {member.name && <div><strong>Real Name:</strong> {member.name}</div>}
-                  {member.stageName && <div><strong>Stage Name:</strong> {member.stageName}</div>}
-                  {member.birthday && <div><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</div>}
-                  {member.zodiacSign && <div><strong>Zodiac Sign:</strong> {member.zodiacSign}</div>}
-                  {member.position && <div><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</div>}
-                  {member.height && <div><strong>Height:</strong> {member.height} cm</div>}
-                  {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
-                  {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
-                  {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
-                  {member.instagram && (
-                    <div>
-                      <strong>Instagram:</strong>{' '}
-                      {(() => {
-                        const match = member.instagram.match(/instagram\.com\/([^/?]+)/);
-                        const username = match ? match[1] : 'profile';
-                        return (
-                          <a href={member.instagram} target="_blank" rel="noopener noreferrer">@{username}</a>
-                        );
-                      })()}
-                    </div>
-                  )}
+                <div className="info-container">
+                  <div className="info-column">
+                    {member.name && <div><strong>Real Name:</strong> {member.name}</div>}
+                    {member.stageName && <div><strong>Stage Name:</strong> {member.stageName}</div>}
+                    {member.birthday && <div><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</div>}
+                    {member.zodiacSign && <div><strong>Zodiac Sign:</strong> {member.zodiacSign}</div>}
+                    {member.position && <div><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</div>}
+                  </div>
+                  <div className="info-column">
+                    {member.height && <div><strong>Height:</strong> {member.height} cm</div>}
+                    {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
+                    {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
+                    {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
+                    {member.instagram && (
+                      <div>
+                        <strong>Instagram:</strong>{' '}
+                        {(() => {
+                          const match = member.instagram.match(/instagram\.com\/([^/?]+)/);
+                          const username = match ? match[1] : 'profile';
+                          return (
+                            <a href={member.instagram} target="_blank" rel="noopener noreferrer">@{username}</a>
+                          );
+                        })()}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
