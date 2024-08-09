@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Spinner } from 'react-bootstrap';
-import { updateUserProfile } from '../services/api';
+import { Modal, Button, Form, Spinner, Alert } from 'react-bootstrap';
+import { updateUserProfile, deleteUserAccount } from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,9 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
   });
   const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,6 +27,7 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     const formDataToSend = new FormData();
     Object.keys(formData).forEach(key => formDataToSend.append(key, formData[key]));
@@ -35,9 +41,31 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
       handleClose();
     } catch (error) {
       console.error("Errore nell'aggiornamento del profilo:", error);
-      // Qui puoi gestire l'errore, ad esempio mostrando un messaggio all'utente
+      setError("Si è verificato un errore durante l'aggiornamento del profilo. Riprova più tardi.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    const isConfirmed = window.confirm(
+      "Sei sicuro di voler eliminare il tuo account? Questa azione è irreversibile e comporterà la perdita di tutti i tuoi dati, inclusi commenti e preferiti."
+    );
+    if (isConfirmed) {
+      setLoading(true);
+      setError('');
+      try {
+        await deleteUserAccount();
+        logout();
+        navigate('/');
+        // Opzionale: mostra un messaggio di conferma all'utente
+        alert("Il tuo account è stato eliminato con successo.");
+      } catch (error) {
+        console.error("Errore nell'eliminazione dell'account:", error);
+        setError("Si è verificato un errore durante l'eliminazione dell'account. Riprova più tardi.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -47,6 +75,7 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
         <Modal.Title>Aggiorna Profilo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Nome</Form.Label>
@@ -90,6 +119,17 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
             {loading ? <Spinner animation="border" size="sm" /> : 'Salva Modifiche'}
           </Button>
         </Form>
+        <hr />
+        <div className="d-flex justify-content-between align-items-center">
+          <Button 
+            variant="danger" 
+            onClick={handleDeleteAccount}
+            disabled={loading}
+          >
+            {loading ? <Spinner animation="border" size="sm" /> : 'Elimina Account'}
+          </Button>
+          <small className="text-muted">Questa azione è irreversibile</small>
+        </div>
       </Modal.Body>
     </Modal>
   );

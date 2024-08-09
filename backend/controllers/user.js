@@ -1,4 +1,5 @@
 import User from '../models/UserModel.js';
+import { Comment } from '../models/CommentModel.js';
 import { Group } from '../models/GroupModel.js';
 import { Soloist } from '../models/SoloistModel.js';
 import mongoose from 'mongoose';
@@ -111,5 +112,50 @@ export const getFavorites = async (req, res) => {
   } catch (error) {
     console.error('Errore nel recupero dei preferiti:', error);
     res.status(500).json({ message: 'Errore nel recupero dei preferiti', error: error.message });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const userId = req.user.id;
+
+    // Elimina l'utente
+    const deletedUser = await User.findByIdAndDelete(userId).session(session);
+    if (!deletedUser) {
+      throw new Error('Utente non trovato');
+    }
+
+    // Elimina tutti i commenti dell'utente
+    await Comment.deleteMany({ author: userId }).session(session);
+
+    // Rimuovi l'utente dalla lista dei preferiti di gruppi e solisti
+    await Group.updateMany(
+      { favorites: userId },
+      { $pull: { favorites: userId } }
+    ).session(session);
+
+    await Soloist.updateMany(
+      { favorites: userId },
+      { $pull: { favorites: userId } }
+    ).session(session);
+
+    // Rimuovi i like dell'utente dai commenti
+    await Comment.updateMany(
+      { likes: userId },
+      { $pull: { likes: userId } }
+    ).session(session);
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({ message: 'Account e dati correlati eliminati con successo' });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error('Errore nell\'eliminazione dell\'account:', error);
+    res.status(500).json({ message: 'Errore nell\'eliminazione dell\'account', error: error.message });
   }
 };

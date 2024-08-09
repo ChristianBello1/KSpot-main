@@ -179,6 +179,14 @@ export const likeComment = (artistId, commentId, isGroup = true) => {
   return api.post(endpoint);
 };
 
-
+export const deleteUserAccount = async () => {
+  try {
+    const response = await api.delete('/profile');
+    return response.data;
+  } catch (error) {
+    console.error('Errore nell\'eliminazione dell\'account:', error);
+    throw error;
+  }
+};
 
 export default api;

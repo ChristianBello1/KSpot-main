@@ -38,6 +38,7 @@ router.get('/favorites', userController.getFavorites);
 
 // Rotte per l'aggiornamento del profilo utente
 router.patch('/profile', avatarUploader.single('avatar'), userController.updateProfile);
+router.delete('/profile', authMiddleware, userController.deleteAccount);
 
 // Rotte per l'amministrazione dei gruppi (solo per admin)
 router.post('/groups', 
