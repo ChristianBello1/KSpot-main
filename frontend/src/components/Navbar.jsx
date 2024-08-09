@@ -67,14 +67,14 @@ const CustomNavbar = () => {
             <div className="d-flex align-items-center">
               <NavLink to="/profile" className="nav-link textp me-2">
                 {user.avatar ? (
-                  <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '30px', height: '30px' }} />
+                  <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '50px', height: '50px' }} />
                 ) : (
                   <div className="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style={{ width: '30px', height: '30px' }}>
                     {user.nome[0]}
                   </div>
                 )}
               </NavLink>
-              <Button variant="outline-light" onClick={handleLogout} size="sm">
+              <Button id="logout-button" variant="outline-light" onClick={handleLogout} size="sm">
                 Logout
               </Button>
             </div>
@@ -99,7 +99,7 @@ const CustomNavbar = () => {
             {user && (
               <NavLink to="/profile" className="nav-link textp" onClick={handleClose}>
                 {user.avatar ? (
-                  <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '70px', height: '70px', marginRight: '10px' }} />
+                  <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
                 ) : (
                   <div className="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style={{ width: '50px', height: '50px', marginRight: '10px' }}>
                     {user.nome[0]}

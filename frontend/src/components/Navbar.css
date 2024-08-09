@@ -16,6 +16,7 @@
     color: white;
     white-space: nowrap;
     transition: transform 0.3s ease, color 0.3s ease;
+    font-size: 20px;
 }
 
 .nav-link:hover, .nav-link:focus {
@@ -64,6 +65,7 @@
 
     .form-control {
         width: 200px;
+        height: 38px;
     }
 
     .navbar-collapse {
@@ -87,7 +89,8 @@
 
     .offcanva .nav-link {
         color: white;
-        padding: 10px 0;
+        padding: 12px 0;
+        font-size: 20px;
     }
 
     .offcanva .textp {
@@ -133,4 +136,12 @@
 .toggler-icon {
     width: 24px;
     height: 24px;
+}
+
+#logout-button {
+    height: 38px; /* Altezza simile alla barra di ricerca */
+    padding: 0 15px; /* Aggiusta il padding orizzontale */
+    display: flex;
+    align-items: center;
+    font-size: 16px; /* Dimensione del testo leggermente aumentata */
 }
