@@ -62,6 +62,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  width: 100%;
 }
 
 .card-wrapper {
@@ -88,7 +89,7 @@
 }
 
 .card-actions .btn {
-  text-decoration: none; /* Rimuove l'underline */
+  text-decoration: none !important; /* Rimuove l'underline */
   margin: 0; /* Rimuove il margine predefinito */
 }
 
@@ -112,4 +113,11 @@
   .card-actions .btn {
     margin-bottom: 5px;
   }
+}
+
+.admin-dashboard .form-control,
+.card-container {
+  max-width: calc(100% - 40px); /* Sottrai il padding sinistro e destro del .admin-dashboard */
+  margin-left: auto;
+  margin-right: auto;
 }
