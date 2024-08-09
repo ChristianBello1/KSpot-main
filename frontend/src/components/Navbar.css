@@ -81,14 +81,17 @@
 
 .searchb {
     border: none;
-    position: absolute;
+    background-color: transparent;
+    padding: 0;
     width: 45px;
     height: 45px;
-    background-color: rgba(0, 0, 0, 0);
-    margin-left: 170px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .searchb:hover {
@@ -135,6 +138,8 @@
         height: 45px;
         display: flex;
         margin-bottom: 20px;
+        position: relative;
+        width: 100%;
     }
 
     .offcanva1 {

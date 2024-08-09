@@ -55,15 +55,16 @@ form {
 .googleLogin {
   display: flex;
   background-color: #4285f4;
-  margin-left: 90px;
-  margin-top: 20px;
-  width: 180px;
-  height:45px;
+  margin: 20px auto;
+  width: 220px;
+  height: 45px;
   color: white;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
   border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .googleLogin:hover {

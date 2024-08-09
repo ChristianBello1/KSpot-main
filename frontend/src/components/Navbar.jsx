@@ -32,6 +32,11 @@ const CustomNavbar = () => {
     handleClose();
   };
 
+  const handleNavigation = (path) => {
+    navigate(path);
+    handleClose();
+  };
+
   return (
     <>
       <Navbar expand="lg" className="mb-3 navbar1 custom-navbar">
@@ -59,12 +64,12 @@ const CustomNavbar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body className='offcanva'>
             <Nav className="justify-content-end flex-grow-1 pe-3 offcanva1">
-              <NavLink to="/boy-groups" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`}>Boy Groups</NavLink>
-              <NavLink to="/girl-groups" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`}>Girl Groups</NavLink>
-              <NavLink to="/male-soloists" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`}>Male Soloists</NavLink>
-              <NavLink to="/female-soloists" className={({ isActive }) => `nav-link text uno ${isActive ? 'active' : ''}`}>Female Soloists</NavLink>
+              <NavLink to="/boy-groups" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`} onClick={() => handleNavigation('/boy-groups')}>Boy Groups</NavLink>
+              <NavLink to="/girl-groups" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`} onClick={() => handleNavigation('/girl-groups')}>Girl Groups</NavLink>
+              <NavLink to="/male-soloists" className={({ isActive }) => `nav-link text ${isActive ? 'active' : ''}`} onClick={() => handleNavigation('/male-soloists')}>Male Soloists</NavLink>
+              <NavLink to="/female-soloists" className={({ isActive }) => `nav-link text uno ${isActive ? 'active' : ''}`} onClick={() => handleNavigation('/female-soloists')}>Female Soloists</NavLink>
               {user && (
-                <NavLink to="/profile" className={({ isActive }) => `nav-link textp d-flex align-items-center ${isActive ? 'active' : ''}`}>
+                <NavLink to="/profile" className={({ isActive }) => `nav-link textp d-flex align-items-center ${isActive ? 'active' : ''}`} onClick={() => handleNavigation('/profile')}>
                   {user.avatar ? (
                     <img src={user.avatar} alt="Profile" className="rounded-circle" style={{ width: '50px', height: '50px', marginRight: '20px' }} />
                   ) : (
@@ -76,15 +81,19 @@ const CustomNavbar = () => {
                 </NavLink>
               )}
               <Form className="d-flex mt-3 mt-lg-0 searchform" onSubmit={handleSearch}>
-                <FormControl
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button type="submit" className='searchb'><img className='search' src={search} alt=""/></button>
+                <div className="position-relative w-100">
+                  <FormControl
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <button type="submit" className='searchb position-absolute top-50 end-0 translate-middle-y'>
+                    <img className='search' src={search} alt=""/>
+                  </button>
+                </div>
               </Form>
               {user && (
                 <Button variant="outline-light" onClick={handleLogout} className="mt-3" id='logout'>Logout</Button>
