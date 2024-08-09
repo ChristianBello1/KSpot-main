@@ -1,3 +1,12 @@
+/* Stili generali */
+.navbar1 {
+    background-color: rgba(0, 0, 0, 0.514);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 1000;
+}
+
+/* Logo */
 .logo {
     width: 100px;
     margin-left: 20px;
@@ -8,25 +17,28 @@
     transform: scale(1.1);
 }
 
-.navbar1 {
-    background-color: rgba(0, 0, 0, 0.514);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    position: relative;
-    z-index: 1000;
-}
-
+/* Stili per i link di navigazione */
 .nav-link {
     width: 100%;
     padding: 10px 0;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: scale(1.1);
+    color: white;
 }
 
 .nav-link.active {
     color: rgb(196, 196, 196);
 }
 
-
+/* Pulsante per aprire il menu offcanvas */
 .list {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
     width: 60px;
     height: 60px;
     border-radius: 30px;
@@ -39,51 +51,19 @@
     background-color: rgba(97, 97, 97, 0.5);
 }
 
-.text {
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
-    transition: transform 0.3s ease;
-}
-
-.text:hover {
-    transform: scale(1.1);
-    color: white;
-}
-
-.uno{
-    margin-right: 20px;
-}
-
-.textp {
-    transition: transform 0.3s ease;
-    margin-left: 20px;
-    display: flex;
-    align-items: center;
-}
-
-.textp:hover {
-    transform: scale(1.1);
-    color: white;
-}
-
+/* Stili per il menu offcanvas */
 .offcanva1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    padding: 0 20px;
 }
 
-.profile-text {
-    margin: 0;
-    font-size: 1.2rem;
-    color: white;
-    display: none !important;
-}
-
-#logout {
-    width: 100%;
-    margin: 10px 0;
+/* Stili per il form di ricerca */
+.searchform {
+    width: calc(100% - 40px);
+    margin: 10px auto;
 }
 
 .searchb {
@@ -96,30 +76,46 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
 }
+
 .searchb:hover {
     opacity: 0.5;
 }
 
 .search {
     width: 23px;
-    margin-top: 0px;
 }
 
-.searchform {
+/* Stili per il pulsante di logout */
+#logout {
+    width: calc(100% - 40px);
+    margin: 10px auto;
+}
+
+/* Stili per il link del profilo */
+.textp {
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
     width: 100%;
-    margin: 10px 0;
 }
 
-@media (max-width: 1032px) and (min-width: 992px) {
-    .search{
-        margin-left: -25px;
-    }
+.textp:hover {
+    transform: scale(1.1);
+    color: white;
 }
 
+.profile-text {
+    margin: 0;
+    font-size: 1.2rem;
+    color: white;
+    display: none !important;
+}
+
+/* Media queries */
 @media (max-width: 991px) {
     .custom-navbar .navbar-nav {
         align-items: flex-start;
@@ -135,46 +131,27 @@
         align-items: center;
     }
 
-    .searchb {
-        margin-left: 275px !important;
-        margin-top: -5px !important;
-    }
-
-    .text {
-        margin-left: 20px;
-    }
-
-    .searchform {
-        margin-left: 20px;
-        height: 45px;
-        display: flex;
-        margin-bottom: 20px;
-        position: relative;
-        width: 100%;
+    .text, .textp {
+        margin-left: 0;
     }
 
     .offcanva1 {
         display: block;
     }
 
-    #logout {
-        width: 100%;
-        margin-left: 10px;
-    }
-
-    .search {
-        margin-top: 0px !important;
-    }
-
     .textp .profile-text {
         display: inline-block !important;
         margin-left: 10px;
-        font-size: 1.2rem;
-        color: white;
     }
 
     .textp img,
     .textp .rounded-circle {
         margin-right: 10px;
+    }
+}
+
+@media (max-width: 1032px) and (min-width: 992px) {
+    .search {
+        margin-left: -25px;
     }
 }

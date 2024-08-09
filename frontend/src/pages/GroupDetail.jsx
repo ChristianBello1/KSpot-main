@@ -316,7 +316,7 @@ const GroupDetail = () => {
           <div className="card-body">
             {member.bio && (
               <div className="bio">
-                <h2>{member.stageName}</h2>
+                <h2 className='text-white'>{member.stageName}</h2>
                 <p>{member.bio}</p>
               </div>
             )}
