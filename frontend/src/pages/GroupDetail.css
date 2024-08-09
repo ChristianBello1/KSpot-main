@@ -1,0 +1,32 @@
+.member-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+  }
+  
+  .member-card .card-body {
+    color: white;
+  }
+  
+  .member-card .info {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .member-card .info > div {
+    flex: 0 0 50%;
+    margin-bottom: 10px;
+  }
+  
+  @media (max-width: 767px) {
+    .member-card .row {
+      flex-direction: column;
+    }
+  
+    .member-card .col-md-4 {
+      margin-bottom: 15px;
+    }
+  
+    .member-card .info > div {
+      flex: 0 0 100%;
+    }
+  }

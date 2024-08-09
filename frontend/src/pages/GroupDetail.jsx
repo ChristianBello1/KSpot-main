@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaInstagram, FaPaperPlane } from 'react-icons/fa';
 import './CommentStyles.css';
 import './Pages.css';
+import './GroupDetail.css';
 
 const GroupDetail = () => {
   const [group, setGroup] = useState(null);
@@ -304,44 +305,49 @@ const GroupDetail = () => {
     </div>
   </div>
 </div>
-
   
-      <div className="members-section mt-5">
+<div className="members-section mt-5">
   <h2 style={{ marginBottom: '40px' }} className='title'>Members</h2>
   <div className="row">
     {group.members.map((member, index) => (
-      <div key={member._id || index} className="col-md-12 mb-3">
+      <div key={member._id || index} className="col-12 mb-3">
         <div className="card member-card">
-          {member.photo && <img src={member.photo} alt={member.name} className="card-img-left" />}
-          <div className="card-body">
-            {member.bio && (
-              <div className="bio">
+          <div className="row g-0">
+            <div className="col-md-4">
+              {member.photo && <img src={member.photo} alt={member.name} className="img-fluid rounded-start" />}
+            </div>
+            <div className="col-md-8">
+              <div className="card-body">
                 <h2 className='text-white'>{member.stageName}</h2>
-                <p>{member.bio}</p>
-              </div>
-            )}
-            <div className="info">
-              {member.name && <div><strong>Real Name:</strong> {member.name}</div>}
-              {member.stageName && <div><strong>Stage Name:</strong> {member.stageName}</div>}
-              {member.birthday && <div><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</div>}
-              {member.zodiacSign && <div><strong>Zodiac Sign:</strong> {member.zodiacSign}</div>}
-              {member.position && <div><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</div>}
-              {member.height && <div><strong>Height:</strong> {member.height} cm</div>}
-              {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
-              {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
-              {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
-              {member.instagram && (
-                <div>
-                  <strong>Instagram:</strong>{' '}
-                  {(() => {
-                    const match = member.instagram.match(/instagram\.com\/([^/?]+)/);
-                    const username = match ? match[1] : 'profile';
-                    return (
-                      <a href={member.instagram} target="_blank" rel="noopener noreferrer">@{username}</a>
-                    );
-                  })()}
+                {member.bio && (
+                  <div className="bio mb-3">
+                    <p>{member.bio}</p>
+                  </div>
+                )}
+                <div className="info">
+                  {member.name && <div><strong>Real Name:</strong> {member.name}</div>}
+                  {member.stageName && <div><strong>Stage Name:</strong> {member.stageName}</div>}
+                  {member.birthday && <div><strong>Birthday:</strong> {new Date(member.birthday).toLocaleDateString()}</div>}
+                  {member.zodiacSign && <div><strong>Zodiac Sign:</strong> {member.zodiacSign}</div>}
+                  {member.position && <div><strong>Position:</strong> {Array.isArray(member.position) ? member.position.join(', ') : member.position}</div>}
+                  {member.height && <div><strong>Height:</strong> {member.height} cm</div>}
+                  {member.weight && <div><strong>Weight:</strong> {member.weight} kg</div>}
+                  {member.mbtiType && <div><strong>MBTI Type:</strong> {member.mbtiType}</div>}
+                  {member.nationality && <div><strong>Nationality:</strong> {member.nationality}</div>}
+                  {member.instagram && (
+                    <div>
+                      <strong>Instagram:</strong>{' '}
+                      {(() => {
+                        const match = member.instagram.match(/instagram\.com\/([^/?]+)/);
+                        const username = match ? match[1] : 'profile';
+                        return (
+                          <a href={member.instagram} target="_blank" rel="noopener noreferrer">@{username}</a>
+                        );
+                      })()}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -349,9 +355,7 @@ const GroupDetail = () => {
     ))}
   </div>
 </div>
-
-
-  
+ 
       <div className="comments-section mt-4">
         <h2 className='title1'>Comments</h2>
         {group.comments && group.comments.length > 0 ? (
