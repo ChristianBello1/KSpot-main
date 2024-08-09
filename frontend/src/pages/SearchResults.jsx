@@ -44,6 +44,14 @@ const SearchResults = () => {
     }
   };
 
+  const getArtistName = (artist) => {
+    if (artist.type && artist.type.includes('group')) {
+      return artist.name;
+    } else {
+      return artist.stageName || artist.name;
+    }
+  };
+
   const capitalizeFirstLetter = (string) => {
     return string.replace(/\b\w/g, char => char.toUpperCase());
   };
@@ -78,7 +86,7 @@ const SearchResults = () => {
                       translateZ={30}
                       className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 namegroup"
                     >
-                      <h5 className="card-title">{capitalizeFirstLetter(artist.name)}</h5>
+                      <h5 className="card-title">{capitalizeFirstLetter(getArtistName(artist))}</h5>
                     </CardItem>
                     </div>
                   </CardBody>

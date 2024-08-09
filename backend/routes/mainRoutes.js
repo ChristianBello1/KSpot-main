@@ -20,7 +20,7 @@ router.get('/search', async (req, res) => {
     const groups = await groupController.searchGroups(q);
     const soloists = await soloistController.searchSoloists(q);
     const results = [...groups, ...soloists];
-    res.json(results.length > 0 ? results : { message: "Nessun risultato trovato" });
+    res.json(results);
   } catch (error) {
     console.error("Errore nella ricerca:", error);
     res.status(500).json({ message: "Errore durante la ricerca" });

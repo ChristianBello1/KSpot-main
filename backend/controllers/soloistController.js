@@ -131,7 +131,7 @@ export const searchSoloists = async (query) => {
         { bio: { $regex: query, $options: 'i' } }
       ]
     });
-    return soloists;
+    return soloists.map(soloist => ({...soloist.toObject(), type: 'soloist'}));
   } catch (error) {
     console.error('Errore nella ricerca dei solisti:', error);
     throw error;

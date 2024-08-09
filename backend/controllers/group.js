@@ -146,7 +146,7 @@ export const searchGroups = async (query) => {
         { 'members.stageName': { $regex: query, $options: 'i' } }
       ]
     });
-    return groups;
+    return groups.map(group => ({...group.toObject(), type: 'group'}));
   } catch (error) {
     console.error('Errore nella ricerca dei gruppi:', error);
     throw error;
