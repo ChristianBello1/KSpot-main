@@ -77,7 +77,7 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Nome</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
               name="nome"
@@ -87,7 +87,7 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Cognome</Form.Label>
+            <Form.Label>Surname</Form.Label>
             <Form.Control
               type="text"
               name="cognome"
@@ -107,7 +107,7 @@ const ProfileUpdateModal = ({ show, handleClose, profileData, onUpdate }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Nuova Immagine Profilo</Form.Label>
+            <Form.Label>New Profile Image</Form.Label>
             <Form.Control
               type="file"
               onChange={handleFileChange}

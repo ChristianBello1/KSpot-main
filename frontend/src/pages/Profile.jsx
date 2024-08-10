@@ -101,8 +101,8 @@ const Profile = () => {
               {renderAvatar()}
             </div>
             <div className="profile-details">
-              <p>Nome: {profileData.nome}</p>
-              <p>Cognome: {profileData.cognome}</p>
+              <p>Name: {profileData.nome}</p>
+              <p>Surname: {profileData.cognome}</p>
               <p>Email: {profileData.email}</p>
             </div>
             <div className="profile-settings">
@@ -119,7 +119,7 @@ const Profile = () => {
             </div>
           )}
           
-          <h1 className='h1'>Preferiti:</h1>
+          <h1 className='h1'>Favorites:</h1>
           <div className="row favorites">
             {renderFavorites()}
           </div>
