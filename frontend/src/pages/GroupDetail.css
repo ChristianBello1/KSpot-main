@@ -8,7 +8,7 @@
 }
 
 .member-name {
-  font-size: 2.5rem;
+  font-size: 35px;
   margin-bottom: 1rem;
 }
 
@@ -31,16 +31,29 @@
     flex-direction: column;
   }
 
+  .member-card .col-md-4,
+  .member-card .col-md-8,
+  .member-card .card-body,
+  .info-container,
+  .info-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .member-card .col-md-4 {
     margin-bottom: 15px;
   }
 
-  .member-name {
-    font-size: 2rem;
+  .member-card img {
+    border-radius: 10px;
+    max-width: 80%;
+    height: auto;
   }
 
-  .info-container {
-    flex-direction: column;
+  .member-name {
+    font-size: 30px;
   }
 
   .info-column {
