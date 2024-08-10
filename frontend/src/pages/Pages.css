@@ -1,4 +1,4 @@
-/* ===== General Styles ===== */
+/* General Styles */
 .container {
   max-width: 100%;
   overflow: hidden;
@@ -6,21 +6,13 @@
   box-sizing: border-box;
 }
 
-/* ===== Typography ===== */
-.title, .title1, .title1s {
+/* Typography */
+.title {
   color: white;
   font-size: 40px;
   font-weight: 500;
-  padding-bottom: 10px;
-}
-
-.title {
   border-bottom: 1px solid white;
-}
-
-.title1s {
-  width: 240px;
-  margin-left: 20px;
+  padding-bottom: 10px;
 }
 
 .notfound {
@@ -29,7 +21,23 @@
   font-size: 25px;
 }
 
-/* ===== Card Styles ===== */
+.title1 {
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+
+.title1s {
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  padding-bottom: 10px;
+  width: 240px;
+  margin-left: 20px;
+}
+
+/* Card Styles */
 .card {
   background-color: white;
   width: 350px;
@@ -39,6 +47,7 @@
   width: 250px;
 }
 
+/* Group and Artist Styles */
 #namegroup {
   transition: transform 0.3s ease;
 }
@@ -53,78 +62,11 @@
   justify-content: center;
 }
 
-/* ===== Member Card Styles ===== */
-.member-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: white;
-  width: 100%;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-}
-
-.card-img-left {
-  width: 250px;
-  height: 250px;
-  margin-right: 20px;
-  border-radius: 8px;
-  object-fit: cover;
-  object-position: center;
-}
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding-left: 20px;
-}
-
-.member-name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.card-body .bio {
-  margin-bottom: 15px;
-}
-
-.card-body .bio h2 {
-  margin: 0;
-  font-size: 30px;
-  color: #333;
-  font-weight: 500;
-}
-
-.card-body .bio p {
-  margin: 5px 0 0;
-  font-size: 16px;
-  text-align: justify;
-}
-
-.card-body .info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.card-body .info div {
-  flex: 1;
-  min-width: 200px;
-  margin-bottom: 10px;
-}
-
 .biogroup {
   text-align: left;
 }
 
-/* ===== Social Icons ===== */
+/* Social Media Icons */
 .social-icons {
   display: flex;
   gap: 15px;
@@ -141,10 +83,9 @@
   transform: scale(1.2);
 }
 
-/* ===== Comments Section ===== */
+/* Comments Section */
 .comments-section {
   color: black;
-  padding-bottom: 50px;
 }
 
 .comment-form, .reply-form {
@@ -167,6 +108,36 @@
   transform: scale(1.2);
 }
 
+/* Button Styles */
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn-icon:hover {
+  opacity: 0.8;
+}
+
+.like-button {
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.like-button.liked {
+  color: #dc3545;
+}
+
+.like-button:hover, .like-button:focus {
+  color: #dc3545;
+}
+
+/* Reply Styles */
 .reply-form-container {
   max-height: 0;
   opacity: 0;
@@ -185,86 +156,7 @@
   padding-bottom: 10px;
 }
 
-/* ===== Buttons ===== */
-.btn {
-  border: none !important;
-}
-
-.btn-icon {
-  background: none;
-  border: none;
-  padding: 0;
-  margin-right: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
-}
-
-.btn-icon:hover {
-  opacity: 0.8;
-}
-
-.btn-sm {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  border-radius: 0.2rem;
-}
-
-.btn-outline-secondary {
-  color: #6c757d;
-  border: 1px solid #6c757d !important;
-}
-
-.btn-outline-secondary:hover {
-  color: #fff;
-  background-color: #6c757d;
-}
-
-.like-button {
-  color: #007bff;
-  transition: color 0.3s ease;
-}
-
-.like-button.liked {
-  color: #dc3545;
-}
-
-.like-button:hover, .like-button:focus {
-  color: #dc3545;
-}
-
-.replies-toggle {
-  background: none;
-  border: none;
-  color: inherit;
-  text-decoration: none;
-  padding: 0;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* ===== Login Prompt ===== */
-.login-prompt {
-  color: white;
-  margin-bottom: 20px;
-}
-
-.login-link {
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.login-link:hover {
-  color: #4285F4;
-  text-decoration: none;
-  transform: scale(1.05);
-}
-
-/* ===== Soloist Info ===== */
+/* Soloist Info Styles */
 .soloist-info-container {
   display: flex;
   flex-direction: column;
@@ -303,7 +195,7 @@
   word-wrap: break-word;
 }
 
-/* ===== Group Info ===== */
+/* Group Info Styles */
 .group-info-social-media {
   display: flex;
   flex-wrap: wrap;
@@ -314,7 +206,26 @@
   width: 230px;
 }
 
-/* ===== Media Queries ===== */
+/* Login Prompt Styles */
+.login-prompt {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.login-link:hover {
+  color: #4285F4;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+/* Responsive Styles */
 @media screen and (min-width: 1024px) {
   .soloist-info-container {
       flex-direction: row;
@@ -341,49 +252,7 @@
 }
 
 @media (max-width: 768px) {
-  .member-card {
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
-  }
-
-  .card-img-left {
-      width: 200px;
-      height: 200px;
-      margin-right: 0;
-      margin-bottom: 15px;
-  }
-
-  .card-body {
-      align-items: center;
-      text-align: center;
-      padding-left: 0;
-  }
-
-  .card-body .bio {
-      margin-bottom: 15px;
-  }
-
-  .card-body .bio h2 {
-      font-size: 30px;
-  }
-
-  .card-body .info {
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-  }
-
-  .card-body .info div {
-      min-width: auto;
-      width: 100%;
-  }
-
   .title1 {
       margin-top: 20px;
-  }
-
-  .member-name {
-      font-size: 22px;
   }
 }

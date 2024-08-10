@@ -8,7 +8,7 @@
 }
 
 .member-name {
-  font-size: 2.5rem;
+  font-size: 35px;
   margin-bottom: 1rem;
 }
 
@@ -26,6 +26,10 @@
   margin-bottom: 10px;
 }
 
+.member-card img {
+  border-radius: 10px;
+}
+
 @media (max-width: 767px) {
   .member-card .row {
     flex-direction: column;
@@ -33,10 +37,13 @@
 
   .member-card .col-md-4 {
     margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
   }
 
-  .member-name {
-    font-size: 2rem;
+  .member-card img {
+    max-width: 80%;
+    height: auto;
   }
 
   .info-container {
