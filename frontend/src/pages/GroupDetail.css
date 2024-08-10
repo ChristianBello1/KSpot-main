@@ -8,7 +8,7 @@
 }
 
 .member-name {
-  font-size: 35px;  /* Modificato da 2.5rem a 35px */
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
@@ -31,23 +31,16 @@
     flex-direction: column;
   }
 
-  .member-card .col-md-4,
-  .member-card .col-md-8,
-  .member-card .card-body,
-  .info-container,
-  .info-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
   .member-card .col-md-4 {
     margin-bottom: 15px;
   }
 
-  .member-card img {
-    border-radius: 10px;  /* Aggiunto per arrotondare gli angoli dell'immagine */
+  .member-name {
+    font-size: 2rem;
+  }
+
+  .info-container {
+    flex-direction: column;
   }
 
   .info-column {
