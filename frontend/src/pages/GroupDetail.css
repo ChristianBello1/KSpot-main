@@ -8,7 +8,7 @@
 }
 
 .member-name {
-  font-size: 35px;
+  font-size: 35px;  /* Modificato da 2.5rem a 35px */
   margin-bottom: 1rem;
 }
 
@@ -26,28 +26,28 @@
   margin-bottom: 10px;
 }
 
-.member-card img {
-  border-radius: 10px;
-}
-
 @media (max-width: 767px) {
   .member-card .row {
     flex-direction: column;
   }
 
+  .member-card .col-md-4,
+  .member-card .col-md-8,
+  .member-card .card-body,
+  .info-container,
+  .info-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .member-card .col-md-4 {
     margin-bottom: 15px;
-    display: flex;
-    justify-content: center;
   }
 
   .member-card img {
-    max-width: 80%;
-    height: auto;
-  }
-
-  .info-container {
-    flex-direction: column;
+    border-radius: 10px;  /* Aggiunto per arrotondare gli angoli dell'immagine */
   }
 
   .info-column {
