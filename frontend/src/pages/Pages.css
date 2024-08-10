@@ -1,64 +1,154 @@
-.title {
-    color: white;
-    font-size: 40px;
-    font-weight: 500;
-    border-bottom: 1px solid white;
-    padding-bottom: 10px;
+/* ===== General Styles ===== */
+.container {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
-.notfound {
-    color: white;
-    margin-top: 30px;
-    font-size: 25px;
-}
-
-.title1 {
-    color: white;
-    font-size: 40px;
-    font-weight: 500;
-    padding-bottom: 10px;
-}
-
-.title1s {
+/* ===== Typography ===== */
+.title, .title1, .title1s {
   color: white;
   font-size: 40px;
   font-weight: 500;
   padding-bottom: 10px;
+}
+
+.title {
+  border-bottom: 1px solid white;
+}
+
+.title1s {
   width: 240px;
   margin-left: 20px;
 }
 
+.notfound {
+  color: white;
+  margin-top: 30px;
+  font-size: 25px;
+}
+
+/* ===== Card Styles ===== */
+.card {
+  background-color: white;
+  width: 350px;
+}
+
+.card-img-top {
+  width: 250px;
+}
+
+#namegroup {
+  transition: transform 0.3s ease;
+}
+
+#namegroup:hover {
+  transform: scale(1.2);
+}
+
+.namegroup {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Member Card Styles ===== */
+.member-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.card-img-left {
+  width: 250px;
+  height: 250px;
+  margin-right: 20px;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 20px;
+}
+
+.member-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.card-body .bio {
+  margin-bottom: 15px;
+}
+
+.card-body .bio h2 {
+  margin: 0;
+  font-size: 30px;
+  color: #333;
+  font-weight: 500;
+}
+
+.card-body .bio p {
+  margin: 5px 0 0;
+  font-size: 16px;
+  text-align: justify;
+}
+
+.card-body .info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.card-body .info div {
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 10px;
+}
+
+.biogroup {
+  text-align: left;
+}
+
+/* ===== Social Icons ===== */
 .social-icons {
-    display: flex;
-    gap: 15px;
-    margin-left: 20px;
+  display: flex;
+  gap: 15px;
+  margin-left: 20px;
 }
 
 .social-icon {
-    font-size: 40px;
-    color: white;
-    transition: transform 0.3s ease;
+  font-size: 40px;
+  color: white;
+  transition: transform 0.3s ease;
 }
 
 .social-icon:hover {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
-.card{
-    background-color: white;
-    width: 350px;
-}
-
-.card-img-top{
-    width: 250px;
-}
-
+/* ===== Comments Section ===== */
 .comments-section {
-    color: black;
+  color: black;
+  padding-bottom: 50px;
 }
 
 .comment-form, .reply-form {
-    position: relative;
+  position: relative;
 }
 
 .submit-triangle {
@@ -74,386 +164,88 @@
 }
 
 .submit-triangle:hover {
-    transform: scale(1.2);
-}
-
-.like-button {
-    color: #007bff;
-    transition: color 0.3s ease;
-}
-
-.like-button.liked {
-    color: #dc3545;
-}
-
-.like-button:hover, .like-button:focus {
-    color: #dc3545;
-}
-
-.btn-icon {
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    color: inherit;
-    text-decoration: none;
-}
-
-.btn-icon:hover {
-    opacity: 0.8;
-}
-
-.replies-toggle {
-    background: none;
-    border: none;
-    color: inherit;
-    text-decoration: none;
-    padding: 0;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    border-radius: 0.2rem;
-}
-
-.btn-outline-secondary {
-    color: #6c757d;
-    border: 1px solid #6c757d !important;
-}
-
-.btn-outline-secondary:hover {
-    color: #fff;
-    background-color: #6c757d;
-}
-
-.btn-icon,
-.submit-triangle,
-.replies-toggle,
-.btn-sm,
-.btn-outline-secondary {
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-.btn-icon:hover,
-.btn-icon:focus,
-.submit-triangle:hover,
-.submit-triangle:focus,
-.replies-toggle:hover,
-.replies-toggle:focus,
-.btn-sm:hover,
-.btn-sm:focus,
-.btn-outline-secondary:hover,
-.btn-outline-secondary:focus {
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-.btn:focus, .btn:active:focus, .btn.active:focus {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.btn-link:hover {
-    text-decoration: none;
-}
-
-.btn {
-    border: none !important;
+  transform: scale(1.2);
 }
 
 .reply-form-container {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 .reply-form-container.show {
-    max-height: 300px; /* Adjust this value based on your needs */
-    opacity: 1;
-    transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
+  max-height: 300px;
+  opacity: 1;
+  transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
 }
 
 .reply-form {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.container {
-    max-width: 100%;
-    overflow: hidden;
-    padding: 0 15px; /* Aggiungi padding per evitare che il contenuto tocchi i bordi */
-    box-sizing: border-box; /* Assicura che padding e bordo siano inclusi nella larghezza totale */
+/* ===== Buttons ===== */
+.btn {
+  border: none !important;
 }
 
-.soloist-info-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Spazio tra gli elementi */
-}
-  
-  .soloist-image {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  .soloist-details-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Spazio tra gli elementi */
-    overflow: hidden; /* Evita overflow dei contenuti */
-  }
-  
-  .soloist-details-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .soloist-details, .soloist-social {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .soloist-bio {
-    width: 100%; /* Assicura che la biografia occupi tutta la larghezza del contenitore genitore */
-    box-sizing: border-box; /* Include padding e border nella larghezza e altezza */
-    overflow-wrap: break-word; /* Forza il wrapping del testo lungo */
-    word-wrap: break-word; /* Per garantire il wrapping su tutti i browser */
-  }
-  
-  @media screen and (min-width: 1024px) {
-    .soloist-info-container {
-      flex-direction: row;
-      gap: 20px;
-    }
-  
-    .soloist-image {
-      flex: 0 0 400px;
-    }
-  
-    .soloist-details-wrapper {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  
-    .soloist-details, .soloist-social {
-      flex: 1;
-      align-items: flex-start;
-    }
-  
-    .soloist-bio {
-      margin-top: 20px;
-    }
-  }
-
-  #namegroup{
-    transition: transform 0.3s ease;
-  }
-
-  #namegroup:hover {
-    transform: scale(1.2);
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
-.namegroup{
-    color: white;
-    display: flex;
-    justify-content: center;
+.btn-icon:hover {
+  opacity: 0.8;
 }
 
-.member-card {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    background-color: white;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .card-img-left {
-    width: 250px;
-    height: auto;
-    margin-right: 20px;
-    border-radius: 8px;
-  }
-  
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow-wrap: break-word;
-  }
-  
-  .card-body p {
-    margin: 0 0 10px;
-  }
-  
-  .card-body a {
-    color: #007bff;
-  }
-  
-  .card-body a:hover {
-    text-decoration: underline;
-  }
-  
-  @media (max-width: 768px) {
-    .member-card {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .card-img-left {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 15px;
-    }
-  
-    .card-body {
-      align-items: center;
-      text-align: center;
-    }
-  
-    .card-body p {
-      text-align: center;
-    }
-  }
-  
-  .member-card {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    background-color: white;
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    box-sizing: border-box; /* Ensure padding and border are included in width and height */
-  }
-  
-  .card-img-left {
-    width: 250px;
-    height: auto;
-    margin-right: 20px;
-    border-radius: 8px;
-  }
-  
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-  
-  .card-body .bio {
-    margin-bottom: 15px;
-  }
-  
-  .card-body .bio h2 {
-    margin: 0;
-    font-size: 30px;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .card-body .bio p {
-    margin: 5px 0 0;
-    font-size: 16px;
-    text-align:justify;
-  }
-  
-  .card-body .info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  
-  .card-body .info div {
-    flex: 1;
-    min-width: 200px; /* Adjust as needed */
-    margin-bottom: 10px;
-  }
-  
-  .card-body p {
-    margin: 0 0 10px;
-  }
-  
-  .card-body a {
-    color: #007bff;
-  }
-  
-  .card-body a:hover {
-    text-decoration: underline;
-  }
-  
-  .biogroup{
-    text-align: left;
-  }
-
-  @media (max-width: 768px) {
-    .member-card {
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
-    }
-  
-    .card-img-left {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 15px;
-    }
-  
-    .card-body {
-      align-items: center;
-      text-align: center;
-    }
-  
-    .card-body .bio {
-      margin-bottom: 15px;
-    }
-  
-    .card-body .bio h2 {
-      font-size: 30px;
-
-    }
-  
-    .card-body .info {
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-  
-    .card-body .info div {
-      min-width: auto;
-      width: 100%;
-    }
-    .title1{
-        margin-top: 20px;
-    }
-  }
-
-
-.group-info-social-media {
-  display: flex;
-  flex-wrap: wrap;
-  width: 550px;
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
 }
 
-.group-info{
-  width: 230px;
+.btn-outline-secondary {
+  color: #6c757d;
+  border: 1px solid #6c757d !important;
 }
 
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: #6c757d;
+}
+
+.like-button {
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.like-button.liked {
+  color: #dc3545;
+}
+
+.like-button:hover, .like-button:focus {
+  color: #dc3545;
+}
+
+.replies-toggle {
+  background: none;
+  border: none;
+  color: inherit;
+  text-decoration: none;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ===== Login Prompt ===== */
 .login-prompt {
   color: white;
   margin-bottom: 20px;
@@ -472,7 +264,126 @@
   transform: scale(1.05);
 }
 
-.comments-section {
-  padding-bottom: 50px; /* Aggiunge spazio sotto i commenti */
+/* ===== Soloist Info ===== */
+.soloist-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
+.soloist-image {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.soloist-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.soloist-details-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.soloist-details, .soloist-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.soloist-bio {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* ===== Group Info ===== */
+.group-info-social-media {
+  display: flex;
+  flex-wrap: wrap;
+  width: 550px;
+}
+
+.group-info {
+  width: 230px;
+}
+
+/* ===== Media Queries ===== */
+@media screen and (min-width: 1024px) {
+  .soloist-info-container {
+      flex-direction: row;
+      gap: 20px;
+  }
+
+  .soloist-image {
+      flex: 0 0 400px;
+  }
+
+  .soloist-details-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+  }
+
+  .soloist-details, .soloist-social {
+      flex: 1;
+      align-items: flex-start;
+  }
+
+  .soloist-bio {
+      margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .member-card {
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+  }
+
+  .card-img-left {
+      width: 200px;
+      height: 200px;
+      margin-right: 0;
+      margin-bottom: 15px;
+  }
+
+  .card-body {
+      align-items: center;
+      text-align: center;
+      padding-left: 0;
+  }
+
+  .card-body .bio {
+      margin-bottom: 15px;
+  }
+
+  .card-body .bio h2 {
+      font-size: 30px;
+  }
+
+  .card-body .info {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+  }
+
+  .card-body .info div {
+      min-width: auto;
+      width: 100%;
+  }
+
+  .title1 {
+      margin-top: 20px;
+  }
+
+  .member-name {
+      font-size: 22px;
+  }
+}
