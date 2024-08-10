@@ -30,7 +30,7 @@ const EditMembersPage = () => {
         <ul className="member-list">
           {members.map((member) => (
             <li key={member._id} className="member-item">
-              <span className="member-name">{member.name} ({member.stageName})</span>
+              <span className="member-name">{member.stageName}</span>
               <Link to={`/admin/edit-member/${groupId}/${member._id}`} className="edit-button">
                 Modifica
               </Link>
