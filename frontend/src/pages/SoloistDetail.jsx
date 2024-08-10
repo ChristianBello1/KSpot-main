@@ -247,7 +247,7 @@ const SoloistDetail = () => {
   
   return (
     <div className="container mt-4 text-white">
-      <h1 className="mb-4 title">{soloist.name}</h1>
+      <h1 className="mb-4 title">{soloist.stageName}</h1>
       
       <div className="soloist-info-container">
       <div className="soloist-image">
@@ -272,7 +272,7 @@ const SoloistDetail = () => {
         <div className="soloist-details-wrapper">
           <div className="soloist-details">
             <h2 className="mb-3 title1">Artist Info</h2>
-            <p><strong>Stage Name:</strong> {soloist.stageName}</p>
+            <p><strong>Real Name:</strong> {soloist.name}</p>
             <p><strong>Birthday:</strong> {new Date(soloist.birthday).toLocaleDateString()}</p>
             <p><strong>Zodiac Sign:</strong> {soloist.zodiacSign}</p>
             <p><strong>Height:</strong> {soloist.height} cm</p>
