@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useAuth } from './contexts/AuthContext';
 import CustomNavbar from "./components/Navbar";
@@ -30,98 +30,103 @@ import Footer from "./components/Footer";
 import Spinner from "./components/Spinner";
 import { getGroupById, getSoloistById } from './services/api';
 
-function AppContent() {
-  const { loading } = useAuth();
-  
-  const PageTitle = () => {
-    const location = useLocation();
-    const params = useParams();
-    const [specificTitle, setSpecificTitle] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-  
-    useEffect(() => {
-      const fetchSpecificTitle = async () => {
-        setIsLoading(true);
-        console.log("Iniziando il recupero del titolo specifico");
-        console.log("Pathname corrente:", location.pathname);
-        console.log("Params:", params);
-  
-        if ((location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) && params.id) {
-          try {
-            let response;
-            if (location.pathname.startsWith('/group/')) {
-              console.log("Recupero dati gruppo con ID:", params.id);
-              response = await getGroupById(params.id);
-              console.log("Dati gruppo ricevuti:", response.data);
-              setSpecificTitle(response.data.name);
-            } else {
-              console.log("Recupero dati solista con ID:", params.id);
-              response = await getSoloistById(params.id);
-              console.log("Dati solista ricevuti:", response.data);
-              setSpecificTitle(response.data.stageName || response.data.name);
-            }
-            console.log("Titolo specifico impostato:", response.data.name || response.data.stageName);
-          } catch (error) {
-            console.error('Errore nel recupero del nome:', error);
-            setSpecificTitle('');
+const PageTitle = () => {
+  const location = useLocation();
+  const [specificTitle, setSpecificTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchSpecificTitle = async () => {
+      setIsLoading(true);
+      console.log("Iniziando il recupero del titolo specifico");
+      console.log("Pathname corrente:", location.pathname);
+
+      const pathParts = location.pathname.split('/');
+      const entityType = pathParts[1]; // 'group' o 'soloist'
+      const id = pathParts[2];
+
+      console.log("Tipo entità:", entityType);
+      console.log("ID estratto:", id);
+
+      if ((entityType === 'group' || entityType === 'soloist') && id) {
+        try {
+          let response;
+          if (entityType === 'group') {
+            console.log("Recupero dati gruppo con ID:", id);
+            response = await getGroupById(id);
+            console.log("Dati gruppo ricevuti:", response.data);
+            setSpecificTitle(response.data.name);
+          } else {
+            console.log("Recupero dati solista con ID:", id);
+            response = await getSoloistById(id);
+            console.log("Dati solista ricevuti:", response.data);
+            setSpecificTitle(response.data.stageName || response.data.name);
           }
-        } else {
-          console.log("Percorso non richiede titolo specifico o ID mancante");
+          console.log("Titolo specifico impostato:", response.data.name || response.data.stageName);
+        } catch (error) {
+          console.error('Errore nel recupero del nome:', error);
           setSpecificTitle('');
         }
-        setIsLoading(false);
-      };
-  
-      fetchSpecificTitle();
-    }, [location.pathname, params.id]);
-  
-    useEffect(() => {
-      console.log("Titolo specifico aggiornato:", specificTitle);
-    }, [specificTitle]);
-  
-    const getTitle = () => {
-      console.log("getTitle chiamato. isLoading:", isLoading, "specificTitle:", specificTitle);
-      if (isLoading) {
-        return "Caricamento... - KSpot";
+      } else {
+        console.log("Percorso non richiede titolo specifico o ID mancante");
+        setSpecificTitle('');
       }
-      if ((location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) && specificTitle) {
-        return `${specificTitle} - KSpot`;
-      }
-      switch(location.pathname) {
-        case '/':
-          return 'Home - KSpot';
-        case '/boy-groups':
-          return 'Boy Groups - KSpot';
-        case '/girl-groups':
-          return 'Girl Groups - KSpot';
-        case '/male-soloists':
-          return 'Male Soloists - KSpot';
-        case '/female-soloists':
-          return 'Female Soloists - KSpot';
-        case '/search':
-          return 'Risultati Ricerca - KSpot';
-        case '/register':
-          return 'Registrazione - KSpot';
-        case '/login':
-          return 'Accesso - KSpot';
-        case '/profile':
-          return 'Profilo - KSpot';
-        case '/admin':
-          return 'Dashboard Admin - KSpot';
-        default:
-          return 'KSpot';
-      }
+      setIsLoading(false);
     };
-  
-    const title = getTitle();
-    console.log("Titolo finale:", title);
-  
-    return (
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
-    );
+
+    fetchSpecificTitle();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    console.log("Titolo specifico aggiornato:", specificTitle);
+  }, [specificTitle]);
+
+  const getTitle = () => {
+    console.log("getTitle chiamato. isLoading:", isLoading, "specificTitle:", specificTitle);
+    if (isLoading) {
+      return "Caricamento... - KSpot";
+    }
+    if (specificTitle) {
+      return `${specificTitle} - KSpot`;
+    }
+    switch(location.pathname) {
+      case '/':
+        return 'Home - KSpot';
+      case '/boy-groups':
+        return 'Boy Groups - KSpot';
+      case '/girl-groups':
+        return 'Girl Groups - KSpot';
+      case '/male-soloists':
+        return 'Male Soloists - KSpot';
+      case '/female-soloists':
+        return 'Female Soloists - KSpot';
+      case '/search':
+        return 'Risultati Ricerca - KSpot';
+      case '/register':
+        return 'Registrazione - KSpot';
+      case '/login':
+        return 'Accesso - KSpot';
+      case '/profile':
+        return 'Profilo - KSpot';
+      case '/admin':
+        return 'Dashboard Admin - KSpot';
+      default:
+        return 'KSpot';
+    }
   };
+
+  const title = getTitle();
+  console.log("Titolo finale:", title);
+
+  return (
+    <Helmet>
+      <title>{title}</title>
+    </Helmet>
+  );
+};
+
+function AppContent() {
+  const { loading } = useAuth();
 
   if (loading) {
     return <Spinner />;
