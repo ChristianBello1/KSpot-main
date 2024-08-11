@@ -43,8 +43,12 @@ const AdminDashboard = () => {
     }
   };
 
+  const getArtistName = (artist) => {
+    return artist.type.includes('group') ? artist.name : (artist.stageName || artist.name);
+  };
+
   const filteredArtists = artists.filter(artist =>
-    artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+    getArtistName(artist).toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -72,8 +76,7 @@ const AdminDashboard = () => {
             <div className="card">
               <div className="card-body">
                 <div>
-                  <h5 className="card-title">{artist.name}</h5>
-                  <p className="card-text">{artist.type}</p>
+                  <h5 className="card-title">{getArtistName(artist)}</h5>
                 </div>
                 <div className="card-actions">
                   <Link to={`/admin/edit-${artist.type.includes('solo') ? 'soloist' : 'group'}/${artist._id}`} className="btn btn-secondary">Modifica</Link>
