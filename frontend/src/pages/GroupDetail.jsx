@@ -6,6 +6,7 @@ import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChe
 import './CommentStyles.css';
 import './Pages.css';
 import './GroupDetail.css';
+import Spinner from '../components/Spinner';
 
 const GroupDetail = () => {
   const [group, setGroup] = useState(null);
@@ -18,6 +19,7 @@ const GroupDetail = () => {
   const [, forceUpdate] = useState();
   const { id } = useParams();
   const { user, addFavorite, removeFavorite, updateUser } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchGroup();
@@ -46,6 +48,7 @@ const GroupDetail = () => {
 
   const fetchGroup = async () => {
     try {
+      setLoading(true);
       const response = await getGroupById(id);
       if (response.data && !response.data.comments) {
         response.data.comments = [];
@@ -53,6 +56,8 @@ const GroupDetail = () => {
       setGroup(response.data);
     } catch (error) {
       console.error('Error fetching group:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -244,7 +249,7 @@ const GroupDetail = () => {
     return url;
   };
   
-  if (!group) return <div>Loading...</div>;
+  if (loading) return <Spinner />;
   
   return (
     <div className="container mt-4 text-white">

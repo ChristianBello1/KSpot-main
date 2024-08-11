@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { FaTrash, FaHeart, FaRegHeart, FaThumbsUp, FaReply, FaChevronDown, FaChevronUp, FaYoutube, FaTwitter, FaPaperPlane, FaInstagram } from 'react-icons/fa';
 import './CommentStyles.css';
 import './Pages.css';
+import Spinner from '../components/Spinner';
 
 const SoloistDetail = () => {
   const [soloist, setSoloist] = useState(null);
@@ -17,6 +18,7 @@ const SoloistDetail = () => {
   const [, forceUpdate] = useState();
   const { id } = useParams();
   const { user, addFavorite, removeFavorite, updateUser } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchSoloist();
@@ -45,6 +47,7 @@ const SoloistDetail = () => {
 
   const fetchSoloist = async () => {
     try {
+      setLoading(true);
       const response = await getSoloistById(id);
       if (response.data && !response.data.comments) {
         response.data.comments = [];
@@ -52,6 +55,8 @@ const SoloistDetail = () => {
       setSoloist(response.data);
     } catch (error) {
       console.error('Error fetching soloist:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -243,7 +248,7 @@ const SoloistDetail = () => {
     return url;
   };
   
-  if (!soloist) return <div>Loading...</div>;
+  if (loading) return <Spinner />;
   
   return (
     <div className="container mt-4 text-white">
