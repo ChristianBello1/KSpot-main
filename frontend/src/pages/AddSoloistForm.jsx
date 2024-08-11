@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminForms.css';
+import CustomDatePicker from './CustomDatePicker';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,7 +12,7 @@ const AddSoloistForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     stageName: '',
-    birthday: '',
+    birthday: null,
     zodiacSign: '',
     height: '',
     weight: '',
@@ -19,7 +20,7 @@ const AddSoloistForm = () => {
     nationality: '',
     bio: '',
     company: '',
-    debutDate: '',
+    debutDate: null,
     type: `${gender}-solo`,
     socialMedia: {
       youtube: '',
@@ -49,6 +50,13 @@ const AddSoloistForm = () => {
     }
   };
 
+  const handleDateChange = (date, name) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: date
+    }));
+  };
+
   const handlePhotoChange = (e) => {
     setPhoto(e.target.files[0]);
   };
@@ -60,6 +68,8 @@ const AddSoloistForm = () => {
   
     const dataToSend = {
       ...formData,
+      birthday: formData.birthday ? formData.birthday.toISOString() : null,
+      debutDate: formData.debutDate ? formData.debutDate.toISOString() : null,
       socialMedia: {
         youtube: formData.socialMedia.youtube,
         x: formData.socialMedia.x,
@@ -102,7 +112,11 @@ const AddSoloistForm = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" />
-        <input type="date" name="birthday" value={formData.birthday} onChange={handleChange} placeholder="Data di nascita" />
+        <CustomDatePicker
+          selected={formData.birthday}
+          onChange={(date) => handleDateChange(date, 'birthday')}
+          placeholderText="Data di nascita"
+        />
         <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno zodiacale" />
         <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm)" />
         <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg)" />
@@ -110,7 +124,11 @@ const AddSoloistForm = () => {
         <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
         <input type="text" name="company" value={formData.company} onChange={handleChange} placeholder="Agenzia" />
-        <input type="date" name="debutDate" value={formData.debutDate} onChange={handleChange} placeholder="Data di debutto" />
+        <CustomDatePicker
+          selected={formData.debutDate}
+          onChange={(date) => handleDateChange(date, 'debutDate')}
+          placeholderText="Data di debutto"
+        />
         <input type="file" onChange={handlePhotoChange} />
         <h3>Social Media</h3>
         <input type="text" name="socialMedia.youtube" value={formData.socialMedia.youtube} onChange={handleChange} placeholder="YouTube" />

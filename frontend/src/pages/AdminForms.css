@@ -35,39 +35,27 @@
   border: 1px solid #ccc;
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .admin-form-container input[type="file"] {
   padding: 5px;
 }
 
-/* Custom styles for date inputs */
-.admin-form-container input[type="date"] {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 16px;
-  color: white;
-  transition: border-color 0.3s, box-shadow 0.3s;
+/* Hover effect for all form elements */
+.admin-form-container input:hover,
+.admin-form-container textarea:hover,
+.admin-form-container select:hover {
+  border-color: #007bff;
 }
 
-.admin-form-container input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.7;
-  cursor: pointer;
-}
-
-.admin-form-container input[type="date"]:focus {
+/* Focus effect for all form elements */
+.admin-form-container input:focus,
+.admin-form-container textarea:focus,
+.admin-form-container select:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-.admin-form-container input[type="date"]:hover {
-  border-color: #007bff;
 }
 
 /* Button styles */
@@ -117,4 +105,27 @@
 .add-button {
   display: inline-block;
   margin-top: 20px;
+}
+
+/* Placeholder text color */
+.admin-form-container input::placeholder,
+.admin-form-container textarea::placeholder,
+.admin-form-container select::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Disabled state for buttons */
+.admin-form-container button:disabled,
+.edit-button:disabled,
+.add-button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+/* Error message styles */
+.error-message {
+  color: #ff4444;
+  margin-bottom: 15px;
+  font-size: 14px;
 }

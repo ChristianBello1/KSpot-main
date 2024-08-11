@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminForms.css';
+import CustomDatePicker from './CustomDatePicker';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,7 +12,7 @@ const AddGroupForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    debutDate: '',
+    debutDate: null,
     company: '',
     fanclubName: '',
     socialMedia: {
@@ -28,6 +29,13 @@ const AddGroupForm = () => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData(prevState => ({
+      ...prevState,
+      debutDate: date
     }));
   };
 
@@ -52,7 +60,8 @@ const AddGroupForm = () => {
     const formDataToSend = new FormData();
     const groupData = {
       ...formData,
-      type: type
+      type: type,
+      debutDate: formData.debutDate ? formData.debutDate.toISOString() : null
     };
     console.log("Dati del gruppo da inviare:", groupData);
     formDataToSend.append('groupData', JSON.stringify(groupData));
@@ -89,7 +98,11 @@ const AddGroupForm = () => {
         <textarea id="description" name="description" value={formData.description} onChange={handleChange} required />
 
         <label htmlFor="debutDate">Data di debutto</label>
-        <input type="date" id="debutDate" name="debutDate" value={formData.debutDate} onChange={handleChange} />
+        <CustomDatePicker
+          selected={formData.debutDate}
+          onChange={handleDateChange}
+          placeholderText="Seleziona la data di debutto"
+        />
 
         <label htmlFor="company">Agenzia</label>
         <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} />

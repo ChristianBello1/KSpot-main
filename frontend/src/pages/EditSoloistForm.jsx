@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminForms.css';
+import CustomDatePicker from './CustomDatePicker';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,7 +12,7 @@ const EditSoloistForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     stageName: '',
-    birthday: '',
+    birthday: null,
     zodiacSign: '',
     height: '',
     weight: '',
@@ -19,7 +20,7 @@ const EditSoloistForm = () => {
     nationality: '',
     bio: '',
     company: '',
-    debutDate: '',
+    debutDate: null,
     socialMedia: {
       youtube: '',
       x: '',
@@ -37,10 +38,12 @@ const EditSoloistForm = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         const data = response.data;
-        data.birthday = data.birthday ? data.birthday.split('T')[0] : '';
-        data.debutDate = data.debutDate ? data.debutDate.split('T')[0] : '';
-        data.socialMedia = data.socialMedia || { youtube: '', x: '', instagram: '' };
-        setFormData(data);
+        setFormData({
+          ...data,
+          birthday: data.birthday ? new Date(data.birthday) : null,
+          debutDate: data.debutDate ? new Date(data.debutDate) : null,
+          socialMedia: data.socialMedia || { youtube: '', x: '', instagram: '' }
+        });
       } catch (error) {
         console.error('Errore nel recupero dei dati del solista:', error);
         alert('Errore nel recupero dei dati del solista');
@@ -71,6 +74,13 @@ const EditSoloistForm = () => {
     }
   };
 
+  const handleDateChange = (date, name) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: date
+    }));
+  };
+
   const handlePhotoChange = (e) => {
     setPhoto(e.target.files[0]);
   };
@@ -82,8 +92,8 @@ const EditSoloistForm = () => {
     
     const updatedFormData = {
       ...formData,
-      birthday: formData.birthday ? new Date(formData.birthday).toISOString() : null,
-      debutDate: formData.debutDate ? new Date(formData.debutDate).toISOString() : null,
+      birthday: formData.birthday ? formData.birthday.toISOString() : null,
+      debutDate: formData.debutDate ? formData.debutDate.toISOString() : null,
       socialMedia: {
         youtube: formData.socialMedia?.youtube || '',
         x: formData.socialMedia?.x || '',
@@ -126,7 +136,11 @@ const EditSoloistForm = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" />
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'Arte" />
-        <input type="date" name="birthday" value={formData.birthday} onChange={handleChange} placeholder="Data di Nascita" />
+        <CustomDatePicker
+          selected={formData.birthday}
+          onChange={(date) => handleDateChange(date, 'birthday')}
+          placeholderText="Data di Nascita"
+        />
         <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno Zodiacale" />
         <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza" />
         <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso" />
@@ -134,14 +148,18 @@ const EditSoloistForm = () => {
         <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
         <input type="text" name="company" value={formData.company} onChange={handleChange} placeholder="Azienda" />
-        <input type="date" name="debutDate" value={formData.debutDate} onChange={handleChange} placeholder="Data di Debutto" />
+        <CustomDatePicker
+          selected={formData.debutDate}
+          onChange={(date) => handleDateChange(date, 'debutDate')}
+          placeholderText="Data di Debutto"
+        />
         <input type="file" onChange={handlePhotoChange} />
         <h3>Social Media</h3>
         <input type="text" name="socialMedia.youtube" value={formData.socialMedia?.youtube || ''} onChange={handleChange} placeholder="YouTube" />
         <input type="text" name="socialMedia.x" value={formData.socialMedia?.x || ''} onChange={handleChange} placeholder="X (Twitter)" />
         <input type="text" name="socialMedia.instagram" value={formData.socialMedia?.instagram || ''} onChange={handleChange} placeholder="Instagram" />
         <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Solista'}
+          {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Solista'}
         </button>
       </form>
     </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminForms.css';
+import CustomDatePicker from './CustomDatePicker';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,7 +12,7 @@ const EditGroupForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    debutDate: '',
+    debutDate: null,
     company: '',
     fanclubName: '',
     socialMedia: {
@@ -30,7 +31,11 @@ const EditGroupForm = () => {
         const response = await axios.get(`${API_URL}/api/groups/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
-        setFormData(response.data);
+        const data = response.data;
+        setFormData({
+          ...data,
+          debutDate: data.debutDate ? new Date(data.debutDate) : null
+        });
       } catch (error) {
         console.error('Errore nel recupero dei dati del gruppo:', error);
         alert('Errore nel recupero dei dati del gruppo');
@@ -47,6 +52,13 @@ const EditGroupForm = () => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData(prevState => ({
+      ...prevState,
+      debutDate: date
     }));
   };
 
@@ -72,7 +84,7 @@ const EditGroupForm = () => {
     
     const updatedFormData = {
       ...formData,
-      debutDate: formData.debutDate ? new Date(formData.debutDate).toISOString() : null
+      debutDate: formData.debutDate ? formData.debutDate.toISOString() : null
     };
     
     formDataToSend.append('groupData', JSON.stringify(updatedFormData));
@@ -108,7 +120,11 @@ const EditGroupForm = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Descrizione" required />
-        <input type="date" name="debutDate" value={formData.debutDate ? formData.debutDate.split('T')[0] : ''} onChange={handleChange} placeholder="Data di debutto" />
+        <CustomDatePicker
+          selected={formData.debutDate}
+          onChange={handleDateChange}
+          placeholderText="Data di debutto"
+        />
         <input type="text" name="company" value={formData.company} onChange={handleChange} placeholder="Agenzia" />
         <input type="text" name="fanclubName" value={formData.fanclubName} onChange={handleChange} placeholder="Nome Fanclub" />
         <input type="file" onChange={handleImageChange} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMemberById, updateMember } from '../services/api';
 import './AdminForms.css';
+import CustomDatePicker from './CustomDatePicker';
 
 const EditMemberForm = () => {
   const { groupId, memberId } = useParams();
@@ -9,7 +10,7 @@ const EditMemberForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     stageName: '',
-    birthday: '',
+    birthday: null,
     zodiacSign: '',
     height: '',
     weight: '',
@@ -34,16 +35,8 @@ const EditMemberForm = () => {
       console.log('Dati del membro ricevuti:', response.data);
       if (response.data) {
         setFormData({
-          name: response.data.name || '',
-          stageName: response.data.stageName || '',
-          birthday: response.data.birthday ? response.data.birthday.split('T')[0] : '',
-          zodiacSign: response.data.zodiacSign || '',
-          height: response.data.height || '',
-          weight: response.data.weight || '',
-          mbtiType: response.data.mbtiType || '',
-          nationality: response.data.nationality || '',
-          instagram: response.data.instagram || '',
-          bio: response.data.bio || '',
+          ...response.data,
+          birthday: response.data.birthday ? new Date(response.data.birthday) : null,
           position: Array.isArray(response.data.position) ? response.data.position.join(', ') : response.data.position || ''
         });
       } else {
@@ -63,6 +56,13 @@ const EditMemberForm = () => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData(prevState => ({
+      ...prevState,
+      birthday: date
     }));
   };
 
@@ -87,7 +87,7 @@ const EditMemberForm = () => {
             formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue);
           }
         } else if (key === 'birthday') {
-          formDataToSend.append(key, formData[key] ? new Date(formData[key]).toISOString() : null);
+          formDataToSend.append(key, formData[key] ? formData[key].toISOString() : null);
         } else {
           formDataToSend.append(key, formData[key]);
         }
@@ -115,7 +115,11 @@ const EditMemberForm = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" />
-        <input type="date" name="birthday" value={formData.birthday ? formData.birthday.split('T')[0] : ''} onChange={handleChange} placeholder="Data di nascita" />
+        <CustomDatePicker
+          selected={formData.birthday}
+          onChange={handleDateChange}
+          placeholderText="Data di nascita"
+        />
         <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno zodiacale" />
         <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm)" />
         <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg)" />
@@ -123,7 +127,7 @@ const EditMemberForm = () => {
         <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} placeholder="Nazionalità" />
         <input type="text" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Instagram" />
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
-        <input type="text" name="position" value={Array.isArray(formData.position) ? formData.position.join(', ') : formData.position} onChange={handleChange} placeholder="Posizione" />
+        <input type="text" name="position" value={formData.position} onChange={handleChange} placeholder="Posizione" />
         <input type="file" onChange={handlePhotoChange} />
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Membro'}

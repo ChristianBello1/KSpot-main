@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { addMemberToGroup } from '../services/api';
 import './AdminForms.css';
+import CustomDatePicker from './CustomDatePicker';
 
 const AddMemberForm = () => {
   const { groupId } = useParams();
@@ -9,7 +10,7 @@ const AddMemberForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     stageName: '',
-    birthday: '',
+    birthday: null,
     zodiacSign: '',
     height: '',
     weight: '',
@@ -28,6 +29,13 @@ const AddMemberForm = () => {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData(prevState => ({
+      ...prevState,
+      birthday: date
     }));
   };
 
@@ -61,7 +69,7 @@ const AddMemberForm = () => {
           formDataToSend.append(key, isNaN(numValue) ? 'N/A' : numValue.toString());
         }
       } else if (key === 'birthday') {
-        formDataToSend.append(key, new Date(formData[key]).toISOString());
+        formDataToSend.append(key, formData[key] ? formData[key].toISOString() : null);
       } else {
         formDataToSend.append(key, formData[key]);
       }
@@ -89,7 +97,12 @@ const AddMemberForm = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Nome" required />
         <input type="text" name="stageName" value={formData.stageName} onChange={handleChange} placeholder="Nome d'arte" required />
-        <input type="date" name="birthday" value={formData.birthday} onChange={handleChange} placeholder="Data di nascita" required />
+        <CustomDatePicker
+          selected={formData.birthday}
+          onChange={handleDateChange}
+          placeholderText="Data di nascita"
+          required
+        />
         <input type="text" name="zodiacSign" value={formData.zodiacSign} onChange={handleChange} placeholder="Segno zodiacale" />
         <input type="text" name="height" value={formData.height} onChange={handleChange} placeholder="Altezza (cm) o N/A" />
         <input type="text" name="weight" value={formData.weight} onChange={handleChange} placeholder="Peso (kg) o N/A" />
