@@ -38,11 +38,14 @@ function AppContent() {
     const params = useParams();
     const [specificTitle, setSpecificTitle] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
+  
     useEffect(() => {
       const fetchSpecificTitle = async () => {
         setIsLoading(true);
         console.log("Iniziando il recupero del titolo specifico");
+        console.log("Pathname corrente:", location.pathname);
+        console.log("Params:", params);
+  
         if (location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) {
           try {
             let response;
@@ -63,25 +66,26 @@ function AppContent() {
             setSpecificTitle('');
           }
         } else {
+          console.log("Percorso non richiede titolo specifico");
           setSpecificTitle('');
         }
         setIsLoading(false);
       };
-
-      if (params.id) {
-        fetchSpecificTitle();
-      } else {
-        setSpecificTitle('');
-      }
+  
+      fetchSpecificTitle();
     }, [location.pathname, params.id]);
-
+  
     useEffect(() => {
       console.log("Titolo specifico aggiornato:", specificTitle);
     }, [specificTitle]);
-
+  
     const getTitle = () => {
+      console.log("getTitle chiamato. isLoading:", isLoading, "specificTitle:", specificTitle);
       if (isLoading) {
         return "Caricamento... - KSpot";
+      }
+      if (location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) {
+        return specificTitle ? `${specificTitle} - KSpot` : "KSpot";
       }
       switch(location.pathname) {
         case '/':
@@ -105,16 +109,13 @@ function AppContent() {
         case '/admin':
           return 'Dashboard Admin - KSpot';
         default:
-          if ((location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) && specificTitle) {
-            return `${specificTitle} - KSpot`;
-          }
           return 'KSpot';
       }
     };
-
+  
     const title = getTitle();
     console.log("Titolo finale:", title);
-
+  
     return (
       <Helmet>
         <title>{title}</title>
