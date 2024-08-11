@@ -30,7 +30,8 @@ import Footer from "./components/Footer";
 import Spinner from "./components/Spinner";
 import { getGroupById, getSoloistById } from './services/api';
 
-const PageTitle = () => {
+function App() {
+  const { loading } = useAuth();
   const location = useLocation();
   const params = useParams();
   const [specificTitle, setSpecificTitle] = useState("");
@@ -47,14 +48,20 @@ const PageTitle = () => {
       } else if (location.pathname.startsWith('/soloist/')) {
         try {
           const response = await getSoloistById(params.id);
-          setSpecificTitle(response.data.name);
+          setSpecificTitle(response.data.stageName || response.data.name);
         } catch (error) {
           console.error('Error fetching soloist name:', error);
         }
+      } else {
+        setSpecificTitle("");
       }
     };
 
-    fetchSpecificTitle();
+    if (params.id) {
+      fetchSpecificTitle();
+    } else {
+      setSpecificTitle("");
+    }
   }, [location, params]);
 
   const getTitle = () => {
@@ -80,71 +87,54 @@ const PageTitle = () => {
       case '/admin':
         return 'Admin Dashboard - KSpot';
       default:
-        if (location.pathname.startsWith('/group/') && specificTitle) {
-          return `${specificTitle} - KSpot`;
-        }
-        if (location.pathname.startsWith('/soloist/') && specificTitle) {
+        if ((location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) && specificTitle) {
           return `${specificTitle} - KSpot`;
         }
         return 'KSpot';
     }
   };
 
-  return (
-    <Helmet>
-      <title>{getTitle()}</title>
-    </Helmet>
-  );
-};
-
-function AppContent() {
-  const { loading } = useAuth();
-
   if (loading) {
     return <Spinner />;
   }
 
   return (
-    <div className="app-container">
-      <PageTitle />
-      <div className="background"></div>
-      <div className="content">
-        <CustomNavbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/group/:id" element={<GroupDetail />} />
-          <Route path="/soloist/:id" element={<SoloistDetail />} />
-          <Route path="/boy-groups" element={<BoyGroups />} />
-          <Route path="/girl-groups" element={<GirlGroups />} />
-          <Route path="/male-soloists" element={<MaleSoloists />} />
-          <Route path="/female-soloists" element={<FemaleSoloists />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/add-group/:type" element={<AddGroupForm />} />
-            <Route path="/admin/add-soloist/:gender" element={<AddSoloistForm />} />
-            <Route path="/admin/add-member/:groupId" element={<AddMemberForm />} />
-            <Route path="/admin/edit-group/:id" element={<EditGroupForm />} />
-            <Route path="/admin/edit-soloist/:id" element={<EditSoloistForm />} />
-            <Route path="/admin/edit-members/:groupId" element={<EditMembersPage />} />
-            <Route path="/admin/edit-member/:groupId/:memberId" element={<EditMemberForm />} />
-          </Route>
-          <Route path="/notfound" element={<NotFound />} />
-          <Route path="*" element={<div style={{color:'white'}}>404 Not Found</div>} />
-        </Routes>
-      </div>
-      <Footer />
-    </div>
-  );
-}
-
-function App() {
-  return (
     <Router>
-      <AppContent />
+      <div className="app-container">
+        <Helmet>
+          <title>{getTitle()}</title>
+        </Helmet>
+        <div className="background"></div>
+        <div className="content">
+          <CustomNavbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/group/:id" element={<GroupDetail />} />
+            <Route path="/soloist/:id" element={<SoloistDetail />} />
+            <Route path="/boy-groups" element={<BoyGroups />} />
+            <Route path="/girl-groups" element={<GirlGroups />} />
+            <Route path="/male-soloists" element={<MaleSoloists />} />
+            <Route path="/female-soloists" element={<FemaleSoloists />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/add-group/:type" element={<AddGroupForm />} />
+              <Route path="/admin/add-soloist/:gender" element={<AddSoloistForm />} />
+              <Route path="/admin/add-member/:groupId" element={<AddMemberForm />} />
+              <Route path="/admin/edit-group/:id" element={<EditGroupForm />} />
+              <Route path="/admin/edit-soloist/:id" element={<EditSoloistForm />} />
+              <Route path="/admin/edit-members/:groupId" element={<EditMembersPage />} />
+              <Route path="/admin/edit-member/:groupId/:memberId" element={<EditMemberForm />} />
+            </Route>
+            <Route path="/notfound" element={<NotFound />} />
+            <Route path="*" element={<div style={{color:'white'}}>404 Not Found</div>} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
     </Router>
   );
 }
