@@ -46,16 +46,16 @@ function AppContent() {
         console.log("Pathname corrente:", location.pathname);
         console.log("Params:", params);
   
-        if (location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) {
+        if ((location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) && params.id) {
           try {
             let response;
             if (location.pathname.startsWith('/group/')) {
-              console.log("Recupero dati gruppo");
+              console.log("Recupero dati gruppo con ID:", params.id);
               response = await getGroupById(params.id);
               console.log("Dati gruppo ricevuti:", response.data);
               setSpecificTitle(response.data.name);
             } else {
-              console.log("Recupero dati solista");
+              console.log("Recupero dati solista con ID:", params.id);
               response = await getSoloistById(params.id);
               console.log("Dati solista ricevuti:", response.data);
               setSpecificTitle(response.data.stageName || response.data.name);
@@ -66,7 +66,7 @@ function AppContent() {
             setSpecificTitle('');
           }
         } else {
-          console.log("Percorso non richiede titolo specifico");
+          console.log("Percorso non richiede titolo specifico o ID mancante");
           setSpecificTitle('');
         }
         setIsLoading(false);
@@ -84,8 +84,8 @@ function AppContent() {
       if (isLoading) {
         return "Caricamento... - KSpot";
       }
-      if (location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) {
-        return specificTitle ? `${specificTitle} - KSpot` : "KSpot";
+      if ((location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) && specificTitle) {
+        return `${specificTitle} - KSpot`;
       }
       switch(location.pathname) {
         case '/':
