@@ -42,10 +42,15 @@ function AppContent() {
       const fetchSpecificTitle = async () => {
         if (location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) {
           try {
-            const response = location.pathname.startsWith('/group/') 
-              ? await getGroupById(params.id)
-              : await getSoloistById(params.id);
-            setSpecificTitle(response.data.name);
+            let response;
+            if (location.pathname.startsWith('/group/')) {
+              response = await getGroupById(params.id);
+              setSpecificTitle(response.data.name);
+            } else {
+              response = await getSoloistById(params.id);
+              setSpecificTitle(response.data.stageName || response.data.name);
+            }
+            console.log('Dati ricevuti:', response.data);
           } catch (error) {
             console.error('Errore nel recupero del nome:', error);
             setSpecificTitle(''); // Imposta un titolo predefinito o vuoto in caso di errore
