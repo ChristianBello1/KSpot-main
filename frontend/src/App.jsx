@@ -37,27 +37,35 @@ function AppContent() {
     const location = useLocation();
     const params = useParams();
     const [specificTitle, setSpecificTitle] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
       const fetchSpecificTitle = async () => {
+        setIsLoading(true);
+        console.log("Iniziando il recupero del titolo specifico");
         if (location.pathname.startsWith('/group/') || location.pathname.startsWith('/soloist/')) {
           try {
             let response;
             if (location.pathname.startsWith('/group/')) {
+              console.log("Recupero dati gruppo");
               response = await getGroupById(params.id);
+              console.log("Dati gruppo ricevuti:", response.data);
               setSpecificTitle(response.data.name);
             } else {
+              console.log("Recupero dati solista");
               response = await getSoloistById(params.id);
+              console.log("Dati solista ricevuti:", response.data);
               setSpecificTitle(response.data.stageName || response.data.name);
             }
-            console.log('Dati ricevuti:', response.data);
+            console.log("Titolo specifico impostato:", response.data.name || response.data.stageName);
           } catch (error) {
             console.error('Errore nel recupero del nome:', error);
-            setSpecificTitle(''); // Imposta un titolo predefinito o vuoto in caso di errore
+            setSpecificTitle('');
           }
         } else {
           setSpecificTitle('');
         }
+        setIsLoading(false);
       };
 
       if (params.id) {
@@ -65,9 +73,16 @@ function AppContent() {
       } else {
         setSpecificTitle('');
       }
-    }, [location, params]);
+    }, [location.pathname, params.id]);
+
+    useEffect(() => {
+      console.log("Titolo specifico aggiornato:", specificTitle);
+    }, [specificTitle]);
 
     const getTitle = () => {
+      if (isLoading) {
+        return "Caricamento... - KSpot";
+      }
       switch(location.pathname) {
         case '/':
           return 'Home - KSpot';
@@ -97,9 +112,12 @@ function AppContent() {
       }
     };
 
+    const title = getTitle();
+    console.log("Titolo finale:", title);
+
     return (
       <Helmet>
-        <title>{getTitle()}</title>
+        <title>{title}</title>
       </Helmet>
     );
   };
