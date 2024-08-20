@@ -349,7 +349,21 @@ const GroupDetail = () => {
                           const match = member.instagram.match(/instagram\.com\/([^/?]+)/);
                           const username = match ? match[1] : 'profile';
                           return (
-                            <a href={member.instagram} target="_blank" rel="noopener noreferrer">@{username}</a>
+                            <a 
+                              href={member.instagram} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{
+                                color: 'white',
+                                textDecoration: 'none',
+                                transition: 'transform 0.3s ease',
+                                display: 'inline-block'
+                              }}
+                              onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+                              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                            >
+                              @{username}
+                            </a>
                           );
                         })()}
                       </div>

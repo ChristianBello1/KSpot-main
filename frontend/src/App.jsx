@@ -29,6 +29,7 @@ import NotFound from './pages/NotFound';
 import Footer from "./components/Footer";
 import Spinner from "./components/Spinner";
 import { getGroupById, getSoloistById } from './services/api';
+import ScrollToTop from "./components/ScrollToTop"; 
 
 const PageTitle = () => {
   const location = useLocation();
@@ -164,6 +165,7 @@ function AppContent() {
           <Route path="*" element={<div style={{color:'white'}}>404 Non Trovato</div>} />
         </Routes>
       </div>
+      <ScrollToTop /> 
       <Footer />
     </div>
   );
