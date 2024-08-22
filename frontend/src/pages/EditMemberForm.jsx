@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getMemberById, updateMember } from '../services/api';
 import './AdminForms.css';
 import CustomDatePicker from './CustomDatePicker';
-import Spinner from "./components/Spinner";
+import Spinner from "../components/Spinner";
 
 const EditMemberForm = () => {
   const { groupId, memberId } = useParams();

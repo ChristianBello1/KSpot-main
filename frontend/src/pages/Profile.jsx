@@ -6,7 +6,7 @@ import ProfileUpdateModal from './ProfileUpdateModal';
 import { FaCog } from 'react-icons/fa';
 import './Profile.css';
 import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
-import Spinner from "./components/Spinner";
+import Spinner from "../components/Spinner";
 
 const Profile = () => {
   const { user, loading: authLoading } = useAuth();

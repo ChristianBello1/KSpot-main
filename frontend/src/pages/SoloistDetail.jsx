@@ -259,14 +259,23 @@ const SoloistDetail = () => {
         {user && (
           <button 
             onClick={handleFavoriteToggle} 
-            id='btnfav'
             className="btn btn-outline-light favorite-btn position-absolute bottom-2 m-2"
             style={{
-              transition: 'transform 0.3s ease',
-              transform: 'scale(1)',
+              transition: 'all 0.3s ease',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(5px)',
+              border: 'none',
             }}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+              e.target.style.color = 'black';
+              e.target.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+              e.target.style.color = 'white';
+              e.target.style.transform = 'scale(1)';
+            }}
           >
             {isFavorite ? <FaHeart color="red" /> : <FaRegHeart />} {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
           </button>
