@@ -6,20 +6,25 @@ import ProfileUpdateModal from './ProfileUpdateModal';
 import { FaCog } from 'react-icons/fa';
 import './Profile.css';
 import { CardContainer, CardBody, CardItem } from '../components/ui/3d-card';
+import Spinner from './Spinner'; // Assicurati che questo componente esista
 
 const Profile = () => {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [profileData, setProfileData] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       fetchProfileData();
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
   const fetchProfileData = async () => {
+    setLoading(true);
     try {
       const data = await getUserData();
       setProfileData(data);
@@ -28,6 +33,8 @@ const Profile = () => {
     } catch (error) {
       console.error('Errore nel caricamento del profilo:', error);
       // Qui potresti impostare un messaggio di errore da mostrare all'utente
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,7 +74,7 @@ const Profile = () => {
   };
 
   const renderAvatar = () => {
-    if (profileData.avatar) {
+    if (profileData && profileData.avatar) {
       return (
         <img 
           src={profileData.avatar} 
@@ -79,7 +86,7 @@ const Profile = () => {
           }}
         />
       );
-    } else {
+    } else if (profileData) {
       const initials = `${profileData.nome.charAt(0)}${profileData.cognome.charAt(0)}`;
       return (
         <div className="profile-avatar">
@@ -87,10 +94,24 @@ const Profile = () => {
         </div>
       );
     }
+    return null;
   };
 
-  if (loading) return <p className="text-white">Caricamento...</p>;
-  if (!user) return <p className="text-white">Please <Link to="/login">login</Link> to view your profile.</p>;
+  if (authLoading || loading) {
+    return (
+      <div className="container mt-4 text-white d-flex justify-content-center align-items-center" style={{height: '80vh'}}>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="container mt-4 text-white">
+        <p>Please <Link to="/login">login</Link> to view your profile.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4 text-white">
@@ -132,7 +153,9 @@ const Profile = () => {
           />
         </div>
       ) : (
-        <p>Caricamento del profilo...</p>
+        <div className="d-flex justify-content-center align-items-center" style={{height: '80vh'}}>
+          <Spinner />
+        </div>
       )}
     </div>
   );
