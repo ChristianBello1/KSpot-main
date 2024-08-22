@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getMemberById, updateMember } from '../services/api';
 import './AdminForms.css';
 import CustomDatePicker from './CustomDatePicker';
+import Spinner from './Spinner'; // Assicurati che questo componente esista
 
 const EditMemberForm = () => {
   const { groupId, memberId } = useParams();
@@ -23,6 +24,7 @@ const EditMemberForm = () => {
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     fetchMemberData();
@@ -72,7 +74,7 @@ const EditMemberForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsSubmitting(true);
     try {
       const formDataToSend = new FormData();
       Object.keys(formData).forEach(key => {
@@ -102,11 +104,11 @@ const EditMemberForm = () => {
       console.error('Errore nella modifica del membro:', error.response?.data || error.message);
       setError('Impossibile aggiornare il membro. Riprova più tardi.');
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
-  if (isLoading) return <div>Caricamento...</div>;
+  if (isLoading) return <Spinner />;
   if (error) return <div className="alert alert-danger">{error}</div>;
 
   return (
@@ -129,8 +131,8 @@ const EditMemberForm = () => {
         <textarea name="bio" value={formData.bio} onChange={handleChange} placeholder="Biografia" />
         <input type="text" name="position" value={formData.position} onChange={handleChange} placeholder="Posizione" />
         <input type="file" onChange={handlePhotoChange} />
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Aggiornamento in corso...' : 'Aggiorna Membro'}
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? <Spinner /> : 'Aggiorna Membro'}
         </button>
       </form>
     </div>
