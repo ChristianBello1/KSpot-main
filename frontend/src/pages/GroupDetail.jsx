@@ -264,7 +264,6 @@ const GroupDetail = () => {
               style={{
                 transition: 'all 0.3s ease',
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(5px)',
                 border: 'none',
               }}
               onMouseEnter={(e) => {
